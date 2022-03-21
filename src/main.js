@@ -5,6 +5,8 @@ import store from "./store";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from './plugins/font-awesome'
+import "./assets/css/style.css";
+
 
 createApp(App)
   .use(router)
