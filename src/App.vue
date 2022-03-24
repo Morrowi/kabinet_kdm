@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <div class="container">
       <router-view />
-    </div>
   </div>
 </template>
 
@@ -26,6 +24,9 @@ export default {
 
       return false;
     }
+  },
+  created(){
+    this.$store.dispatch('getRatesAction')
   },
   methods: {
     logOut() {

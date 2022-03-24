@@ -1,7 +1,8 @@
 <template>
   <div class="container-fluid vh-100">
+<!--    <AddRates/>-->
     <div class="row justify-content-start align-items-center flex-column pt-4 pb-4">
-      <div class="topLogo mb-4">
+      <div class="topLogo mb-4 col-auto">
         <svg width="207" height="51" viewBox="0 0 207 51" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
           <rect width="56.6667" height="51" fill="url(#pattern0)"/>
           <path d="M76.1432 23V17.764H79.0785L82.9976 23H84.0924L79.8242 17.3039L83.7116 11.8933H82.6326L79.0468 16.8755H76.1432V11.8933H75.207V23H76.1432ZM87.7918 16.2249H91.3776V23H92.2662V15.384H86.9032C86.7604 19.7315 86.2527 22.3336 84.8564 22.3336C84.6819 22.3336 84.5074 22.3177 84.317 22.2384V22.9683C84.6184 23.0793 84.8723 23.1111 85.1262 23.1111C86.9826 23.1111 87.5696 20.4137 87.7918 16.2249ZM95.5164 23L100.689 16.8279V23H101.577V15.384H100.8L95.6433 21.5561V15.384H94.7389V23H95.5164ZM104.956 23V19.6045H109.906V23H110.795V15.384H109.906V18.7795H104.956V15.384H104.051V23H104.956ZM114.048 23L119.221 16.8279V23H120.109V15.384H119.332L114.175 21.5561V15.384H113.271V23H114.048ZM123.487 23V19.5252H125.201L128.295 23H129.358L125.963 19.1285L128.961 15.384H127.914L125.249 18.6843H123.487V15.384H122.583V23H123.487ZM136.684 21.6196V18.3669C136.684 16.336 135.478 15.2095 133.463 15.2095C132.226 15.2095 131.226 15.4792 130.639 15.6855V16.574C131.274 16.3043 132.21 16.0345 133.368 16.0345C134.939 16.0345 135.796 16.9231 135.796 18.2559V18.7636C135.066 18.5573 134.209 18.4304 133.4 18.4304C131.781 18.4304 130.036 19.0333 130.036 20.9215C130.036 22.4764 131.353 23.1745 132.686 23.1745C133.955 23.1745 135.05 22.7144 135.811 21.8893C135.891 22.7461 136.478 23.0635 137.128 23.0635C137.414 23.0635 137.7 23 137.953 22.9048V22.1749C137.763 22.2384 137.573 22.286 137.366 22.286C137.001 22.286 136.684 22.1273 136.684 21.6196ZM130.956 20.8739C130.956 19.6045 132.273 19.192 133.527 19.192C134.288 19.192 135.129 19.3348 135.796 19.5093V20.9056C135.113 21.8735 134.003 22.3971 132.86 22.3971C131.892 22.3971 130.956 21.9211 130.956 20.8739ZM143.487 25.1103V23H150.658V25.1103H151.547V22.1908H150.436V15.384H144.994C145.01 18.3828 144.581 20.3503 143.614 22.1908H142.614V25.1103H143.487ZM145.851 16.1932H149.548V22.1908H144.581C145.375 20.5248 145.819 18.7953 145.851 16.1932ZM152.646 19.192C152.646 21.7624 154.598 23.1745 156.645 23.1745C158.723 23.1745 160.659 21.7624 160.659 19.192C160.659 16.6216 158.723 15.2095 156.645 15.2095C154.598 15.2095 152.646 16.6216 152.646 19.192ZM159.754 19.192C159.754 21.1753 158.342 22.3177 156.66 22.3177C154.963 22.3177 153.551 21.1753 153.551 19.192C153.551 17.2087 154.963 16.0663 156.66 16.0663C158.342 16.0663 159.754 17.2087 159.754 19.192ZM169.968 19.43C169.968 17.1769 168.27 15.7013 166.24 15.7013C164.891 15.7013 163.653 16.3995 163.082 17.526C163.384 16.1456 163.939 14.9556 165.081 14.2575C166.938 13.1627 168.175 13.5276 169.254 12.6708V11.7188C168.175 12.7819 166.747 12.2583 164.558 13.5911C163.193 14.4479 162.178 16.2725 162.178 18.7795C162.178 21.5085 163.796 23.1745 166.113 23.1745C168.397 23.1745 169.968 21.7465 169.968 19.43ZM163.082 19.2396C163.257 17.6847 164.526 16.5581 166.128 16.5581C167.921 16.5581 169.08 17.7799 169.08 19.4459C169.08 21.1119 167.937 22.3177 166.097 22.3177C164.272 22.3177 163.082 20.9849 163.082 19.2396ZM172.728 16.9548V15.384H171.918V26.4907H172.823V21.5244C173.394 22.3971 174.457 23.1745 175.98 23.1745C178.154 23.1745 179.772 21.5403 179.772 19.192C179.772 16.8437 178.154 15.2095 175.98 15.2095C174.457 15.2095 173.394 15.9869 172.728 16.9548ZM178.868 19.192C178.868 21.1595 177.551 22.3495 175.869 22.3495C174.394 22.3495 173.251 21.3657 172.807 20.2233V18.1607C173.251 17.0183 174.394 16.0345 175.869 16.0345C177.551 16.0345 178.868 17.2404 178.868 19.192ZM181.203 19.192C181.203 21.7624 183.155 23.1745 185.201 23.1745C187.28 23.1745 189.216 21.7624 189.216 19.192C189.216 16.6216 187.28 15.2095 185.201 15.2095C183.155 15.2095 181.203 16.6216 181.203 19.192ZM188.311 19.192C188.311 21.1753 186.899 22.3177 185.217 22.3177C183.52 22.3177 182.107 21.1753 182.107 19.192C182.107 17.2087 183.52 16.0663 185.217 16.0663C186.899 16.0663 188.311 17.2087 188.311 19.192ZM192.067 23V16.2249H196.637V15.384H191.163V23H192.067ZM197.225 19.192C197.225 21.7624 199.176 23.1745 201.223 23.1745C203.302 23.1745 205.237 21.7624 205.237 19.192C205.237 16.6216 203.302 15.2095 201.223 15.2095C199.176 15.2095 197.225 16.6216 197.225 19.192ZM204.333 19.192C204.333 21.1753 202.921 22.3177 201.239 22.3177C199.541 22.3177 198.129 21.1753 198.129 19.192C198.129 17.2087 199.541 16.0663 201.239 16.0663C202.921 16.0663 204.333 17.2087 204.333 19.192ZM76.7461 42V37.5097L78.539 40.3499H79.6338L81.4268 37.5097V42H83.5529V34.384H81.4585L79.0785 38.1603L76.7144 34.384H74.6041V42H76.7461ZM92.2263 40.0325V37.6049C92.2263 35.098 90.7665 34.1619 88.4817 34.1619C87.3076 34.1619 86.1493 34.4633 85.5305 34.6696V36.5736C86.2445 36.288 87.1807 36.0024 88.2279 36.0024C89.4179 36.0024 90.0208 36.526 90.0208 37.2876V37.5573C89.4813 37.4304 88.8149 37.3511 88.212 37.3511C86.6888 37.3511 84.8641 37.954 84.8641 39.8897C84.8641 41.3971 86.1017 42.2221 87.5297 42.2221C88.6563 42.2221 89.5289 41.8731 90.2747 41.286C90.592 41.8572 91.1791 42.1428 91.9565 42.1428C92.3849 42.1428 92.8292 42.0476 93.1783 41.9207V40.4768C93.0355 40.5244 92.8927 40.5403 92.7657 40.5403C92.4801 40.5403 92.2263 40.4292 92.2263 40.0325ZM88.7197 38.668C89.1799 38.668 89.6876 38.7632 90.0208 38.8425V40.0325C89.5131 40.4768 88.926 40.6513 88.3072 40.6513C87.6408 40.6513 87.1172 40.2864 87.1172 39.7152C87.1172 38.9377 87.9105 38.668 88.7197 38.668ZM96.3116 35.4947V34.384H94.36V45.4907H96.5654V41.1908C97.0573 41.7303 97.8665 42.2221 99.0724 42.2221C101.484 42.2221 102.785 40.2705 102.785 38.192C102.785 36.1135 101.484 34.1619 99.0724 34.1619C97.6602 34.1619 96.7876 34.8124 96.3116 35.4947ZM100.532 38.192C100.532 39.382 99.7864 40.3657 98.5329 40.3657C97.565 40.3657 96.851 39.7628 96.5496 39.0964V37.2876C96.851 36.6212 97.565 36.0183 98.5329 36.0183C99.7864 36.0183 100.532 37.002 100.532 38.192ZM106.436 42V38.9853H107.324L109.514 42H111.989L109.149 38.1444L111.767 34.384H109.292L107.356 37.2241H106.436V34.384H104.23V42H106.436ZM112.091 38.192C112.091 40.8417 114.091 42.2221 116.502 42.2221C117.645 42.2221 118.581 42.0476 119.295 41.7461V40.0167C118.644 40.3023 117.867 40.4768 116.994 40.4768C115.741 40.4768 114.567 40.0167 114.313 38.906H119.676C120.183 36.6529 119.168 34.1619 116.011 34.1619C114.297 34.1619 112.091 35.3201 112.091 38.192ZM117.692 37.478H114.297C114.329 36.4308 115.154 35.8437 116.09 35.8437C117.47 35.8437 117.772 36.9544 117.692 37.478ZM125.008 42V36.2404H127.436V34.384H120.391V36.2404H122.818V42H125.008ZM127.989 38.192C127.989 40.8576 129.988 42.2221 132.194 42.2221C134.415 42.2221 136.398 40.8576 136.398 38.192C136.398 35.5264 134.415 34.1619 132.194 34.1619C129.988 34.1619 127.989 35.5264 127.989 38.192ZM134.161 38.192C134.161 39.3661 133.463 40.2547 132.194 40.2547C130.94 40.2547 130.242 39.3661 130.242 38.192C130.242 37.0179 130.94 36.1293 132.194 36.1293C133.463 36.1293 134.161 37.0179 134.161 38.192ZM141.078 36.1293H143.03V42H145.236V34.384H139.048C138.905 37.7953 138.635 40.2864 137.429 40.2864C137.286 40.2864 137.128 40.2547 136.969 40.1912V41.9365C137.413 42.0952 137.826 42.1587 138.175 42.1587C140.269 42.1587 140.856 39.5565 141.078 36.1293ZM146.676 38.192C146.676 40.8576 148.675 42.2221 150.88 42.2221C153.102 42.2221 155.085 40.8576 155.085 38.192C155.085 35.5264 153.102 34.1619 150.88 34.1619C148.675 34.1619 146.676 35.5264 146.676 38.192ZM152.848 38.192C152.848 39.3661 152.15 40.2547 150.88 40.2547C149.627 40.2547 148.929 39.3661 148.929 38.192C148.929 37.0179 149.627 36.1293 150.88 36.1293C152.15 36.1293 152.848 37.0179 152.848 38.192ZM158.731 42V36.2404H162.332V34.384H156.525V42H158.731ZM170.196 40.0325V37.6049C170.196 35.098 168.736 34.1619 166.452 34.1619C165.277 34.1619 164.119 34.4633 163.5 34.6696V36.5736C164.214 36.288 165.15 36.0024 166.198 36.0024C167.388 36.0024 167.991 36.526 167.991 37.2876V37.5573C167.451 37.4304 166.785 37.3511 166.182 37.3511C164.659 37.3511 162.834 37.954 162.834 39.8897C162.834 41.3971 164.072 42.2221 165.5 42.2221C166.626 42.2221 167.499 41.8731 168.244 41.286C168.562 41.8572 169.149 42.1428 169.926 42.1428C170.355 42.1428 170.799 42.0476 171.148 41.9207V40.4768C171.005 40.5244 170.862 40.5403 170.736 40.5403C170.45 40.5403 170.196 40.4292 170.196 40.0325ZM166.69 38.668C167.15 38.668 167.657 38.7632 167.991 38.8425V40.0325C167.483 40.4768 166.896 40.6513 166.277 40.6513C165.611 40.6513 165.087 40.2864 165.087 39.7152C165.087 38.9377 165.88 38.668 166.69 38.668Z" fill="black"/>
@@ -13,28 +14,28 @@
           </defs>
         </svg>
       </div>
-      <div class="formRegWrapper b-radius bg-white">
+      <div class="formRegWrapper b-radius bg-white" v-if="currentStep === 0">
         <div class="curFormBlock" data-target="reg">
           <div class="f-24 fw-600 mb-3">
             Добро пожаловать
-            в&nbsp;хороший маркетинг
+            в хороший маркетинг
           </div>
           <div class="f-16 col-lg-9 mb-3">
-            Если у вас уже есть аккаунт, <span class="showCurForm color-blue cursor-pointer" data-target="login">войдите</span> в него
+            Если у вас уже есть аккаунт, <router-link to="/login" class="showCurForm color-blue cursor-pointer">войдите</router-link> в него
           </div>
           <Form @submit="handleRegister" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
                 <div class="form-group mb-3">
                   <Field name="email" placeholder="Эл. почта" class="w-100 formInput"/>
-                  <ErrorMessage name="email" />
+                  <ErrorMessage class="input-error" name="email" />
                 </div>
               </div>
               <div class="col-12">
                 <div class="form-group mb-3">
                   <Field name="password" type="password" class="w-100 formInput" placeholder="Пароль" v-show="!showPass"/>
                   <Field name="password" type="text" class="w-100 formInput" placeholder="Пароль" v-show="showPass"/>
-                  <ErrorMessage name="password" />
+                  <ErrorMessage class="input-error" name="password" />
                   <div class="buttonShowPass" @click="showPassBt">
                     <input class="password-but" type="checkbox">
                     <div class="hidePass" v-show="!showPass">
@@ -83,7 +84,7 @@
                       <span class="f-12">Я прочитал <a href="#" class="color-blue">правила</a> и согласен с ними</span>
                     </label>
                   </Field>
-                  <ErrorMessage name="rules" />
+                  <ErrorMessage class="input-error" name="rules" />
                 </div>
               </div>
               <div class="col-12 mt-4">
@@ -107,174 +108,197 @@
                   {{ message }}
                 </div>
         </div>
-        <div class="curFormBlock" data-target="login" style="display: none;">
-          <div class="f-24 fw-600 mb-3 col-lg-9">
-            Клиника доброго маркетолога вход в&nbsp;личный кабинет
+      </div>
+
+      <div class="row w-100 mb-4" v-if="showStep">
+        <div class="col-lg-8 m-auto">
+          <div class="row mr-0 ml-0 justify-content-between">
+            <div class="stepWrap" :class="{ active : currentStep >=1 }" ><div class="stepBlock">1</div></div>
+            <div class="stepWrap" :class="{ active : currentStep >=2 }"><div class="stepBlock">2</div></div>
+            <div class="stepWrap" :class="{ active : currentStep >=3 }"><div class="stepBlock">3</div></div>
           </div>
-          <div class="f-16 col-lg-9 mb-3">
-            Если у вас нет аккаунта, <span class="showCurForm color-blue cursor-pointer" data-target="reg">зарегистрируйтесь</span>
+        </div>
+      </div>
+      <div class="formRegWrapper b-radius bg-white curFormBlock"  v-if="currentStep === 1">
+        <div class="text-center">
+          <div class="f-24 fw-600 mb-3">
+            Осталось всего 3&nbsp;шага
           </div>
-          <form action="">
+          <div class="f-16 col-lg-9 m-auto">
+            Укажите ваше имя или название компании
+          </div>
+          <Form @submit="handleStep1" :validation-schema="schema2" class="mt-3">
             <div class="row">
               <div class="col-12">
-                <div class="form-group">
-                  <input type="text" class="w-100 formInput" placeholder="Эл. почта">
+                <div class="form-group mb-3">
+                  <Field name="username" placeholder="Имя или название организации" class="w-100 formInput"/>
+                  <ErrorMessage class="input-error" name="username" />
                 </div>
               </div>
               <div class="col-12">
-                <div class="form-group mb-3">
-                  <input type="password" class="w-100 formInput" placeholder="Пароль">
-                  <div class="buttonShowPass">
-                    <input class="password-but" type="checkbox">
-                    <div class="hidePass">
-                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4.00977 3.23535L16.309 16.7645" stroke="black" stroke-width="1.22993" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12.2289 12.275C11.6255 12.8235 10.8289 13.1098 10.0144 13.071C9.19986 13.0321 8.43411 12.6714 7.88558 12.068C7.33705 11.4646 7.05066 10.668 7.08941 9.8535C7.12817 9.03897 7.48888 8.27319 8.09222 7.72461" stroke="black" stroke-width="1.22993" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M6.00884 5.43262C2.87489 7.01965 1.55078 9.99922 1.55078 9.99922C1.55078 9.99922 4.01064 15.5333 10.1603 15.5333C11.6011 15.5448 13.024 15.2129 14.3111 14.5651" stroke="black" stroke-width="1.22993" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M16.3567 13.1595C18.0326 11.6584 18.7697 10.0001 18.7697 10.0001C18.7697 10.0001 16.3098 4.46486 10.1602 4.46486C9.62755 4.46399 9.09577 4.50729 8.57031 4.59432" stroke="black" stroke-width="1.22993" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M10.7383 6.97949C11.3918 7.10498 11.987 7.43899 12.4347 7.93141C12.8823 8.42382 13.1582 9.0481 13.221 9.7106" stroke="black" stroke-width="1.22993" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
+                <button type="submit" class="button blueButton w-100 pt-3 pb-3" :disabled="loading">
+                  <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+                  Далее
+                </button>
+              </div>
+            </div>
+          </Form>
+          <div
+              v-if="message"
+              class="alert"
+              :class="successful ? 'alert-success' : 'alert-danger'"
+          >
+            {{ message }}
+          </div>
+        </div>
+      </div>
+      <div class="curFormBlock w-100"  v-if="currentStep === 2" >
+        <div class="formRegWrapper mh-auto">
+          <div class="f-24 fw-600 mb-3">
+            Выберите тариф
+          </div>
+          <div class="f-16">
+            Вы&nbsp;можете выбрать тариф позже,
+            после консультации с&nbsp;маркетологом.
+          </div>
+          <form action="" class="mt-3 mb-4">
+            <div class="row">
+              <div class="col-12">
+                <button type="submit" class="button blueButton w-100 pt-3 pb-3">Выбрать тариф позже</button>
+              </div>
+            </div>
+          </form>
+          <div class="f-24 fw-600 mb-3">
+            Доступные тарифы
+          </div>
+        </div>
+        <div class="row scrollBlock" v-if="selectedRate =='' " >
+          <div class="col-4" v-for="rate in Rates" :key="rate.id" :id="rate.id">
+            <div class=" b-radius bg-white formTarifItem mx-3"   >
+            <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
+              <div class="f-18 fw-600">
+                {{rate.name}}
+              </div>
+              <div class="f-24 fw-600 color-orange">
+                {{rate.price}} ₽/месяц
+              </div>
+            </div>
+            <div class="tarifItem p-3 border-bottom" v-for="prop in rate.props" :key="prop" >
+              {{prop}}
+            </div>
+            <div class="d-flex mr-0 ml-0 p-3">
+              <div class="button blueButton px-5" @click="selecteRate(rate.id);">Выбрать тариф</div>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center" v-if="selectedRate !=='' " >
+          <div class="col-lg-6">
+            <div class="b-radius bg-white formTarifItem ml-3 mr-3">
+              <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
+                <div class="f-18 fw-600">
+                  {{selectedRate.name}}
+                </div>
+                <div class="f-24 fw-600 color-orange">
+                  {{selectedRate.price}} ₽/месяц
+                </div>
+              </div>
+              <div class="tarifItem p-3 border-bottom" v-for="prop in selectedRate.props" :key="prop" >
+                {{prop}}
+              </div>
+            </div>
+            <div class="col-lg-6 m-auto">
+              <div class="row mr-0 ml-0 p-3 justify-content-center flex-column">
+                <div class="button buttonBorder pl-5 pr-5 pt-3 pb-3 mb-3">Выбрать тариф позже</div>
+                <div class="showCurForm button blueButton pl-5 pr-5 pt-3 pb-3 mb-3" @click="currentStep=3" >Продолжить</div>
+                <span class="showCurForm backStep color-blue text-center cursor-pointer" @click="selectedRate=''" >Назад</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="curFormBlock" v-if="currentStep === 3" >
+        <div class="mh-auto mb-3">
+          <div class="f-24 fw-600">
+            Последний шаг. Теперь все будет хорошо!
+          </div>
+        </div>
+        <div class="col-lg-5 pr-5 pl-5 mh-auto mb-5 text-center">
+          <div class="f-16">
+            Выберите себе маркетолога. Не бойтесь, его можно будет поменять.
+          </div>
+        </div>
+        <div class="row justify-content-center mr-0 ml-0">
+          <div class="col-lg-8 mb-4">
+            <div class="b-radius bg-white formTarifItem ml-3 mr-3">
+              <div class="border-bottom p-3">
+                <div class="row justify-content-between mr-0 ml-0 align-items-start position-relative">
+                  <div class="d-flex">
+                    <div class="avaBlock mr-5 d-flex align-items-center flex-column">
+                      <div class="bigAvaBlock mb-3">
+                        <img src="image/ava.png" alt="">
+                      </div>
+                      <div class="f-18 fw-600 d-flex align-items-center lh-1">
+                        <div class="mr-1">
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.15076 1.36588C7.54204 0.736562 8.45796 0.73656 8.84924 1.36587L10.8006 4.50441C10.9383 4.72583 11.157 4.88472 11.4101 4.94723L14.9981 5.83325C15.7175 6.01091 16.0005 6.882 15.5229 7.4486L13.141 10.2743C12.973 10.4737 12.8894 10.7308 12.9082 10.9908L13.1743 14.677C13.2276 15.4161 12.4866 15.9544 11.8002 15.6753L8.37669 14.2832C8.13517 14.185 7.86483 14.185 7.62331 14.2832L4.19982 15.6753C3.51337 15.9544 2.77238 15.4161 2.82573 14.677L3.0918 10.9908C3.11057 10.7308 3.02704 10.4737 2.859 10.2743L0.477088 7.4486C-0.000513792 6.882 0.282519 6.01091 1.00194 5.83325L4.58988 4.94723C4.843 4.88472 5.06171 4.72583 5.19937 4.50441L7.15076 1.36588Z" fill="#EE735A"/>
+                          </svg>
+                        </div>
+                        <span class="pt-1">4,8</span>
+                      </div>
                     </div>
-                    <div class="showPass" style="display: none;">
-                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.1608 4.46387C4.01112 4.46387 1.55127 9.99914 1.55127 9.99914C1.55127 9.99914 4.01112 15.5332 10.1608 15.5332C16.3104 15.5332 18.7702 9.99914 18.7702 9.99914C18.7702 9.99914 16.3104 4.46387 10.1608 4.46387Z" stroke="#171717" stroke-width="1.22993" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M10.1608 13.0744C11.8589 13.0744 13.2356 11.6978 13.2356 9.99962C13.2356 8.30145 11.8589 6.9248 10.1608 6.9248C8.46258 6.9248 7.08594 8.30145 7.08594 9.99962C7.08594 11.6978 8.46258 13.0744 10.1608 13.0744Z" stroke="#171717" stroke-width="1.22993" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
+
+                    <div class="d-flex flex-column">
+                      <div class="f-18 fw-600 mb-3">
+                        Наталья Маркова
+                      </div>
+                      <div class="f-14 color-2 lh-22">
+                        Специализируется на работе со строительными кампаниями, ИТ, сферой ремонтов. Успешно провела более 300 проектов. Специализируется на работе со строительными кампаниями, ИТ, сферой ремонтов. Успешно провела более 300 проектов.Специализируется на работе со строительными кампаниями, ИТ, сферой ремонтов. Успешно провела более 300 проектов.Специализируется на работе со строительными кампаниями, ИТ, сферой ремонтов. Успешно провела более 300 проектов.
+                      </div>
                     </div>
+
                   </div>
                 </div>
               </div>
-              <div class="col-12">
-                <div class="form-group mb-3">
-                  <button type="submit" class="button blueButton w-100 pt-3 pb-3">Войти</button>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-group mb-3">
-                  <label class="d-flex align-items-center justify-content-center checkBlockWrap">
-                    <input type="checkbox" class="d-none">
-                    <div class="checkBloc me-2">
-                      <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.6668 0.5L4.25016 6.91667L1.3335 4" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </div>
-                    <span class="f-12">Запомнить меня</span>
-                  </label>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-group mb-3">
-                  <span class="showCurForm color-blue cursor-pointer f-12" data-target="forgot">Вспомнить пароль</span>
+              <div class="row justify-content-end">
+                <div class="col-auto mx-2 my-3">
+                  <div class="button blueButton px-5" @click="selectedManager(1);">Выбрать</div>
                 </div>
               </div>
             </div>
-          </form>
-        </div>
-        <div class="curFormBlock" data-target="forgot" style="display: none;">
-          <div class="f-24 fw-600 mb-3">
-            Восстановление пароля
           </div>
-          <div class="f-16 col-lg-9 mb-3">
-            Мы&nbsp;пришлем инструкции
-            по&nbsp;восстановлению пароля
-            на&nbsp;электронную почту.
-          </div>
-          <form action="">
-            <div class="row">
-              <div class="col-12">
-                <div class="form-group">
-                  <input type="text" class="w-100 formInput" placeholder="Эл. почта">
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-group">
-                  <button type="button" class="showCurForm button blueButton w-100 pt-3 pb-3" data-target="infoForgot">Сбросить пароль</button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="curFormBlock" data-target="infoForgot" style="display: none;">
-          <div class="f-24 fw-600 mb-3">
-            Проверьте эл. почту
-          </div>
-          <div class="f-16 col-lg-9 mb-3">
-            Мы&nbsp;отправили инструкции
-            по&nbsp;восстановлению пароля
-          </div>
-          <form action="" class="w-100">
-            <div class="row">
-              <div class="col-12 mt-4">
-                <div class="form-group">
-                  <button type="button" class="showCurForm button blueButton w-100 pt-3 pb-3" data-target="login">Войти в аккаунт</button>
-                </div>
-              </div>
-            </div>
-          </form>
+
         </div>
       </div>
     </div>
+    <a class="nav-link" @click.prevent="logOut">
+      <font-awesome-icon icon="sign-out-alt" /> LogOut
+    </a>
   </div>
-<!--  <div class="col-md-12">-->
-<!--    <div class="card card-container">-->
-<!--      <img-->
-<!--          id="profile-img"-->
-<!--          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"-->
-<!--          class="profile-img-card"-->
-<!--      />-->
-<!--      <Form @submit="handleRegister" :validation-schema="schema">-->
-<!--        <div v-if="!successful">-->
-<!--          <div class="form-group">-->
-<!--            <label for="username">Username</label>-->
-<!--            <Field name="username" type="text" class="form-control" />-->
-<!--            <ErrorMessage name="username" class="error-feedback" />-->
-<!--          </div>-->
-<!--          <div class="form-group">-->
-<!--            <label for="email">Email</label>-->
-<!--            <Field name="email" type="email" class="form-control" />-->
-<!--            <ErrorMessage name="email" class="error-feedback" />-->
-<!--          </div>-->
-<!--          <div class="form-group">-->
-<!--            <label for="password">Password</label>-->
-<!--            <Field name="password" type="password" class="form-control" />-->
-<!--            <ErrorMessage name="password" class="error-feedback" />-->
-<!--          </div>-->
 
-<!--          <div class="form-group">-->
-<!--            <button class="btn btn-primary btn-block" :disabled="loading">-->
-<!--              <span-->
-<!--                  v-show="loading"-->
-<!--                  class="spinner-border spinner-border-sm"-->
-<!--              ></span>-->
-<!--              Sign Up-->
-<!--            </button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </Form>-->
-
-<!--      <div-->
-<!--          v-if="message"-->
-<!--          class="alert"-->
-<!--          :class="successful ? 'alert-success' : 'alert-danger'"-->
-<!--      >-->
-<!--        {{ message }}-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
 </template>
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
+//import AddRates from "@/components/AddRates"
+//const AddRates = () => import("./components/AddRates.vue")
 import * as yup from "yup";
 
 export default {
-  name: "Register",
+  name: "Home",
   components: {
+//    AddRates,
     Form,
     Field,
     ErrorMessage,
   },
   data() {
+
+    let currentStep=0;
+    let showStep=false;
+
     const schema = yup.object().shape({
       email: yup
           .string()
@@ -290,26 +314,141 @@ export default {
           .string()
           .required("Обязательное поле")
     });
+    const schema2 = yup.object().shape({
+      username: yup
+          .string()
+          .required("Обязательное поле")
+    });
+
+    if(this.$store.state.auth.status.loggedIn){
+        if(this.$store.state.auth.user.username === null){
+          showStep=true;
+          currentStep=1;
+
+        } else if(this.$store.state.auth.user.username != null && this.$store.state.auth.user.rate === 0 ){
+          showStep=true;
+          //console.log(this.$store.state.auth.user.username);
+          currentStep=2;
+        }
+
+    }
+
+
+
 
     return {
+      username:'',
       showPass:false,
       successful: false,
       loading: false,
       message: "",
       schema,
+      schema2,
+      showStep,
+      currentStep,
+      selectedRate:'',
+      selectManager:'',
     };
   },
   computed: {
+    Rates(){
+      let arr = {};
+      for (let key of Object.keys(this.$store.state.rates)) {
+        arr[key]={
+          'id':this.$store.state.rates[key].id,
+          'name':this.$store.state.rates[key].name,
+          'price':this.$store.state.rates[key].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "),
+          'props':JSON.parse(this.$store.state.rates[key].props),
+        }
+        //console.log(this.$store.state.rates[key]);
+      }
+      //console.log(arr);
+      return  arr;
+
+    },
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
     },
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+
   },
   mounted() {
+    console.log(this.currentUser);
+    if(this.currentUser!==null){
+      if(this.currentUser.manager!=null){
+        this.$router.push("/dashboard");
+      }
+    }
     if (this.loggedIn) {
-      this.$router.push("/profile");
+      console.log()
+      //this.$router.push("/profile");
+    }
+  },
+  watch:{
+    '$store.state.auth.user.status.loggedIn': function() {
+      let authUser = JSON.parse(localStorage.getItem('user'));
+      //console.log(authUser);
+      if(authUser === null){
+        this.$router.push("/");
+      } else if(authUser.username === null){
+        this.currentStep=1;
+       }
     }
   },
   methods: {
+
+
+    selectedManager(id){
+      this.message = "";
+      this.loading = true;
+
+      let userStorage = JSON.parse(localStorage.getItem('user'));
+
+      let user={
+        'user_id':userStorage.id,
+        'rate':this.selectedRate.id,
+        'manager':id
+      }
+
+
+      this.$store.dispatch("auth/step2", user).then(
+          () => {
+            //dashboard
+            this.$router.push('/dashboard');
+          },
+          (error) => {
+            this.message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            this.successful = false;
+            this.loading = false;
+          }
+      );
+
+
+
+
+    },
+    selecteRate(id){
+      console.log(this.Rates);
+      for (let k in this.Rates){
+        if(this.Rates[k].id===id){
+          this.selectedRate=this.Rates[k]
+
+        }
+      }
+
+
+    },
+    logOut() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
+    },
     showPassBt(){
       this.showPass=!this.showPass;
     },
@@ -317,25 +456,52 @@ export default {
       this.message = "";
       this.successful = false;
       this.loading = true;
-console.log(user);
-      // this.$store.dispatch("auth/register", user).then(
-      //     (data) => {
-      //       this.message = data.message;
-      //       this.successful = true;
-      //       this.loading = false;
-      //     },
-      //     (error) => {
-      //       this.message =
-      //           (error.response &&
-      //               error.response.data &&
-      //               error.response.data.message) ||
-      //           error.message ||
-      //           error.toString();
-      //       this.successful = false;
-      //       this.loading = false;
-      //     }
-      // );
+
+      this.$store.dispatch("auth/register", user).then(
+          (data) => {
+            this.message = data.message;
+            this.successful = true;
+            this.loading = false;
+          },
+          (error) => {
+            this.message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            this.successful = false;
+            this.loading = false;
+          }
+      );
     },
+    handleStep1(user) {
+      this.message = "";
+      this.loading = true;
+      let userStorage = JSON.parse(localStorage.getItem('user'));
+      user.id=userStorage.id;
+      console.log(userStorage);
+      this.$store.dispatch("auth/step1", user).then(
+          (data) => {
+
+            this.currentStep=2;
+            this.showStep=true;
+            this.message = data.message;
+            this.successful = true;
+            this.loading = false;
+          },
+          (error) => {
+            this.message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            this.successful = false;
+            this.loading = false;
+          }
+      );
+    }
   },
 };
 </script>
