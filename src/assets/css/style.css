@@ -133,7 +133,7 @@ body {
 .menuLinkBlock:hover .menuLinkName{
     color: #ffffff;
 }
-.menuLinkBlock.active svg path{
+.active svg path{
     fill: #EE735A;
 }
 .menuLinkBlock.active .menuLinkName{

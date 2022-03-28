@@ -37,6 +37,19 @@ const routes = [
     name: "admin",
     // lazy-loaded
     component: BoardAdmin,
+    children: [
+      {path: '',
+        component: () => import('./views/admin/Index.vue'),
+      },
+      {
+        path: 'manager',
+        component: () => import('./views/admin/Manager.vue')
+      },
+      {
+        path: 'profile',
+        component: Profile
+      }
+    ]
   },
   {
     path: "/mod",

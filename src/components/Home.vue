@@ -378,7 +378,11 @@ export default {
     console.log(this.currentUser);
     if(this.currentUser!==null){
       if(this.currentUser.manager!=null){
-        this.$router.push("/dashboard");
+        if(this.currentUser.rules == 1){
+          this.$router.push("/admin");
+        } else {
+          this.$router.push("/dashboard");
+        }
       }
     }
     if (this.loggedIn) {

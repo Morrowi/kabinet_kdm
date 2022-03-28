@@ -560,7 +560,7 @@
 </template>
 
 <script>
-//import UserService from "../services/user.service";
+import UserService from "../services/user.service";
 
 export default {
   name: "User",
@@ -583,9 +583,15 @@ export default {
     },
   },
   mounted() {
-
-   /* UserService.getUserBoard().then(
+    UserService.getUserBoard().then(
       (response) => {
+        console.log(response.data.roles);
+        if(response.data.roles === 1){
+          this.$router.push("/admin");
+        } else if(response.data.roles === 2){
+          this.$router.push("/mod");
+        }
+
         this.content = response.data;
       },
       (error) => {
@@ -596,7 +602,7 @@ export default {
           error.message ||
           error.toString();
       }
-    );*/
+    );
   },
 };
 </script>
