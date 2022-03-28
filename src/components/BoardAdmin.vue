@@ -38,7 +38,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/admin/manager" active-class="active">
+                  <router-link to="/admin/users" active-class="active">
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +53,7 @@
                         </svg>
                       </div>
                       <div class="menuLinkName fw-500 f-14">
-                        Менеджеры
+                        Пользователи
                       </div>
                     </div>
                   </router-link>

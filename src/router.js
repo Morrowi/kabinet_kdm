@@ -42,8 +42,8 @@ const routes = [
         component: () => import('./views/admin/Index.vue'),
       },
       {
-        path: 'manager',
-        component: () => import('./views/admin/Manager.vue')
+        path: 'users',
+        component: () => import('./views/admin/Users.vue')
       },
       {
         path: 'profile',

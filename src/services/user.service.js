@@ -20,9 +20,15 @@ class UserService {
     return axios.get(API_URL + 'admin', { headers: authHeader() });
   }
 
-  getListManager(id){
-    return axios.post(API_URL + 'manager/list',
+  getListUsers(id){
+    return axios.post(API_URL + 'users/list',
         { id: id },
+        {headers: authHeader()}
+    );
+  }
+  getUpdateUsers(id, val){
+    return axios.put(API_URL + 'users/'+id,
+        { id: val },
         {headers: authHeader()}
 
     );
