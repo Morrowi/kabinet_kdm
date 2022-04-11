@@ -17,7 +17,7 @@ class UserService {
   }
 
   getAdminBoard() {
-    return axios.get(API_URL + 'admin', { headers: authHeader() });
+    return axios.get(API_URL + 'user', { headers: authHeader() });
   }
 
   getListUsers(id){
@@ -33,6 +33,14 @@ class UserService {
 
     );
   }
+  getAddUsers(id, val){
+    return axios.put(API_URL + 'users/'+id,
+        { id: val, what:'addRole' },
+        {headers: authHeader()}
+
+    );
+  }
+
 }
 
 export default new UserService();

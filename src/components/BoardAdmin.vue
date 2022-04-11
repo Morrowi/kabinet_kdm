@@ -127,7 +127,7 @@
 </template>
 
 <script>
-//import UserService from "../services/user.service";
+import UserService from "../services/user.service";
 
 export default {
   name: "Admin",
@@ -149,25 +149,25 @@ export default {
     },
   },
   mounted() {
-    // UserService.getAdminBoard().then(
-    //   (response) => {
-    //     console.log(response.roles);
-    //     if(response.data.roles === null){
-    //       this.$router.push("/dashboard");
-    //     } else if(response.data.roles === 2){
-    //       this.$router.push("/mod");
-    //     }
-    //     this.content = response.data;
-    //   },
-    //   (error) => {
-    //     this.content =
-    //       (error.response &&
-    //         error.response.data &&
-    //         error.response.data.message) ||
-    //       error.message ||
-    //       error.toString();
-    //   }
-    // );
+    UserService.getAdminBoard().then(
+      (response) => {
+        console.log(response.roles);
+        if(response.data.roles === null){
+          this.$router.push("/dashboard");
+        } else if(response.data.roles === 2){
+          this.$router.push("/mod");
+        }
+        this.content = response.data;
+      },
+      (error) => {
+        this.content =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+      }
+    );
   },
 };
 </script>

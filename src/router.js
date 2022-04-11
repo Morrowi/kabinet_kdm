@@ -56,6 +56,15 @@ const routes = [
     name: "moderator",
     // lazy-loaded
     component: BoardModerator,
+    children: [
+      {path: '',
+        component: () => import('./views/mod/Index.vue'),
+      },
+      {
+        path: 'profile',
+        component: () => import('./views/mod/Profile.vue')
+      },
+    ]
   },
   {
     path: "/user",
