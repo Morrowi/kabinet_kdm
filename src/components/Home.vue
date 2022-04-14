@@ -231,7 +231,7 @@
           </div>
         </div>
         <div class="row justify-content-center mr-0 ml-0">
-          <div class="col-lg-8 mb-4">
+          <div class="col-lg-8 mb-4" v-for="marketolog in Marketologs" :key="marketolog.id" :id="marketolog.id">
             <div class="b-radius bg-white formTarifItem ml-3 mr-3">
               <div class="border-bottom p-3">
                 <div class="row justify-content-between mr-0 ml-0 align-items-start position-relative">
@@ -252,10 +252,10 @@
 
                     <div class="d-flex flex-column">
                       <div class="f-18 fw-600 mb-3">
-                        Наталья Маркова
+                        {{ marketolog.username}}
                       </div>
-                      <div class="f-14 color-2 lh-22">
-                        Специализируется на работе со строительными кампаниями, ИТ, сферой ремонтов. Успешно провела более 300 проектов. Специализируется на работе со строительными кампаниями, ИТ, сферой ремонтов. Успешно провела более 300 проектов.Специализируется на работе со строительными кампаниями, ИТ, сферой ремонтов. Успешно провела более 300 проектов.Специализируется на работе со строительными кампаниями, ИТ, сферой ремонтов. Успешно провела более 300 проектов.
+                      <div class="f-14 color-2 lh-22" v-html="marketolog.description">
+
                       </div>
                     </div>
 
@@ -264,7 +264,7 @@
               </div>
               <div class="row justify-content-end">
                 <div class="col-auto mx-2 my-3">
-                  <div class="button blueButton px-5" @click="selectedManager(1);">Выбрать</div>
+                  <div class="button blueButton px-5" @click="selectedManager(marketolog.id);">Выбрать</div>
                 </div>
               </div>
             </div>
@@ -366,6 +366,21 @@ export default {
       return  arr;
 
     },
+    Marketologs(){
+      /*let arr = {};
+      for (let key of Object.keys(this.$store.state.marketologs)) {
+        arr[key]={
+          'id':this.$store.state.rates[key].id,
+          'name':this.$store.state.rates[key].name,
+          'price':this.$store.state.rates[key].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "),
+          'props':JSON.parse(this.$store.state.rates[key].props),
+        }
+        //console.log(this.$store.state.rates[key]);
+      }*/
+      //console.log(arr);
+      return  this.$store.state.marketologs;
+
+    },
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
     },
@@ -379,9 +394,9 @@ export default {
     if(this.currentUser!==null){
       if(this.currentUser.manager!=null){
         if(this.currentUser.rules == 1){
-          this.$router.push("/admin");
+          //this.$router.push("/admin");
         } else {
-          this.$router.push("/dashboard");
+          //this.$router.push("/dashboard");
         }
       }
     }

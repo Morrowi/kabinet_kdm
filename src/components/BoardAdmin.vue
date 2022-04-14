@@ -151,8 +151,8 @@ export default {
   mounted() {
     UserService.getAdminBoard().then(
       (response) => {
-        console.log(response.roles);
-        if(response.data.roles === null){
+        console.log(response.data);
+        if(response.data.roles === null || response.data.roles === 0){
           this.$router.push("/dashboard");
         } else if(response.data.roles === 2){
           this.$router.push("/mod");

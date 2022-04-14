@@ -591,6 +591,11 @@ export default {
         } else if(response.data.roles === 2){
           this.$router.push("/mod");
         }
+        if(this.currentUser.manager === null){
+          this.$router.push("/");
+        }
+
+        console.log(this.currentUser);
 
         this.content = response.data;
       },

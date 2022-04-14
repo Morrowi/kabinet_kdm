@@ -27,6 +27,7 @@ export default {
   },
   created(){
     this.$store.dispatch('getRatesAction')
+    this.$store.dispatch('getMarketologAction')
   },
   methods: {
     logOut() {

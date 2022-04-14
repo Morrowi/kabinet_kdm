@@ -110,6 +110,17 @@ body {
 .h-100vh{
     height: 100vh;
 }
+.trash{
+    background: none;
+    border: none;
+}
+.trash svg{
+    width: 18px;
+    height: 18px;
+}
+.trash svg:hover path{
+    fill: #EE735A
+}
 
 .menuLinkBlock {
     display: flex;

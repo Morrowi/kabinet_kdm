@@ -40,6 +40,17 @@ class UserService {
 
     );
   }
+  getAddMarketolog(data){
+    return axios.post(API_URL + 'marketolog/add',
+        data,
+        {headers: authHeader()}
+    );
+  }
+  getDeleteMarketolog(val){
+    return axios.delete(API_URL + 'marketolog/add/'+val,
+        {headers: authHeader()}
+    );
+  }
 
 }
 

@@ -83,15 +83,31 @@ export default {
     addUser(values){
       console.log(values);
 
-      let formData = new FormData();
+     /* let formData = new FormData();
       for (let k in values) {
         if(values[k] !==undefined){
           formData.append(k, values[k]);
         }
-      }
-      formData.append('description', this.valueEditor);
+      }*/
+      values['description']=this.valueEditor;
 
-      console.log(formData);
+      UserService.getAddMarketolog(values).then(
+          (response) => {
+            if(response.data == 'saccess'){
+              this.$router.push('/admin/users');
+            }
+          },
+          (error) => {
+            this.content =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+          }
+      );
+
+
     }
 
   },
@@ -101,20 +117,7 @@ export default {
     },
   },
   mounted() {
-    // console.log(this.currentUser);
-    UserService.getListUsers(this.currentUser.id).then(
-      (response) => {
-        this.usersList = response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-      }
-    );
+
   }
 };
 </script>
