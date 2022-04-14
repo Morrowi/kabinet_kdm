@@ -17,13 +17,13 @@
                 <div class="row align-items-center mb-3">
                   <label for="p-name" class="form-label col-2">Имя</label>
                   <div class="col-5">
-                    <input type="text" id="p-name" class="w-100 formInput task">
+                    <input type="text" id="p-name" class="w-100 formInput task" :value="currentUser.username">
                   </div>
                 </div>
                 <div class="row align-items-center  mb-3">
                   <label for="p-name" class="form-label col-2">Email</label>
                   <div class="col-5">
-                    <input type="email" id="p-email" class="w-100 formInput task">
+                    <input type="email" id="p-email" class="w-100 formInput task" :value="currentUser.email">
                   </div>
                 </div>
                 <div class="row align-items-center  mb-3">
@@ -59,7 +59,7 @@
           </div>
           <div class="row me-0 ml-0 justify-content-center justify-content-lg-end">
             <div class="col-auto mx-2 my-3">
-              <div class="button buttonBorder">Написать сообщение</div>
+              <div class="button buttonBorder" @click="reUser();">Написать сообщение</div>
             </div>
           </div>
         </div>
@@ -82,8 +82,10 @@ export default {
   data() {
     let user = JSON.parse(localStorage.getItem('user'));
     let header ='Bearer ' + user.accessToken;
-    console.log(header);
+
+    console.log(this.$store.state.auth.user);
     return {
+      loading:false,
       header
     };
   },
@@ -92,6 +94,12 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     }
+  },
+  methods:{
+    reUser() {
+      this.loading = true;
+      this.$store.dispatch("auth/reuser");
+    },
   },
   mounted() {
     if (!this.currentUser) {

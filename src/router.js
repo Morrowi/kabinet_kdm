@@ -43,7 +43,11 @@ const routes = [
       },
       {
         path: 'users',
-        component: () => import('./views/admin/Users.vue')
+        component: () => import('./views/admin/Users.vue'),
+      },
+      {
+        path: 'users/add',
+        component: () => import('./views/admin/AddUsers.vue')
       },
       {
         path: 'profile',

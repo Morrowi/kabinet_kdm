@@ -97,7 +97,8 @@
             </a>
             <div class="d-flex align-items-center userTopWrap me-0 me-lg-5">
               <div class="imgUserTop me-2">
-                <img src="../assets/image/user.png" alt="">
+                <Avatar shape="circle" :image="'http://panel.kdm1.biz/uploads/'+currentUser.id+'/'+currentUser.avatar" />
+<!--                <img :src="'http://panel.kdm1.biz/uploads/'+currentUser.id+'/'+currentUser.avatar" alt="">-->
               </div>
               <div class="f-14 fw-400">
                 {{ currentUser.username }}
@@ -120,9 +121,12 @@
 
 <script>
 //import UserService from "../services/user.service";
-
+import Avatar from 'primevue/avatar';
 export default {
   name: "Moderator",
+  components:{
+    Avatar
+  },
   data() {
     return {
       content: "",

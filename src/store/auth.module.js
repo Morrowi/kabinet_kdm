@@ -61,7 +61,16 @@ export const auth = {
           }
       );
     },
-
+    reuser() {
+      return AuthService.reuser(user).then(
+          user => {
+            return Promise.resolve(user);
+          },
+          error => {
+            return Promise.reject(error);
+          }
+      );
+    },
 
   },
   mutations: {

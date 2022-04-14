@@ -70,6 +70,20 @@ class AuthService {
       return response;
     });
   }
+  reuser() {
+    return axios.post(API_URL + 'reuser', {},{
+          headers: authHeader()
+        }
+    )
+        .then(response => {
+          let user = JSON.parse(localStorage.getItem('user'));
+          response.data.accessToken = user.accessToken
+          if (response.data.accessToken) {
+            localStorage.setItem('user', JSON.stringify(response.data));
+          }
+          return response;
+        });
+  }
 
 }
 

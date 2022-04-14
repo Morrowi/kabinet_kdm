@@ -22,15 +22,15 @@
         <td>{{user.date_insert}}</td>
         <td>
           <select class="form-select" @change="changeRole(user, $event)">
-            <option value="0" :selected="user.role_id === null? true : false" >Халоп</option>
-            <option value="1" :selected="user.role_id === 1? true : false"  >Администратор</option>
-            <option value="2" :selected="user.role_id === 2? true : false" >Модератор</option>
+            <option value="0" :selected="user.role_id === null" >Юзер</option>
+            <option value="1" :selected="user.role_id === 1"  >Администратор</option>
+            <option value="2" :selected="user.role_id === 2" >Модератор</option>
           </select>
         </td>
       </tr>
       </tbody>
     </table>
-
+    <router-link to="/admin/users/add" active-class="active"> Добавить</router-link>
 
   </div>
 
