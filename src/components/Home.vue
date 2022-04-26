@@ -390,11 +390,22 @@ export default {
 
   },
   mounted() {
-    console.log(this.currentUser);
+
     if(this.currentUser!==null){
       if(this.currentUser.manager!=null){
-        if(this.currentUser.rules == 1){
+
+        if(this.currentUser.roles === 1){
           //this.$router.push("/admin");
+        } else if(this.currentUser.roles === 2) {
+          this.$router.push("/mod");
+        } else {
+          //this.$router.push("/dashboard");
+        }
+      } else {
+        if(this.currentUser.roles === 1){
+          //this.$router.push("/admin");
+        } else if(this.currentUser.roles === 2) {
+          this.$router.push("/mod");
         } else {
           //this.$router.push("/dashboard");
         }

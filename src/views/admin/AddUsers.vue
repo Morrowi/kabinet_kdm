@@ -22,6 +22,12 @@
 
           </Editor>
         </div>
+        <DropZone
+            url="/admin/users/add/sendmessage"
+            paramName="avatar"
+            :uploadOnDrop="false"
+            @addedFile="onFileAdd"
+        />
         <div class="form-group mb-3">
           <button class="btn btn-primary btn-block" :disabled="loading">
               <span
@@ -70,6 +76,7 @@ export default {
           .max(40, "Must be maximum 40 characters!"),
     });
     return {
+      files:[],
       successful: false,
       loading: false,
       schema,
@@ -80,6 +87,19 @@ export default {
 
   },
   methods: {
+    onFileAdd(files){
+      //console.log(files);
+      this.files = files.file;
+      console.log(this.files);
+    },
+    shootMessage: async function () {
+      this.$refs.myVueDropzone.processQueue();
+    },
+    sendMessage: async function (files, xhr, formData) {
+      formData.append("email", this.email);
+      formData.append("message", this.message);
+      formData.append("recipient", this.recipient);
+    },
     addUser(values){
       console.log(values);
 
@@ -89,6 +109,7 @@ export default {
           formData.append(k, values[k]);
         }
       }*/
+      values['files']=this.files;
       values['description']=this.valueEditor;
 
       UserService.getAddMarketolog(values).then(
