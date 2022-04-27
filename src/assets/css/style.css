@@ -901,6 +901,11 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
 .lh-22{
     line-height: 22px;
 }
+
+.sc-chat-window{
+    z-index: 1020;
+}
+
 @media (min-width: 992px){
     .modal-lg {
         max-width: 1150px;

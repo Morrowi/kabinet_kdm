@@ -120,7 +120,7 @@
       <beautiful-chat
           :participants="participants"
           :titleImageUrl="titleImageUrl"
-          :onMessageWasSent="onMessageWasSent"
+          :onMessageWasSent="sendMessage"
           :messageList="messageList"
           :newMessagesCount="newMessagesCount"
           :isOpen="isChatOpen"
@@ -148,9 +148,11 @@
 //import UserService from "../services/user.service";
 //import SocketioService from '../services/socketio.service.js';
 import Avatar from 'primevue/avatar';
-import { io } from 'socket.io-client';
 
+import { io } from 'socket.io-client';
+import UserService from "@/services/user.service";
 const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
+
 export default {
   name: "Moderator",
 
@@ -163,7 +165,18 @@ export default {
       socket.emit("leave", this.$store.state.auth.user.id);
     };
 
+    socket.on("user joined", user => {
+      console.log('room1', user);
+    });
+
+    socket.on("connection", sockets => {
+      console.log('room', sockets);
+
+    });
+
+
   },
+
   // created() {
   //   SocketioService.setupSocketConnection();
   // },
@@ -191,10 +204,11 @@ export default {
         }
       ], // the list of all the participant of the conversation. `name` is the user name, `id` is used to establish the author of a message, `imageUrl` is supposed to be the user avatar.
       titleImageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png',
-      messageList: [
+      messageList:[],
+      /*messageList: [
         { id:this.$store.state.auth.user.id, type: 'text', author: `me`, data: { text: `Say yes!` } },
         { type: 'text', author: `user1`, data: { text: `No.` } }
-      ], // the list of the messages to show, can be paginated and adjusted dynamically
+      ],*/ // the list of the messages to show, can be paginated and adjusted dynamically
       newMessagesCount: 0,
       isChatOpen: false, // to determine whether the chat window should be open or closed
       showTypingIndicator: '', // when set to a value matching the participant.id it shows the typing indicator for the specific user
@@ -226,18 +240,45 @@ export default {
       messageStyling: true // enables *bold* /emph/ _underline_ and such (more info at github.com/mattezza/msgdown)
     };
   },
-  methods:{
-    sendMessage (text) {
+  created() {
+    this.getRealtimeMsg();
+  },
 
-      if (text.length > 0) {
+  methods:{
+    sendMessage (data) {
+      console.log(data);
+      if(data.type ==="emoji") {
+        let emoji = data.data.emoji;
         this.newMessagesCount = this.isChatOpen ? this.newMessagesCount : this.newMessagesCount + 1
-        this.onMessageWasSent({ id:this.$store.state.auth.user.id,author: 'support', type: 'text', data: { text } })
+        let message = {
+          id: this.$store.state.auth.user.id,
+          room: this.$store.state.auth.user.room,
+          author: 'support',
+          type: 'emoji',
+          data: {emoji}
+        };
+        socket.emit("some event", message);
+        console.log(message);
+        this.onMessageWasSent({id: this.$store.state.auth.user.id, author: 'me', type: 'emoji', data: {emoji}})
+      }else if(data.type ==="file"){
+        let file = data.data.file;
+        this.onMessageWasSent({id: this.$store.state.auth.user.id, author: 'me', type: 'file', data: {file  }})
+      } else {
+        let text = data.data.text
+        if (text.length > 0) {
+          this.newMessagesCount = this.isChatOpen ? this.newMessagesCount : this.newMessagesCount + 1
+          let message = {id:this.$store.state.auth.user.id, room:this.$store.state.auth.user.room, author: 'support', type: 'text', data: { text } };
+
+          socket.emit("some event",message);
+          this.onMessageWasSent({ id:this.$store.state.auth.user.id,author: 'me', type: 'text', data: { text } })
+        }
       }
     },
     onMessageWasSent (message) {
-      message['id']='qwe';
+
       console.log(message);
-      socket.emit('message', message);
+      //socket.emit('message', message);
+
       // called when the user sends a message
       this.messageList = [ ...this.messageList, message ]
     },
@@ -262,6 +303,29 @@ export default {
       m.isEdited = true;
       m.data.text = message.data.text;
     },
+    getRealtimeMsg(){
+      socket.on("some event", data => {
+        console.log(data);
+        this.onMessageWasSent(data);
+        //this.messageList = [ ...this.messageList, data ]
+
+      });
+    },
+    getMsg(){
+      socket.on("get msg", data => {
+        console.log(data);
+        console.log(this.currentUser.id);
+        for (let i in data){
+          data[i].data = JSON.parse(data[i].data);
+          if(this.currentUser.id === data[i].uid ){
+            data[i].author = 'me';
+          }
+          this.messageList = [ ...this.messageList,data[i] ]
+        }
+      });
+    },
+
+
     logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
@@ -274,19 +338,30 @@ export default {
     },
   },
   mounted() {
-/*    UserService.getModeratorBoard().then(
-      (response) => {
-        this.content = response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-      }
-    );*/
+    UserService.getUserBoard().then(
+        (response) => {
+          console.log('[role]',response.data.roles);
+          if(response.data.roles === 1){
+            this.$router.push("/admin");
+          }
+
+          socket.emit("subscribe", this.currentUser.room);
+          socket.emit("get msg", this.currentUser.room);
+
+
+
+          this.content = response.data;
+        },
+        (error) => {
+          this.content =
+              (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+              error.message ||
+              error.toString();
+        }
+    );
+    this.getMsg();
   },
 };
 </script>
