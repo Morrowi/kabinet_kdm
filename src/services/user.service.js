@@ -43,7 +43,7 @@ class UserService {
   getAddMarketolog(data){
     return axios.post(API_URL + 'marketolog/add',
         data,
-        {headers: authHeader()}
+        {headers: authHeader(), "Content-Type": "multipart/form-data"}
     );
   }
   getDeleteMarketolog(val){

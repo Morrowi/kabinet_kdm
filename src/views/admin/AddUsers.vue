@@ -22,12 +22,17 @@
 
           </Editor>
         </div>
-        <DropZone
-            url="/admin/users/add/sendmessage"
-            paramName="avatar"
-            :uploadOnDrop="false"
-            @addedFile="onFileAdd"
-        />
+        <div class="form-group mb-3">
+          <DropZone
+              url="/admin/users/add/sendmessage"
+              paramName="avatar"
+              :uploadOnDrop="false"
+              @addedFile="onFileAdd"
+          />
+        </div>
+        <div class="form-group mb-3">
+          <star-rating @update:rating ="setRating" v-bind:star-size="30"></star-rating>
+        </div>
         <div class="form-group mb-3">
           <button class="btn btn-primary btn-block" :disabled="loading">
               <span
@@ -49,13 +54,17 @@ import UserService from "../../services/user.service";
 import { Field, Form, ErrorMessage } from 'vee-validate';
 import Editor from 'primevue/editor';
 import * as yup from "yup";
+import StarRating from 'vue-star-rating'
+
+
 export default {
   name: "Users",
   components: {
     Field,
     Form,
     ErrorMessage,
-    Editor
+    Editor,
+    StarRating
   },
   data() {
     const schema = yup.object().shape({
@@ -76,6 +85,7 @@ export default {
           .max(40, "Must be maximum 40 characters!"),
     });
     return {
+      rating:0,
       files:[],
       successful: false,
       loading: false,
@@ -87,6 +97,9 @@ export default {
 
   },
   methods: {
+    setRating(rating){
+      this.rating= rating;
+    },
     onFileAdd(files){
       //console.log(files);
       this.files = files.file;
@@ -103,18 +116,22 @@ export default {
     addUser(values){
       console.log(values);
 
-     /* let formData = new FormData();
+      let formData = new FormData();
       for (let k in values) {
         if(values[k] !==undefined){
           formData.append(k, values[k]);
         }
-      }*/
-      values['files']=this.files;
-      values['description']=this.valueEditor;
+      }
 
-      UserService.getAddMarketolog(values).then(
+      formData.append('description', this.valueEditor);
+      formData.append('rating', this.rating);
+      formData.append('files', this.files);
+      // values['files']=this.files;
+      // values['description']=this.valueEditor;
+      console.log(formData)
+      UserService.getAddMarketolog(formData).then(
           (response) => {
-            if(response.data == 'saccess'){
+            if(response.data == 'success'){
               this.$router.push('/admin/users');
             }
           },

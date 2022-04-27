@@ -22,11 +22,11 @@ library.add(faUserSecret)
 
 
 createApp(App)
-  .use(router)
-  .use(store)
-  .use(DropZone)
-  .use(Chat)
-  /*.use(new VueSocketIO({
+    .use(router)
+    .use(store)
+    .use(DropZone)
+    .use(Chat)
+    /*.use(new VueSocketIO({
       debug: true,
       connection: SocketIO('http://panel.kdm1.biz:8001', { path: "/api/chat" }),
       vuex: {

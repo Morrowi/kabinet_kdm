@@ -5,10 +5,10 @@ class SocketioService {
     constructor() {}
 
     setupSocketConnection() {
-        this.socket = io('ws://panel.kdm1.biz/api/chat:8001');
-        this.socket.emit('my message', 'Hello there from Vue.');
+        this.socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
+        this.socket.emit('message', 'Hello there from Vue.');
 
-        this.socket.on('my broadcast', (data) => {
+        this.socket.on('my', (data) => {
             console.log(data);
         });
     }

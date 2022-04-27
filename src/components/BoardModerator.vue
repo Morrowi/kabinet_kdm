@@ -146,20 +146,30 @@
 
 <script>
 //import UserService from "../services/user.service";
-import SocketioService from '../services/socketio.service.js';
+//import SocketioService from '../services/socketio.service.js';
 import Avatar from 'primevue/avatar';
+import { io } from 'socket.io-client';
+
+const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
 export default {
   name: "Moderator",
 
   components:{
     Avatar
   },
-  created() {
-    SocketioService.setupSocketConnection();
+  setup() {
+    //События еслли уходит с сайта
+    window.onbeforeunload = () => {
+      socket.emit("leave", this.$store.state.auth.user.id);
+    };
+
   },
-  beforeUnmount() {
-    SocketioService.disconnect();
-  },
+  // created() {
+  //   SocketioService.setupSocketConnection();
+  // },
+  // beforeUnmount() {
+  //   SocketioService.disconnect();
+  // },
   data() {
     let user = this.$store.state.auth.user;
     let client = this.$store.state.auth.user.client;
@@ -182,7 +192,7 @@ export default {
       ], // the list of all the participant of the conversation. `name` is the user name, `id` is used to establish the author of a message, `imageUrl` is supposed to be the user avatar.
       titleImageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png',
       messageList: [
-        { type: 'text', author: `me`, data: { text: `Say yes!` } },
+        { id:this.$store.state.auth.user.id, type: 'text', author: `me`, data: { text: `Say yes!` } },
         { type: 'text', author: `user1`, data: { text: `No.` } }
       ], // the list of the messages to show, can be paginated and adjusted dynamically
       newMessagesCount: 0,
@@ -221,12 +231,13 @@ export default {
 
       if (text.length > 0) {
         this.newMessagesCount = this.isChatOpen ? this.newMessagesCount : this.newMessagesCount + 1
-        this.onMessageWasSent({ author: 'support', type: 'text', data: { text } })
+        this.onMessageWasSent({ id:this.$store.state.auth.user.id,author: 'support', type: 'text', data: { text } })
       }
     },
     onMessageWasSent (message) {
-      console.log(this.$socket);
-      this.$socket.emit('message', message);
+      message['id']='qwe';
+      console.log(message);
+      socket.emit('message', message);
       // called when the user sends a message
       this.messageList = [ ...this.messageList, message ]
     },
