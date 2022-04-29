@@ -262,8 +262,15 @@ export default {
 
       this.loading = true;
       this.$store.dispatch("auth/login", user).then(
-        () => {
-          this.$router.push("/dashboard");
+        (data) => {
+          if(data.roles === 1){
+            this.$router.push("/admin");
+          } else if(data.roles === 2) {
+            this.$router.push('/mod');
+          }else{
+            this.$router.push('/dashboard');
+          }
+
         },
         (error) => {
           this.loading = false;

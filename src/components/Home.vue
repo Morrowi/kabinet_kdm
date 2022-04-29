@@ -446,7 +446,13 @@ export default {
       this.$store.dispatch("auth/step2", user).then(
           () => {
             //dashboard
-            this.$router.push('/dashboard');
+            if(userStorage.roles === 1){
+              this.$router.push("/admin");
+            } else if(userStorage.roles === 2) {
+              this.$router.push('/mod');
+            }else{
+              this.$router.push('/dashboard');
+            }
           },
           (error) => {
             this.message =

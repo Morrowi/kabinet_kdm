@@ -674,7 +674,7 @@ export default {
         let emoji = data.data.emoji;
         this.newMessagesCount = this.isChatOpen ? this.newMessagesCount : this.newMessagesCount + 1
         let message = {id:this.$store.state.auth.user.id, room:this.$store.state.auth.user.room, author: 'support', type: 'emoji', data: { emoji } };
-        socket.emit("some event",message);
+        socket.emit("message",message);
         console.log(message);
         this.onMessageWasSent({ id:this.$store.state.auth.user.id,author: 'me', type: 'emoji', data: { emoji } })
       } else {
@@ -683,7 +683,7 @@ export default {
         if (text.length > 0) {
           this.newMessagesCount = this.isChatOpen ? this.newMessagesCount : this.newMessagesCount + 1
           let message = {id:this.$store.state.auth.user.id, room:this.$store.state.auth.user.room, author: 'support', type: 'text', data: { text } };
-          socket.emit("some event",message);
+          socket.emit("message",message);
           console.log(message);
           this.onMessageWasSent({ id:this.$store.state.auth.user.id,author: 'me', type: 'text', data: { text } })
         }
@@ -719,7 +719,7 @@ export default {
       m.data.text = message.data.text;
     },
     getRealtimeMsg(){
-      socket.on("some event", data => {
+      socket.on("message", data => {
         console.log(data);
         this.onMessageWasSent(data);
         //this.messageList = [ ...this.messageList, data ]
@@ -732,7 +732,7 @@ export default {
         console.log(this.currentUser.id);
         for (let i in data){
           data[i].data = JSON.parse(data[i].data);
-          if(this.currentUser.id === data[i].uid ){
+          if(this.$store.state.auth.user.id === data[i].uid ){
             data[i].author = 'me';
           }
           this.messageList = [ ...this.messageList,data[i] ]
@@ -753,7 +753,7 @@ export default {
   mounted() {
     UserService.getUserBoard().then(
       (response) => {
-console.log(this.$store.state.auth.user)
+
         if(response.data.roles === 1){
           this.$router.push("/admin");
         } else if(response.data.roles === 2){

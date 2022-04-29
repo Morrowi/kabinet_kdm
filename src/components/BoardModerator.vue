@@ -257,19 +257,33 @@ export default {
           type: 'emoji',
           data: {emoji}
         };
-        socket.emit("some event", message);
+        socket.emit("message", message);
         console.log(message);
         this.onMessageWasSent({id: this.$store.state.auth.user.id, author: 'me', type: 'emoji', data: {emoji}})
       }else if(data.type ==="file"){
-        let file = data.data.file;
-        this.onMessageWasSent({id: this.$store.state.auth.user.id, author: 'me', type: 'file', data: {file  }})
+        let fileSend = data.data.file;
+        let message = {
+          id: this.$store.state.auth.user.id,
+          room: this.$store.state.auth.user.room,
+          author: 'support',
+          type: 'file',
+          mime:fileSend.type,
+          name:fileSend.name,
+          data: {file}
+        };
+        socket.emit("message", message);
+        let file={
+          name:fileSend.name,
+          url:'http://panel.kdm1.biz/room/'+this.$store.state.auth.user.room+'/'+file.name
+        }
+        this.onMessageWasSent({id: this.$store.state.auth.user.id, author: 'me', type: 'file', data: {file}})
       } else {
         let text = data.data.text
         if (text.length > 0) {
           this.newMessagesCount = this.isChatOpen ? this.newMessagesCount : this.newMessagesCount + 1
           let message = {id:this.$store.state.auth.user.id, room:this.$store.state.auth.user.room, author: 'support', type: 'text', data: { text } };
 
-          socket.emit("some event",message);
+          socket.emit("message",message);
           this.onMessageWasSent({ id:this.$store.state.auth.user.id,author: 'me', type: 'text', data: { text } })
         }
       }
@@ -304,7 +318,7 @@ export default {
       m.data.text = message.data.text;
     },
     getRealtimeMsg(){
-      socket.on("some event", data => {
+      socket.on("message", data => {
         console.log(data);
         this.onMessageWasSent(data);
         //this.messageList = [ ...this.messageList, data ]
@@ -314,10 +328,10 @@ export default {
     getMsg(){
       socket.on("get msg", data => {
         console.log(data);
-        console.log(this.currentUser.id);
+
         for (let i in data){
           data[i].data = JSON.parse(data[i].data);
-          if(this.currentUser.id === data[i].uid ){
+          if(this.$store.state.auth.user.id === data[i].uid ){
             data[i].author = 'me';
           }
           this.messageList = [ ...this.messageList,data[i] ]
