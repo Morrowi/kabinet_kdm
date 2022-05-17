@@ -17,8 +17,8 @@
               </div>
               <ul class="menuLinkBody">
                 <li class="d-flex firstBlockMenu">
-                  <a href="index.html">
-                    <div class="menuLinkBlock active">
+                  <router-link to="/dashboard" active-class="active">
+                    <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <g clip-path="url(#clip0_250_45956)">
@@ -35,10 +35,10 @@
                         Обзор
                       </div>
                     </div>
-                  </a>
+                  </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <a href="marketolog.html">
+                  <router-link to="/dashboard/marketer" active-class="active">
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -50,10 +50,10 @@
                         Мой маркетолог
                       </div>
                     </div>
-                  </a>
+                  </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <a href="zadachi.html">
+                  <router-link to="/dashboard/tasks" active-class="active">
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -64,10 +64,10 @@
                         Задачи
                       </div>
                     </div>
-                  </a>
+                  </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <a href="otcheti.html">
+                  <router-link to="/dashboard/reports" active-class="active">
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -80,10 +80,10 @@
                         Отчеты по рекламе
                       </div>
                     </div>
-                  </a>
+                  </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <a href="docs.html">
+                  <router-link to="/dashboard/inpayac" active-class="active">
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -94,10 +94,10 @@
                         Счета, оплаты, акты
                       </div>
                     </div>
-                  </a>
+                  </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <a href="alerts.html">
+                  <router-link to="/dashboard/notifications" active-class="active">
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -115,10 +115,10 @@
                         Уведомления
                       </div>
                     </div>
-                  </a>
+                  </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <a href="tarif.html">
+                  <router-link to="/dashboard/rate" active-class="active">
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -133,10 +133,10 @@
                         Активен
                       </div>
                     </div>
-                  </a>
+                  </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <a href="#">
+                  <router-link to="/dashboard/profile" active-class="active">
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -147,7 +147,7 @@
                         Профиль
                       </div>
                     </div>
-                  </a>
+                  </router-link>
                 </li>
                 <li class="d-flex mb-4">
                   <a href="javascript:void(0);"  @click="logOut">
@@ -211,347 +211,7 @@
             </div>
           </div>
           <div class="container-fluid">
-
-            <div class="contentBlock mb-5">
-          <div class="f-24 fw-600 mb-3">
-            Обзор
-          </div>
-          <div class="row mb-4">
-            <div class="col-lg-6">
-              <div class="row justify-content-between h-100">
-                <div class="col-12 mb-3">
-                  <div class="b-radius bg-white">
-                    <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
-                      <div class="f-18 fw-600">
-                        Мой маркетолог
-                      </div>
-                      <div class="blockHeaderButton">
-                        <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.3">
-                            <path d="M13.4874 0.512567C12.804 -0.170848 11.696 -0.170848 11.0126 0.512567C10.3291 1.19598 10.3291 2.30402 11.0126 2.98744C11.696 3.67085 12.804 3.67085 13.4874 2.98744C14.1709 2.30405 14.1709 1.19601 13.4874 0.512567Z" fill="#030229"/>
-                            <path d="M8.23744 0.512567C7.55402 -0.170848 6.44598 -0.170848 5.76257 0.512567C5.07915 1.19598 5.07915 2.30402 5.76257 2.98744C6.44598 3.67085 7.55402 3.67085 8.23744 2.98744C8.92085 2.30405 8.92085 1.19601 8.23744 0.512567Z" fill="#030229"/>
-                            <path d="M2.98744 0.512567C2.30402 -0.170848 1.19598 -0.170848 0.512564 0.512567C-0.170852 1.19598 -0.170852 2.30402 0.512564 2.98744C1.19598 3.67085 2.30402 3.67085 2.98744 2.98744C3.67085 2.30405 3.67085 1.19601 2.98744 0.512567Z" fill="#030229"/>
-                          </g>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="border-bottom p-3">
-                      <div class="d-flex justify-content-between me-0 ml-0 align-items-start">
-                        <div class="d-flex align-items-center">
-                          <div class="avaBlock me-3">
-                            <img src="../assets/image/ava.png" alt="">
-                          </div>
-                          <div class="d-flex flex-column">
-                            <div class="f-16 mb-1">
-                              Наталья Маркова
-                            </div>
-                            <div class="f-18 fw-600 d-flex align-items-center lh-1">
-                              <div class="me-1">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path d="M7.15076 1.36588C7.54204 0.736562 8.45796 0.73656 8.84924 1.36587L10.8006 4.50441C10.9383 4.72583 11.157 4.88472 11.4101 4.94723L14.9981 5.83325C15.7175 6.01091 16.0005 6.882 15.5229 7.4486L13.141 10.2743C12.973 10.4737 12.8894 10.7308 12.9082 10.9908L13.1743 14.677C13.2276 15.4161 12.4866 15.9544 11.8002 15.6753L8.37669 14.2832C8.13517 14.185 7.86483 14.185 7.62331 14.2832L4.19982 15.6753C3.51337 15.9544 2.77238 15.4161 2.82573 14.677L3.0918 10.9908C3.11057 10.7308 3.02704 10.4737 2.859 10.2743L0.477088 7.4486C-0.000513792 6.882 0.282519 6.01091 1.00194 5.83325L4.58988 4.94723C4.843 4.88472 5.06171 4.72583 5.19937 4.50441L7.15076 1.36588Z" fill="#EE735A"/>
-                                </svg>
-                              </div>
-                              <span class="pt-1">4,8</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="tabletInfo online">
-                          Онлайн
-                        </div>
-                      </div>
-                    </div>
-                      <div class="row me-0 ml-0 justify-content-center justify-content-lg-end">
-                        <div class="col-auto mx-2 my-3">
-                          <div class="button buttonBorder">Написать сообщение</div>
-                        </div>
-                      </div>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="b-radius bg-white h-100">
-                    <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
-                      <div class="f-18 fw-600">
-                        Уведомления
-                      </div>
-                      <div class="blockHeaderButton">
-                        <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.3">
-                            <path d="M13.4874 0.512567C12.804 -0.170848 11.696 -0.170848 11.0126 0.512567C10.3291 1.19598 10.3291 2.30402 11.0126 2.98744C11.696 3.67085 12.804 3.67085 13.4874 2.98744C14.1709 2.30405 14.1709 1.19601 13.4874 0.512567Z" fill="#030229"/>
-                            <path d="M8.23744 0.512567C7.55402 -0.170848 6.44598 -0.170848 5.76257 0.512567C5.07915 1.19598 5.07915 2.30402 5.76257 2.98744C6.44598 3.67085 7.55402 3.67085 8.23744 2.98744C8.92085 2.30405 8.92085 1.19601 8.23744 0.512567Z" fill="#030229"/>
-                            <path d="M2.98744 0.512567C2.30402 -0.170848 1.19598 -0.170848 0.512564 0.512567C-0.170852 1.19598 -0.170852 2.30402 0.512564 2.98744C1.19598 3.67085 2.30402 3.67085 2.98744 2.98744C3.67085 2.30405 3.67085 1.19601 2.98744 0.512567Z" fill="#030229"/>
-                          </g>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="messBlockWrap">
-                      <div class="bessBlockItem f-14 border-bottom active">
-                        Добро пожаловать в Клинику Доброго Маркетолога. Вы всегда мо...
-                      </div>
-                      <div class="bessBlockItem f-14 border-bottom active">
-                        У вас есть 3 задачи на утверждение
-                      </div>
-                      <div class="bessBlockItem f-14 border-bottom">
-                        Маркетолог Наталья Маркова ждет вашего ответа
-                      </div>
-                      <div class="bessBlockItem f-14 border-bottom">
-                        У вас есть 3 задачи на утверждение
-                      </div>
-                    </div>
-
-
-                    <div class="row me-0 ml-0 justify-content-between align-items-center">
-                      <div class="col-auto mx-2 my-3">
-                        <div class="colMessBlock f-14 color-blue">
-                          У вас <span>2</span> непрочитанных уведомления
-                        </div>
-                      </div>
-                      <div class="col-auto mx-2 my-3">
-                        <div class="button buttonBorder">
-                          Написать сообщение
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="b-radius bg-white p-3">
-                <div class="d-flex align-items-center flex-wrap justify-content-between mb-3">
-                  <div class="f-18 fw-600">
-                    Отчеты по рекламе
-                  </div>
-                  <div class="blockHeaderButton">
-                    <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <g opacity="0.3">
-                        <path d="M13.4874 0.512567C12.804 -0.170848 11.696 -0.170848 11.0126 0.512567C10.3291 1.19598 10.3291 2.30402 11.0126 2.98744C11.696 3.67085 12.804 3.67085 13.4874 2.98744C14.1709 2.30405 14.1709 1.19601 13.4874 0.512567Z" fill="#030229"/>
-                        <path d="M8.23744 0.512567C7.55402 -0.170848 6.44598 -0.170848 5.76257 0.512567C5.07915 1.19598 5.07915 2.30402 5.76257 2.98744C6.44598 3.67085 7.55402 3.67085 8.23744 2.98744C8.92085 2.30405 8.92085 1.19601 8.23744 0.512567Z" fill="#030229"/>
-                        <path d="M2.98744 0.512567C2.30402 -0.170848 1.19598 -0.170848 0.512564 0.512567C-0.170852 1.19598 -0.170852 2.30402 0.512564 2.98744C1.19598 3.67085 2.30402 3.67085 2.98744 2.98744C3.67085 2.30405 3.67085 1.19601 2.98744 0.512567Z" fill="#030229"/>
-                      </g>
-                    </svg>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-6 pr-2 pl-2 mb-3">
-                    <div class="border p-2 b-radius d-flex flex-column align-items-center justify-content-center">
-                      <div class="f-14 color-1 mb-2">
-                        Клики
-                      </div>
-                      <div class="f-18 fw-600 mb-2">
-                        17 050 шт
-                      </div>
-                      <div class="d-flex align-items-center color-green f-14">
-                        <div class="me-1">
-                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15.3332 4L8.99984 10.3333L5.6665 7L0.666504 12" stroke="#29B147" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M11.3335 4H15.3335V8" stroke="#29B147" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        </div>
-                        <span>
-                                            32,1%
-                                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 pr-2 pl-2 mb-3">
-                    <div class="border p-2 b-radius d-flex flex-column align-items-center justify-content-center">
-                      <div class="f-14 color-1 mb-2">
-                        Расходы
-                      </div>
-                      <div class="f-18 fw-600 mb-2">
-                        2 144 965 ₽
-                      </div>
-                      <div class="d-flex align-items-center color-red f-14">
-                        <div class="me-1">
-                          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15.3332 12.5L8.99984 6.16667L5.6665 9.5L0.666504 4.5" stroke="#F26464" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M11.3335 12.5H15.3335V8.5" stroke="#F26464" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        </div>
-                        <span>
-                                            8%
-                                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 pr-2 pl-2 mb-3">
-                    <div class="border p-2 b-radius d-flex flex-column align-items-center justify-content-center">
-                      <div class="f-14 color-1 mb-2">
-                        Средняя цена клика
-                      </div>
-                      <div class="f-18 fw-600 mb-2">
-                        31 ₽
-                      </div>
-                      <div class="d-flex align-items-center color-green f-14">
-                        <div class="me-1">
-                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15.3332 4L8.99984 10.3333L5.6665 7L0.666504 12" stroke="#29B147" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M11.3335 4H15.3335V8" stroke="#29B147" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        </div>
-                        <span>
-                                            3%
-                                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 pr-2 pl-2 mb-3">
-                    <div class="border p-2 b-radius d-flex flex-column align-items-center justify-content-center">
-                      <div class="f-14 color-1 mb-2">
-                        Конверсии
-                      </div>
-                      <div class="f-18 fw-600 mb-2">
-                        13,3 %
-                      </div>
-                      <div class="d-flex align-items-center color-red f-14">
-                        <div class="me-1">
-                          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15.3332 12.5L8.99984 6.16667L5.6665 9.5L0.666504 4.5" stroke="#F26464" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M11.3335 12.5H15.3335V8.5" stroke="#F26464" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        </div>
-                        <span>
-                                            18,79 %
-                                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12">
-                    <div id="chart"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="b-radius bg-white">
-                <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
-                  <div class="f-18 fw-600">
-                    Задачи
-                  </div>
-                </div>
-                <div class="myTable border-bottom pb-3">
-                  <div class="topBlock">
-                    <div class="titleBlock">Описание задачи</div>
-                    <div class="infoBlock">Статус</div>
-                    <div class="infoBlock">Дата создания</div>
-                    <div class="infoBlock">Действие</div>
-                  </div>
-                  <div class="contentBlock">
-                    <div class="itemBlock">
-                      <div class="titleBlock">Название задачи 1</div>
-                      <div class="infoBlock">
-                        <div class="tabletInfo work">
-                          В работе
-                        </div>
-                      </div>
-                      <div class="infoBlock">21.12.2022</div>
-                      <div class="infoBlock">
-                        <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.3">
-                            <path d="M13.4874 1.01257C12.804 0.329152 11.696 0.329152 11.0126 1.01257C10.3291 1.69598 10.3291 2.80402 11.0126 3.48744C11.696 4.17085 12.804 4.17085 13.4874 3.48744C14.1709 2.80405 14.1709 1.69601 13.4874 1.01257Z" fill="#030229"/>
-                            <path d="M8.23744 1.01257C7.55402 0.329152 6.44598 0.329152 5.76257 1.01257C5.07915 1.69598 5.07915 2.80402 5.76257 3.48744C6.44598 4.17085 7.55402 4.17085 8.23744 3.48744C8.92085 2.80405 8.92085 1.69601 8.23744 1.01257Z" fill="#030229"/>
-                            <path d="M2.98744 1.01257C2.30402 0.329152 1.19598 0.329152 0.512564 1.01257C-0.170852 1.69598 -0.170852 2.80402 0.512564 3.48744C1.19598 4.17085 2.30402 4.17085 2.98744 3.48744C3.67085 2.80405 3.67085 1.69601 2.98744 1.01257Z" fill="#030229"/>
-                          </g>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="itemBlock">
-                      <div class="titleBlock">Название задачи 1</div>
-                      <div class="infoBlock">
-                        <div class="tabletInfo pause">
-                          На паузе
-                        </div>
-                      </div>
-                      <div class="infoBlock">21.12.2022</div>
-                      <div class="infoBlock">
-                        <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.3">
-                            <path d="M13.4874 1.01257C12.804 0.329152 11.696 0.329152 11.0126 1.01257C10.3291 1.69598 10.3291 2.80402 11.0126 3.48744C11.696 4.17085 12.804 4.17085 13.4874 3.48744C14.1709 2.80405 14.1709 1.69601 13.4874 1.01257Z" fill="#030229"/>
-                            <path d="M8.23744 1.01257C7.55402 0.329152 6.44598 0.329152 5.76257 1.01257C5.07915 1.69598 5.07915 2.80402 5.76257 3.48744C6.44598 4.17085 7.55402 4.17085 8.23744 3.48744C8.92085 2.80405 8.92085 1.69601 8.23744 1.01257Z" fill="#030229"/>
-                            <path d="M2.98744 1.01257C2.30402 0.329152 1.19598 0.329152 0.512564 1.01257C-0.170852 1.69598 -0.170852 2.80402 0.512564 3.48744C1.19598 4.17085 2.30402 4.17085 2.98744 3.48744C3.67085 2.80405 3.67085 1.69601 2.98744 1.01257Z" fill="#030229"/>
-                          </g>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="itemBlock">
-                      <div class="titleBlock">Название задачи 1</div>
-                      <div class="infoBlock">
-                        <div class="tabletInfo completed">
-                          Готово
-                        </div>
-                      </div>
-                      <div class="infoBlock">21.12.2022</div>
-                      <div class="infoBlock">
-                        <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.3">
-                            <path d="M13.4874 1.01257C12.804 0.329152 11.696 0.329152 11.0126 1.01257C10.3291 1.69598 10.3291 2.80402 11.0126 3.48744C11.696 4.17085 12.804 4.17085 13.4874 3.48744C14.1709 2.80405 14.1709 1.69601 13.4874 1.01257Z" fill="#030229"/>
-                            <path d="M8.23744 1.01257C7.55402 0.329152 6.44598 0.329152 5.76257 1.01257C5.07915 1.69598 5.07915 2.80402 5.76257 3.48744C6.44598 4.17085 7.55402 4.17085 8.23744 3.48744C8.92085 2.80405 8.92085 1.69601 8.23744 1.01257Z" fill="#030229"/>
-                            <path d="M2.98744 1.01257C2.30402 0.329152 1.19598 0.329152 0.512564 1.01257C-0.170852 1.69598 -0.170852 2.80402 0.512564 3.48744C1.19598 4.17085 2.30402 4.17085 2.98744 3.48744C3.67085 2.80405 3.67085 1.69601 2.98744 1.01257Z" fill="#030229"/>
-                          </g>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="itemBlock">
-                      <div class="titleBlock">Название задачи 1</div>
-                      <div class="infoBlock">
-                        <div class="tabletInfo wait">
-                          Ждем материалы
-                        </div>
-                      </div>
-                      <div class="infoBlock">21.12.2022</div>
-                      <div class="infoBlock">
-                        <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.3">
-                            <path d="M13.4874 1.01257C12.804 0.329152 11.696 0.329152 11.0126 1.01257C10.3291 1.69598 10.3291 2.80402 11.0126 3.48744C11.696 4.17085 12.804 4.17085 13.4874 3.48744C14.1709 2.80405 14.1709 1.69601 13.4874 1.01257Z" fill="#030229"/>
-                            <path d="M8.23744 1.01257C7.55402 0.329152 6.44598 0.329152 5.76257 1.01257C5.07915 1.69598 5.07915 2.80402 5.76257 3.48744C6.44598 4.17085 7.55402 4.17085 8.23744 3.48744C8.92085 2.80405 8.92085 1.69601 8.23744 1.01257Z" fill="#030229"/>
-                            <path d="M2.98744 1.01257C2.30402 0.329152 1.19598 0.329152 0.512564 1.01257C-0.170852 1.69598 -0.170852 2.80402 0.512564 3.48744C1.19598 4.17085 2.30402 4.17085 2.98744 3.48744C3.67085 2.80405 3.67085 1.69601 2.98744 1.01257Z" fill="#030229"/>
-                          </g>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="itemBlock">
-                      <div class="titleBlock">Название задачи 1</div>
-                      <div class="infoBlock">
-                        <div class="tabletInfo agreed">
-                          На согласовании
-                        </div>
-                      </div>
-                      <div class="infoBlock">21.12.2022</div>
-                      <div class="infoBlock">
-                        <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.3">
-                            <path d="M13.4874 1.01257C12.804 0.329152 11.696 0.329152 11.0126 1.01257C10.3291 1.69598 10.3291 2.80402 11.0126 3.48744C11.696 4.17085 12.804 4.17085 13.4874 3.48744C14.1709 2.80405 14.1709 1.69601 13.4874 1.01257Z" fill="#030229"/>
-                            <path d="M8.23744 1.01257C7.55402 0.329152 6.44598 0.329152 5.76257 1.01257C5.07915 1.69598 5.07915 2.80402 5.76257 3.48744C6.44598 4.17085 7.55402 4.17085 8.23744 3.48744C8.92085 2.80405 8.92085 1.69601 8.23744 1.01257Z" fill="#030229"/>
-                            <path d="M2.98744 1.01257C2.30402 0.329152 1.19598 0.329152 0.512564 1.01257C-0.170852 1.69598 -0.170852 2.80402 0.512564 3.48744C1.19598 4.17085 2.30402 4.17085 2.98744 3.48744C3.67085 2.80405 3.67085 1.69601 2.98744 1.01257Z" fill="#030229"/>
-                          </g>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row me-0 ml-0 justify-content-between align-items-center">
-                  <div class="col-auto mx-2 my-3">
-                    <div class="colMessBlock f-14 color-blue">
-                      Все задачи <span>(103)</span>
-                    </div>
-                  </div>
-                  <div class="col-auto mx-2 my-3">
-                    <div class="button buttonBorder">
-                      + Написать сообщение
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
+            <router-view></router-view>
           </div>
         </div>
       </div>
@@ -615,7 +275,7 @@ export default {
   data() {
     let user = this.$store.state.auth.user;
     let manager = this.$store.state.auth.user.manager;
-    console.log(this.$store.state.auth.user.manager);
+    //console.log(this.$store.state.auth.user.manager);
     return {
       content: "",
 
@@ -675,11 +335,11 @@ export default {
         this.newMessagesCount = this.isChatOpen ? this.newMessagesCount : this.newMessagesCount + 1
         let message = {id:this.$store.state.auth.user.id, room:this.$store.state.auth.user.room, author: 'support', type: 'emoji', data: { emoji } };
         socket.emit("message",message);
-        console.log(message);
+        //console.log(message);
         this.onMessageWasSent({ id:this.$store.state.auth.user.id,author: 'me', type: 'emoji', data: { emoji } })
       } else {
         let text = data.data.text
-        console.log(data);
+        //console.log(data);
         if (text.length > 0) {
           this.newMessagesCount = this.isChatOpen ? this.newMessagesCount : this.newMessagesCount + 1
           let message = {id:this.$store.state.auth.user.id, room:this.$store.state.auth.user.room, author: 'support', type: 'text', data: { text } };
@@ -720,7 +380,7 @@ export default {
     },
     getRealtimeMsg(){
       socket.on("message", data => {
-        console.log(data);
+        //console.log(data);
         this.onMessageWasSent(data);
         //this.messageList = [ ...this.messageList, data ]
 
@@ -728,8 +388,8 @@ export default {
     },
     getMsg(){
       socket.on("get msg", data => {
-        console.log(data);
-        console.log(this.currentUser.id);
+        //console.log(data);
+        //console.log(this.currentUser.id);
         for (let i in data){
           data[i].data = JSON.parse(data[i].data);
           if(this.$store.state.auth.user.id === data[i].uid ){

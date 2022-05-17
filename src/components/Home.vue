@@ -175,21 +175,21 @@
         <div class="row scrollBlock" v-if="selectedRate =='' " >
           <div class="col-4" v-for="rate in Rates" :key="rate.id" :id="rate.id">
             <div class=" b-radius bg-white formTarifItem mx-3"   >
-            <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
-              <div class="f-18 fw-600">
-                {{rate.name}}
+              <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
+                <div class="f-18 fw-600">
+                  {{rate.name}}
+                </div>
+                <div class="f-24 fw-600 color-orange">
+                  {{rate.price}} ₽/месяц
+                </div>
               </div>
-              <div class="f-24 fw-600 color-orange">
-                {{rate.price}} ₽/месяц
+              <div class="tarifItem p-3 border-bottom" v-for="prop in rate.props" :key="prop" >
+                {{prop}}
+              </div>
+              <div class="d-flex mr-0 ml-0 p-3">
+                <div class="button blueButton px-5" @click="selecteRate(rate.id);">Выбрать тариф</div>
               </div>
             </div>
-            <div class="tarifItem p-3 border-bottom" v-for="prop in rate.props" :key="prop" >
-              {{prop}}
-            </div>
-            <div class="d-flex mr-0 ml-0 p-3">
-              <div class="button blueButton px-5" @click="selecteRate(rate.id);">Выбрать тариф</div>
-            </div>
-          </div>
           </div>
         </div>
 
@@ -236,17 +236,17 @@
               <div class="border-bottom p-3">
                 <div class="row justify-content-between mr-0 ml-0 align-items-start position-relative">
                   <div class="d-flex">
-                    <div class="avaBlock mr-5 d-flex align-items-center flex-column">
+                    <div class="avaBlock me-5 d-flex align-items-center flex-column">
                       <div class="bigAvaBlock mb-3">
-                        <img src="image/ava.png" alt="">
+                        <Avatar shape="circle" :image="marketolog.avatar" />
                       </div>
                       <div class="f-18 fw-600 d-flex align-items-center lh-1">
-                        <div class="mr-1">
+                        <div class="me-1">
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7.15076 1.36588C7.54204 0.736562 8.45796 0.73656 8.84924 1.36587L10.8006 4.50441C10.9383 4.72583 11.157 4.88472 11.4101 4.94723L14.9981 5.83325C15.7175 6.01091 16.0005 6.882 15.5229 7.4486L13.141 10.2743C12.973 10.4737 12.8894 10.7308 12.9082 10.9908L13.1743 14.677C13.2276 15.4161 12.4866 15.9544 11.8002 15.6753L8.37669 14.2832C8.13517 14.185 7.86483 14.185 7.62331 14.2832L4.19982 15.6753C3.51337 15.9544 2.77238 15.4161 2.82573 14.677L3.0918 10.9908C3.11057 10.7308 3.02704 10.4737 2.859 10.2743L0.477088 7.4486C-0.000513792 6.882 0.282519 6.01091 1.00194 5.83325L4.58988 4.94723C4.843 4.88472 5.06171 4.72583 5.19937 4.50441L7.15076 1.36588Z" fill="#EE735A"/>
                           </svg>
                         </div>
-                        <span class="pt-1">4,8</span>
+                        <span class="pt-1">{{ marketolog.rating}}</span>
                       </div>
                     </div>
 
@@ -273,15 +273,14 @@
         </div>
       </div>
     </div>
-    <a class="nav-link" @click.prevent="logOut">
-      <font-awesome-icon icon="sign-out-alt" /> LogOut
-    </a>
+
   </div>
 
 </template>
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
+import Avatar from 'primevue/avatar';
 //import AddRates from "@/components/AddRates"
 //const AddRates = () => import("./components/AddRates.vue")
 import * as yup from "yup";
@@ -293,6 +292,7 @@ export default {
     Form,
     Field,
     ErrorMessage,
+    Avatar
   },
   data() {
 
@@ -367,18 +367,25 @@ export default {
 
     },
     Marketologs(){
-      /*let arr = {};
+      let arr = {};
       for (let key of Object.keys(this.$store.state.marketologs)) {
+        let src = 'http://panel.kdm1.biz/uploads/img/default_marketolog.svg';
+        if(this.$store.state.marketologs[key].avatar !==null){
+          src = 'http://panel.kdm1.biz/uploads/'+this.$store.state.marketologs[key].id+'/'+this.$store.state.marketologs[key].avatar
+        }
+
         arr[key]={
-          'id':this.$store.state.rates[key].id,
-          'name':this.$store.state.rates[key].name,
-          'price':this.$store.state.rates[key].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "),
-          'props':JSON.parse(this.$store.state.rates[key].props),
+          id: this.$store.state.marketologs[key].id,
+          avatar: src,
+          description: this.$store.state.marketologs[key].description,
+          email: this.$store.state.marketologs[key].email,
+          rating: this.$store.state.marketologs[key].rating,
+          username: this.$store.state.marketologs[key].username,
         }
         //console.log(this.$store.state.rates[key]);
-      }*/
-      //console.log(arr);
-      return  this.$store.state.marketologs;
+      }
+      console.log(arr);
+      return  arr;
 
     },
     loggedIn() {

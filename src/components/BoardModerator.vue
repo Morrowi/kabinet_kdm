@@ -128,8 +128,8 @@
           :open="openChat"
           :showEmoji="true"
           :showFile="true"
-          :showEdition="true"
-          :showDeletion="true"
+          :showEdition="false"
+          :showDeletion="false"
           :deletionConfirmation="true"
           :showTypingIndicator="showTypingIndicator"
           :showLauncher="true"
@@ -160,6 +160,7 @@ export default {
     Avatar
   },
   setup() {
+
     //События еслли уходит с сайта
     window.onbeforeunload = () => {
       socket.emit("leave", this.$store.state.auth.user.id);
@@ -186,7 +187,7 @@ export default {
   data() {
     let user = this.$store.state.auth.user;
     let client = this.$store.state.auth.user.client;
-    console.log(this.$store.state.auth.user);
+
 
     return {
       content: "",
@@ -242,6 +243,8 @@ export default {
   },
   created() {
     this.getRealtimeMsg();
+
+
   },
 
   methods:{
@@ -291,6 +294,7 @@ export default {
     onMessageWasSent (message) {
 
       console.log(message);
+
       //socket.emit('message', message);
 
       // called when the user sends a message
@@ -339,6 +343,9 @@ export default {
       });
     },
 
+    isOnline(){
+      console.log(123);
+    },
 
     logOut() {
       this.$store.dispatch('auth/logout');
@@ -350,8 +357,24 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
+
   },
   mounted() {
+    window.onfocus = function() {
+      this.isOnline;
+      //console.log( 'Вкладка открыта! :)' );
+      //console.log(t);
+
+      /*let data = {
+        action: 'is online',
+        //room: this.$store.state.auth.user.room,
+      }
+      console.log('romm',this.$store.state.auth.user)
+      socket.emit("is online", data);*/
+    };
+    window.onblur = function() {
+      //console.log( 'Вкладка не открыта! :(' );
+    };
     UserService.getUserBoard().then(
         (response) => {
           console.log('[role]',response.data.roles);

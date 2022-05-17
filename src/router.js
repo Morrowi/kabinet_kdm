@@ -17,6 +17,40 @@ const routes = [
   {
     path: "/dashboard",
     component: BoardUser,
+    children: [
+      {
+        path: '',
+        component: () => import('./views/user/Index.vue'),
+      },
+      {
+        path: 'marketer',
+        component: () => import('./views/user/Marketer.vue'),
+      },
+      {
+        path: 'tasks',
+        component: () => import('./views/user/Tasks.vue'),
+      },
+      {
+        path: 'reports',
+        component: () => import('./views/user/Reports.vue'),
+      },
+      {
+        path: 'inpayac',
+        component: () => import('./views/user/Inpayac.vue'),
+      },
+      {
+        path: 'notifications',
+        component: () => import('./views/user/Notifications.vue'),
+      },
+      {
+        path: 'rate',
+        component: () => import('./views/user/Rate.vue'),
+      },
+      {
+        path: 'profile',
+        component: () => import('./views/user/Profile.vue'),
+      }
+    ]
   },
   {
     path: "/login",

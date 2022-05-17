@@ -51,6 +51,14 @@ class UserService {
         {headers: authHeader()}
     );
   }
+  getAddTasks(formData){
+    console.log(formData);
+    return axios.post(API_URL + 'tasks/add',
+        formData,
+        {headers: authHeader(), 'Content-Type': 'multipart/form-data'}
+    //{headers: authHeader()}
+    );
+  }
 
 }
 

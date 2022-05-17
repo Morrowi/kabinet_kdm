@@ -106,7 +106,9 @@ body {
 .lh-1{
     line-height: 1;
 }
-
+.mh-100{
+    min-height: 100%;
+}
 .h-100vh{
     height: 100vh;
 }
@@ -895,6 +897,10 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
 .bigAvaBlock {
     width: 135px;
 }
+.bigAvaBlock .p-avatar{
+    width: 100%;
+    height: 100%;
+}
 .bigAvaBlock img{
     width: 100%;
 }
@@ -905,37 +911,141 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
 .sc-chat-window{
     z-index: 1020;
 }
+.sc-message--file-icon{
+    display: none;
+}
+.sc-message--file-name a{
+    padding-top: 10px !important;
+    display: block;
+}
+.p-avatar-xl{
+    width: 80px !important;
+    height: 80px !important;
+}
+
+.modal::before{
+    content: '';
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0 0 0 / 50%);
+    display: block;
+}
+button.close {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.modal-header .close {
+    padding: 1rem 1rem;
+    margin: -1rem -1rem -1rem auto;
+}
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+}
+
+.close:hover{
+    opacity: 1;
+}
+
+.p-dropdown,
+.p-calendar{
+    background: #FFFFFF !important;
+    border: 1px solid #F0F2FA !important;
+    border-radius: 6px !important;
+    padding: 7px 15px !important;
+    min-height: 36px !important;
+    width: 100%;
+}
+.p-inputtext{
+    font-size: 16px !important;
+    color: #212529 !important;
+    font-family: Arial,Helvetica,sans-serif;
+    border:none !important;
+}
+.p-dropdown-panel,
+.p-datepicker{
+    z-index: 1125 !important;
+}
+.p-fileupload-buttonbar,
+.p-progressbar{
+    display: none;
+}
+.p-fileupload .p-fileupload-content{
+    padding: 0 !important;
+    border: none !important;
+}
+.p-fileupload-files{
+    padding: 2rem 1rem;
+    border: 1px solid #dee2e6;
+}
 
 @media (min-width: 992px){
-    .modal-lg {
-        max-width: 1150px;
-    }
+.modal-lg {
+    max-width: 1150px;
+}
 }
 @media all and (max-width: 991px){
-    .mobMenuButton{
-        display: flex;
-    }
-    .mobMenuWrap {
-        position: fixed;
-        left: 0;
-        top: 70px;
-        z-index: 22;
-        max-width: 50%;
-        min-width: 290px;
-        height: calc(100% - 70px);
-        transform: translateX(-100%);
-        transition: all 0.3s;
-    }
-    .mobMenuWrap.active{
-        transform: translateX(0);
-    }
-    .mobMenuWrap .stickyTop{
-        position: unset;
-    }
+.mobMenuButton{
+    display: flex;
+}
+.mobMenuWrap {
+    position: fixed;
+    left: 0;
+    top: 70px;
+    z-index: 22;
+    max-width: 50%;
+    min-width: 290px;
+    height: calc(100% - 70px);
+    transform: translateX(-100%);
+    transition: all 0.3s;
+}
+.mobMenuWrap.active{
+    transform: translateX(0);
+}
+.mobMenuWrap .stickyTop{
+    position: unset;
+}
 }
 @media all and (max-width: 768px){
-    .massageTopWrap .messOn,
-    .massageTopWrap .messOff{
-        display: none !important;
-    }
+.massageTopWrap .messOn,
+.massageTopWrap .messOff{
+    display: none !important;
+}
+}
+
+
+.loading{
+    background-color: rgba(0,0,0, 0.7);
+    margin:-1rem  -1.5rem;
+    height: calc(100vh - 72px);
+    overflow: hidden;
+    padding: 50px;
+}
+
+.loading.block{
+    margin:-1rem  -1rem;
+    height: 100%;
+}
+
+.loading svg{
+    width: 75px;
+    height: 75px;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .7s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+    opacity: 0;
 }
