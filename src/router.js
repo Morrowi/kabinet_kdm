@@ -99,6 +99,10 @@ const routes = [
         component: () => import('./views/mod/Index.vue'),
       },
       {
+        path: 'tasks',
+        component: () => import('./views/mod/Tasks.vue'),
+      },
+      {
         path: 'profile',
         component: () => import('./views/mod/Profile.vue')
       },

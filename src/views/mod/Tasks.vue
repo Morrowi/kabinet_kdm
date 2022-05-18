@@ -1,20 +1,14 @@
 <template>
   <div>
     <div class="row mr-0 ml-0 justify-content-between mb-3 flex-column" v-if="isShowHead">
-      <div class="f-24 fw-600 mb-2">
-        Задачи
-      </div>
-      <div class="f-14">
-        Вы можете создать задачу самостоятельно либо через личного менеджера, <a class="color-blue" href="marketolog.html">написав ему в
-        чат</a>
-      </div>
+
     </div>
     <div class="row">
       <div class="col-12">
-        <div class="b-radius bg-white">
+        <div v-for="user in arrUserTasks" :key="user.id" class="b-radius bg-white mb-5">
           <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
             <div class="f-18 fw-600">
-              Задачи
+              Клиент - {{ user.username }}
             </div>
           </div>
           <div class="myTable">
@@ -25,7 +19,7 @@
               <div class="infoBlock">Действие</div>
             </div>
             <div class="contentBlock">
-              <div class="itemBlock" v-for="tasks in arrTasks" :key="tasks.id">
+              <div class="itemBlock" v-for="tasks in user.tasks" :key="tasks.id">
                 <div class="titleBlock" @click="showTasks(tasks.id);">{{tasks.nameTask}}</div>
                 <div class="infoBlock">
                   <div class="tabletInfo" :class="tasks.status_class">
@@ -228,12 +222,16 @@ export default {
     Toast
   },
   data() {
+
+
+
+
     return{
 
 
 
       countTasks:0,
-      arrTasks:[],
+      arrUserTasks:[],
       modalTaks:[],
       //add tasks
       nameTask:null,
@@ -270,39 +268,43 @@ export default {
 
     listTasks(){
       axios.post( 'http://panel.kdm1.biz/api/tasks/',
-          '',
+          this.$store.state.auth.user.client,
           {
             headers: authHeader()
           }
       ).then((resp)=>{
         for (const k in resp.data) {
-          resp.data[k].date_insert= this.dateToYMD(new Date(resp.data[k].date_insert));
-          switch (resp.data[k].status){
-            case 1:
-              resp.data[k].status_class='work';
-              resp.data[k].status_text='В работе';
-              break;
-            case 2:
-              resp.data[k].status_class='pause';
-              resp.data[k].status_text='На паузе';
-              break;
-            case 3:
-              resp.data[k].status_class='completed';
-              resp.data[k].status_text='Готово';
-              break;
-            case 4:
-              resp.data[k].status_class='wait';
-              resp.data[k].status_text='Ждем материалы';
-              break;
-            case 5:
-              resp.data[k].status_class='agreed';
-              resp.data[k].status_text='На согласовании';
-              break;
+          for ( const key in resp.data[k].tasks){
+            resp.data[k].tasks[key].date_insert= this.dateToYMD(new Date(resp.data[k].tasks[key].date_insert));
+            switch (resp.data[k].tasks[key].status){
+              case 1:
+                resp.data[k].tasks[key].status_class='work';
+                resp.data[k].tasks[key].status_text='В работе';
+                break;
+              case 2:
+                resp.data[k].tasks[key].status_class='pause';
+                resp.data[k].tasks[key].status_text='На паузе';
+                break;
+              case 3:
+                resp.data[k].tasks[key].status_class='completed';
+                resp.data[k].tasks[key].status_text='Готово';
+                break;
+              case 4:
+                resp.data[k].tasks[key].status_class='wait';
+                resp.data[k].tasks[key].status_text='Ждем материалы';
+                break;
+              case 5:
+                resp.data[k].tasks[key].status_class='agreed';
+                resp.data[k].tasks[key].status_text='На согласовании';
+                break;
+            }
           }
+
+
           //status
         }
-        this.countTasks = resp.data.length;
-        this.arrTasks = resp.data;
+        //this.countTasks = resp.data.length;
+        this.arrUserTasks = resp.data;
       }).catch(function(error){
         console.log(error);
       });

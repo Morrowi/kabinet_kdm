@@ -1049,3 +1049,8 @@ button.close {
 .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
     opacity: 0;
 }
+
+.in_work{
+    background-color: rgba(91, 147, 255, 0.2);
+    color: #5B93FF;
+}
