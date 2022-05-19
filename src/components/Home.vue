@@ -17,7 +17,7 @@
       <div class="formRegWrapper b-radius bg-white" v-if="currentStep === 0">
         <div class="curFormBlock" data-target="reg">
           <div class="f-24 fw-600 mb-3">
-            Добро пожаловать
+            Добро пожаловать <br>
             в хороший маркетинг
           </div>
           <div class="f-16 col-lg-9 mb-3">
@@ -26,13 +26,13 @@
           <Form @submit="handleRegister" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <div class="form-group mb-3">
+                <div class="form-group mb-4">
                   <Field name="email" placeholder="Эл. почта" class="w-100 formInput"/>
                   <ErrorMessage class="input-error" name="email" />
                 </div>
               </div>
               <div class="col-12">
-                <div class="form-group mb-3">
+                <div class="form-group mb-4">
                   <Field name="password" type="password" class="w-100 formInput" placeholder="Пароль" v-show="!showPass"/>
                   <Field name="password" type="text" class="w-100 formInput" placeholder="Пароль" v-show="showPass"/>
                   <ErrorMessage class="input-error" name="password" />
@@ -81,7 +81,7 @@
                           <path d="M10.6668 0.5L4.25016 6.91667L1.3335 4" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                       </div>
-                      <span class="f-12">Я прочитал <a href="#" class="color-blue">правила</a> и согласен с ними</span>
+                      <span class="f-12">Я прочитал <a href="javascript:void(0);" @click="open = true" class="color-blue">правила</a> и согласен с ними</span>
                     </label>
                   </Field>
                   <ErrorMessage class="input-error" name="rules" />
@@ -275,10 +275,23 @@
     </div>
 
   </div>
+  <div :class="{show: open}" :style="[open?'display: block':'display: none']"  class="modal fade " id="newTask">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header p-3">
+          <div class="f-24 fw-600">Правила</div>
+          <button type="button" class="close" @click="open = false">&times;</button>
+        </div>
+        <div class="modal-body">
 
+        </div>
+       </div>
+    </div>
+  </div>
 </template>
 
 <script>
+
 import { Form, Field, ErrorMessage } from "vee-validate";
 import Avatar from 'primevue/avatar';
 //import AddRates from "@/components/AddRates"
@@ -287,6 +300,10 @@ import * as yup from "yup";
 
 export default {
   name: "Home",
+  metaInfo: {
+    title: 'Default App Title',
+    titleTemplate: '%s | vue-meta Example App'
+  },
   components: {
 //    AddRates,
     Form,
@@ -302,12 +319,12 @@ export default {
     const schema = yup.object().shape({
       email: yup
           .string()
-          .required("Email обязательное поле!")
-          .email("Email is invalid!")
-          .max(50, "Must be maximum 50 characters!"),
+          .required("Эл.почта обязательное поле!")
+          .email("Не является почтой")
+          .max(50, "Максимальная длинна не может быть больше 50"),
       password: yup
           .string()
-          .required("Password обязателен!")
+          .required("Пароль обязателен!")
           .min(6, "Минимальное кол-во символов 6")
           .max(40, "Максимальное кол-во символов 40!"),
       rules: yup
@@ -337,6 +354,7 @@ export default {
 
 
     return {
+      open: false,
       username:'',
       showPass:false,
       successful: false,
@@ -446,7 +464,7 @@ export default {
       let user={
         'user_id':userStorage.id,
         'rate':this.selectedRate.id,
-        'manager':id
+        'manager':{'id':id}
       }
 
 
@@ -546,6 +564,7 @@ export default {
       );
     }
   },
+
 };
 </script>
 

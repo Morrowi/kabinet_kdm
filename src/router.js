@@ -13,6 +13,10 @@ const routes = [
     path: "/",
     name: "home",
     component: Home,
+    meta:{
+      title: 'Добрый маркетолог — личный кабинет',
+      description: 'Добрый маркетолог — личный кабинет',
+    }
   },
   {
     path: "/dashboard",
@@ -50,21 +54,33 @@ const routes = [
         path: 'profile',
         component: () => import('./views/user/Profile.vue'),
       }
-    ]
+    ],
+    meta:{
+      title: 'Добрый маркетолог — личный кабинет'
+    }
   },
   {
     path: "/login",
     component: Login,
+    meta:{
+      title: 'Авторзация'
+    }
   },
   {
     path: "/register",
     component: Register,
+    meta:{
+      title: 'Регистрация'
+    }
   },
   {
     path: "/profile",
     name: "profile",
     // lazy-loaded
     component: Profile,
+    meta:{
+      title: 'Профиль'
+    }
   },
   {
     path: "/admin",
@@ -87,7 +103,10 @@ const routes = [
         path: 'profile',
         component: Profile
       }
-    ]
+    ],
+    meta:{
+      title: 'Панель администратора'
+    }
   },
   {
     path: "/mod",
@@ -106,14 +125,21 @@ const routes = [
         path: 'profile',
         component: () => import('./views/mod/Profile.vue')
       },
-    ]
+      {
+        path: 'chat',
+        component: () => import('./views/mod/Chat.vue')
+      },
+    ],
+    meta:{
+      title: 'Панель маркетолога'
+    }
   },
-  {
+  /*{
     path: "/user",
     name: "user",
     // lazy-loaded
     component: BoardUser,
-  },
+  },*/
 ];
 
 const router = createRouter({
@@ -125,6 +151,9 @@ router.beforeEach((to, from, next) => {
   const publicPages = ['/', '/login', '/register', '/home'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
+  document.title = to.meta.title;
+  document.description = to.meta.description;
+
 
   // trying to access a restricted page + not logged in
   // redirect to login page

@@ -252,9 +252,9 @@ export default {
   setup() {
 
     //События еслли уходит с сайта
-    window.onbeforeunload = () => {
+/*    window.onbeforeunload = () => {
       socket.emit("leave", this.$store.state.auth.user.id);
-    };
+    };*/
 
     socket.on("user joined", user => {
       console.log(user);
@@ -422,7 +422,11 @@ export default {
         if(this.currentUser.manager === null){
           this.$router.push("/");
         }
-        socket.emit("subscribe", this.currentUser.room);
+        let join ={
+          is: 'user',
+          rooms:this.currentUser.room,
+        }
+        socket.emit("subscribe", join);
         socket.emit("get msg", this.currentUser.room);
 
         this.content = response.data;

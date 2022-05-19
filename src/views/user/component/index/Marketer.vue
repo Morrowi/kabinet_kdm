@@ -83,20 +83,24 @@ export default {
   },
   mounted() {
     console.log(this.$store.state.auth.user);
-    axios.put( 'http://panel.kdm1.biz/api/marketolog/'+this.$store.state.auth.user.manager.id,
-        '',
-        {
-          headers: authHeader()
-        }
-    ).then((resp)=>{
-      //console.log(resp.data);
-      this.marketolog = resp.data;
-    }).catch(function(error){
-      console.log(error);
-    }).finally(() => (this.loading = false));
+    if(this.$store.state.auth.user.manager.id !== undefined){
+
+      axios.put( 'http://panel.kdm1.biz/api/marketolog/'+this.$store.state.auth.user.manager.id,
+          '',
+          {
+            headers: authHeader()
+          }
+      ).then((resp)=>{
+        //console.log(resp.data);
+        this.marketolog = resp.data;
+      }).catch(function(error){
+        console.log(error);
+      }).finally(() => (this.loading = false));
+    }
     //console.log(this.$store.state.auth.user.manager);
   },
   created() {
+
     //console.log(this.currentUser.manager)
   },
 

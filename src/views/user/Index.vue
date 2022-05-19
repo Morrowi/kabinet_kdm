@@ -45,11 +45,7 @@
                     У вас <span>2</span> непрочитанных уведомления
                   </div>
                 </div>
-                <div class="col-auto mx-2 my-3">
-                  <div class="button buttonBorder">
-                    Написать сообщение
-                  </div>
-                </div>
+
               </div>
 
             </div>

@@ -25,7 +25,7 @@ html,
 body {
     padding: 0;
     min-height: 100vh;
-    background: #F3F4F7;
+    background: #E5E5E5;
     font-family: 'Inter', sans-serif;
 
     margin: 0 auto;
@@ -33,6 +33,10 @@ body {
 }
 .cursor-pointer{
     cursor: pointer;
+}
+.mx-n075{
+    margin-left: -0.75em;
+    margin-right: -0.75em;
 }
 .fw-400{
     font-weight: 400;
@@ -155,6 +159,10 @@ body {
 
 .input-error{
     display: block;
+    color: red;
+    font-size: 12px;
+    position: absolute;
+    padding-left: 5px;
 }
 
 .button {

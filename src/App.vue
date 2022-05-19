@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: 'Добрый маркетолог — личный кабинет',
   computed: {
     currentUser() {
       return this.$store.state.auth.user;

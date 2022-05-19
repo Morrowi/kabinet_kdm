@@ -171,14 +171,13 @@ export default {
   name: "Index admin",
   components: {
 
-
   },
   data() {
 
     return{
       selectRates:{},
       rates:[],
-      loading:false
+      loading:true
     }
   },
   watch:{

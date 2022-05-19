@@ -25,13 +25,13 @@
           <Form @submit="handleRegister" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <div class="form-group mb-3">
+                <div class="form-group mb-4">
                   <Field name="email" placeholder="Эл. почта" class="w-100 formInput"/>
                   <ErrorMessage class="input-error" name="email" />
                 </div>
               </div>
               <div class="col-12">
-                <div class="form-group mb-3">
+                <div class="form-group mb-4">
                   <Field name="password" type="password" class="w-100 formInput" placeholder="Пароль" v-show="!showPass"/>
                   <Field name="password" type="text" class="w-100 formInput" placeholder="Пароль" v-show="showPass"/>
                   <ErrorMessage class="input-error" name="password" />
@@ -109,7 +109,7 @@
         </div>
         <div class="curFormBlock" data-target="login" >
           <div class="f-24 fw-600 mb-3 col-lg-9">
-            Клиника доброго маркетолога вход в&nbsp;личный кабинет
+            Клиника доброго маркетолога <br>вход в личный кабинет
           </div>
           <div class="f-16 col-lg-9 mb-3">
             Если у вас нет аккаунта, <router-link to="/" class="showCurForm color-blue cursor-pointer">зарегистрируйтесь</router-link>
@@ -117,16 +117,16 @@
           <Form @submit="handleLogin" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <div class="form-group mb-3">
+                <div class="form-group mb-4">
                   <Field name="email" placeholder="Эл. почта" class="w-100 formInput"/>
-                  <ErrorMessage name="email" />
+                  <ErrorMessage class="input-error" name="email" />
                 </div>
               </div>
               <div class="col-12">
-                <div class="form-group mb-3">
+                <div class="form-group mb-4">
                   <Field name="password" type="password" class="w-100 formInput" placeholder="Пароль" v-show="!showPass"/>
                   <Field name="password" type="text" class="w-100 formInput" placeholder="Пароль" v-show="showPass"/>
-                  <ErrorMessage name="password" />
+                  <ErrorMessage class="input-error" name="password" />
                   <div class="buttonShowPass" @click="showPassBt">
                     <input class="password-but" type="checkbox">
                     <div class="hidePass" v-show="!showPass">
