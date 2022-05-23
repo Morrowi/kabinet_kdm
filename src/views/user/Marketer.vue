@@ -12,7 +12,7 @@
             <div class="b-radius bg-white">
               <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
                 <div class="f-18 fw-600">
-                  Мой маркетолог
+                  Маркетолог
                 </div>
                 <div class="blockHeaderButton">
                   <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,7 +54,7 @@
               </div>
               <div class="px-3 py-2">
                 <div class="d-flex justify-content-center justify-content-lg-start">
-                  <div class="button buttonBorder">
+                  <div class="button buttonBorder" @click="open = true">
                     Оценить работу
                   </div>
                 </div>
@@ -73,24 +73,48 @@
           </div>
         </div>
         <div class="col-lg-6">
-          <div class="b-radius bg-white">
-            <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
-              <div class="f-18 fw-600">
-                Чат
-              </div>
-              <div class="blockHeaderButton">
-                <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g opacity="0.3">
-                    <path d="M13.4874 0.512567C12.804 -0.170848 11.696 -0.170848 11.0126 0.512567C10.3291 1.19598 10.3291 2.30402 11.0126 2.98744C11.696 3.67085 12.804 3.67085 13.4874 2.98744C14.1709 2.30405 14.1709 1.19601 13.4874 0.512567Z" fill="#030229"/>
-                    <path d="M8.23744 0.512567C7.55402 -0.170848 6.44598 -0.170848 5.76257 0.512567C5.07915 1.19598 5.07915 2.30402 5.76257 2.98744C6.44598 3.67085 7.55402 3.67085 8.23744 2.98744C8.92085 2.30405 8.92085 1.19601 8.23744 0.512567Z" fill="#030229"/>
-                    <path d="M2.98744 0.512567C2.30402 -0.170848 1.19598 -0.170848 0.512564 0.512567C-0.170852 1.19598 -0.170852 2.30402 0.512564 2.98744C1.19598 3.67085 2.30402 3.67085 2.98744 2.98744C3.67085 2.30405 3.67085 1.19601 2.98744 0.512567Z" fill="#030229"/>
-                  </g>
-                </svg>
-              </div>
+          <chat-window
+              :height="'calc(100vh - 40vh)'"
+              :current-user-id="currentUserId"
+              :rooms="room"
+              :rooms-list-opened ="roomsListOpened"
+              :rooms-loaded="roomsLoaded"
+              :show-add-room="showAddRoom"
+              :show-search="showSearch"
+              :show-reaction-emojis="showReactionEmojis"
+              :loading-rooms="loadingRooms"
+              :single-room="singleRoom"
+              :show-footer="true"
+              :messages="messages"
+              :messages-loaded="messagesLoaded"
+              @fetch-messages="onFetchMessages"
+              @send-message="sendMessage"
+              @open-file ="openFile"
+          />
+        </div>
+      </div>
+      <div :class="{show: open}" :style="[open?'display: block':'display: none']"  class="modal fade ">
+        <div class="modal-dialog modal-lg ">
+          <div class="modal-content">
+            <div class="modal-header p-3">
+              <div class="f-24 fw-600">Оценка работы </div>
+              <button type="button" class="close" @click="open = false">&times;</button>
             </div>
-            <div class="p-3">
-              <img class="w-100" src="image/chat.png" alt="">
+            <div class="modal-body">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group mb-3">
+                      <Editor v-model="valueEditor" editorStyle="height: 190px" placeholder="Отзыв о работе маркетолога"></Editor>
+                    </div>
+                  </div>
+                </div>
+
             </div>
+            <div class="d-flex justify-content-start px-3 pb-3 justify-content-between">
+              <star-rating @update:rating ="setRating" :rating="rating" :show-rating="false" v-bind:star-size="20"></star-rating>
+              <button @click="submitForm" type="button" class="button buttonBorder">Оценить</button>
+            </div>
+
           </div>
         </div>
       </div>
@@ -101,27 +125,181 @@
 
 
 <script>
+import Editor from 'primevue/editor';
 import Avatar from 'primevue/avatar';
 import axios from "axios";
 import authHeader from "@/services/auth-header";
+import StarRating from 'vue-star-rating'
+
+import ChatWindow from 'vue-advanced-chat'
+import 'vue-advanced-chat/dist/vue-advanced-chat.css'
+
+import {io} from "socket.io-client";
+const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
+
 export default {
   name: "Marketer",
   components: {
-    Avatar
+    Editor,
+    Avatar,
+    StarRating,
+    ChatWindow
   },
   data() {
-
+    let user = this.$store.state.auth.user;
+    //console.log(this.$store.state.auth.user);
     let loading = true;
     return{
       loading,
       marketolog:{},
+      open: false,
+      valueEditor:null,
+      rating:5,
+      //chat
+      room: [],
+      roomsLoaded: true,
+      showSearch:true,
+      roomsListOpened: false,
+      showAddRoom:false,
+      showReactionEmojis:true,
+      singleRoom:true,
+      messagesLoaded: false,
+      loadingRooms: false,
+      messages: [],
+      currentUserId: user.id
+
+
+
     }
   },
   watch:{
 
   },
   methods: {
+    setRating(rating){
+      this.rating= rating;
+    },
 
+    //chat
+    getRooms(){
+      socket.on("get room", data => {
+        this.room=[data];
+        //console.log('151 - lime ',data);
+      });
+    },
+    getMsg(){
+      socket.on("message_m", data => {
+        //console.log('[line 63]',data);
+        /*let tmpMessage = [...this.messages, ...data];*/
+        this.messages.push(data.msg);
+        //console.log('[this.messages]',this.messages);
+      });
+    },
+    loadRoom(){
+      let join ={
+        is: 'user',
+        rooms:{
+          room: this.$store.state.auth.user.room,
+          id: this.$store.state.auth.user.id,
+          manager: this.$store.state.auth.user.manager.id
+        },
+      }
+      //console.log(join);
+      socket.emit("subscribe", join);
+    },
+    onFetchMessages(data) {
+      //console.log('178 line', data);
+
+
+      socket.emit("get msg", data.room.roomId);
+
+      socket.on("load msg", data => {
+       // console.log(data);
+        setTimeout(() => {
+          this.messages= data;
+          this.messagesLoaded = true;
+        })
+      });
+
+    },
+    async sendMessage({ content, roomId, files, replyMessage }) {
+      const message = {
+        sender_id: this.currentUserId,
+        content,
+        timestamp: new Date()
+      }
+      if (files) {
+        message.files = await this.formattedFiles(files)
+      }
+      let dataMsg = {
+        room: roomId,
+        message:message
+      }
+      console.log(message)
+      socket.emit("message_m", dataMsg);
+      /*socket.on("message_m", data => {
+        //console.log('[message_m] line 125',data);
+
+      });*/
+      console.log(message);
+      console.log(roomId);
+      console.log(replyMessage);
+      /*if (replyMessage) {
+        message.replyMessage = {
+          _id: replyMessage._id,
+          content: replyMessage.content,
+          sender_id: replyMessage.senderId
+        }
+        if (replyMessage.files) {
+          message.replyMessage.files = replyMessage.files
+        }
+      }
+      const { id } = await firestoreService.addMessage(roomId, message)
+      if (files) {
+        for (let index = 0; index < files.length; index++) {
+          await this.uploadFile({ file: files[index], messageId: id, roomId })
+        }
+      }
+      firestoreService.updateRoom(roomId, { lastUpdated: new Date() })*/
+    },
+
+    async formattedFiles(files) {
+      const formattedFiles = []
+      console.log(files);
+
+      for (let i in files){
+        let file =files[i];
+        const messageFile = {
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          extension: file.extension || file.type,
+          url: file.url || file.localUrl
+        }
+        if (file.audio) {
+          messageFile.audio = true
+          messageFile.duration = file.duration
+        }
+        const blobFile = await fetch(file.localUrl).then(res => res.blob());
+        console.log(blobFile);
+        messageFile.b64 = await this.blobToBase64(blobFile);
+
+        formattedFiles.push(messageFile)
+      }
+
+      return formattedFiles
+    },
+    async blobToBase64(blob) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+    },
+    openFile({ file }) {
+      window.open(file.file.url, '_blank')
+    },
+    //chat
   },
   computed:{
     currentUser() {
@@ -129,7 +307,6 @@ export default {
     },
   },
   mounted() {
-
     if(this.$store.state.auth.user.manager.id !== undefined){
 
       axios.put( 'http://panel.kdm1.biz/api/marketolog/'+this.$store.state.auth.user.manager.id,
@@ -144,7 +321,9 @@ export default {
         console.log(error);
       }).finally(() => (this.loading = false));
     }
-    //console.log(this.$store.state.auth.user.manager);
+    this.loadRoom();
+    this.getRooms();
+    this.getMsg();
   },
   created() {
 

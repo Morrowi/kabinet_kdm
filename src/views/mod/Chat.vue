@@ -11,9 +11,8 @@
         @fetch-messages="onFetchMessages"
         @send-message="sendMessage"
         @open-file ="openFile"
-
-
     />
+    <button @click="testSound"></button>
   </div>
 
 </template>
@@ -25,6 +24,9 @@ import axios from "axios";
 import ChatWindow from 'vue-advanced-chat'
 import 'vue-advanced-chat/dist/vue-advanced-chat.css'
 
+import {Howl} from 'howler';
+
+
 import {io} from "socket.io-client";
 const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
 export default {
@@ -34,25 +36,18 @@ export default {
 
   },
   setup() {
-
     //События еслли уходит с сайта
     window.onbeforeunload = () => {
       socket.emit("leave", this.$store.state.auth.user.id);
     };
-
-
-/*    socket.on("connection", sockets => {
-      console.log('room', sockets);
-    });*/
-
-
-
   },
   data() {
     let user = this.$store.state.auth.user;
 
     return{
+
       rooms: [],
+      activeRoom:'',
       roomsLoaded: true,
       messagesLoaded: false,
       loadingRooms: false,
@@ -67,6 +62,13 @@ export default {
 
   },
   methods: {
+    notySound(){
+      var sound = new Howl({
+        src: ['http://panel.kdm1.biz/sound/notification.mp3']
+      });
+
+      sound.play();
+    },
     getRooms(){
       socket.on("get room", data => {
         this.rooms=data;
@@ -75,10 +77,19 @@ export default {
     },
     getMsg(){
       socket.on("message_m", data => {
-        console.log('[line 63]',data);
-        /*let tmpMessage = [...this.messages, ...data];*/
-        this.messages.push(data);
-        console.log('[this.messages]',this.messages);
+
+        if(this.activeRoom === data.room ){
+          this.messages.push(data.msg);
+        } else {
+          for (let i in this.rooms){
+            if(data.room === this.rooms[i].roomId){
+              this.rooms[i].unreadCount++;
+            }
+          }
+          this.notySound();
+          //console.log(this.rooms);
+          //console.log(data);
+        }
       });
     },
     loadRoom(){
@@ -98,7 +109,12 @@ export default {
     },
     onFetchMessages(data) {
       socket.emit("get msg", data.room.roomId);
-
+      this.activeRoom=data.room.roomId;
+      for (let i in this.rooms){
+        if(data.room.roomId === this.rooms[i].roomId){
+          this.rooms[i].unreadCount=0;
+        }
+      }
       socket.on("load msg", data => {
         //console.log(data);
         setTimeout(() => {

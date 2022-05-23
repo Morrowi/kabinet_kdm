@@ -216,189 +216,32 @@
         </div>
       </div>
     </div>
-    <beautiful-chat
-        :participants="participants"
-        :titleImageUrl="titleImageUrl"
-        :onMessageWasSent="sendMessage"
-        :messageList="messageList"
-        :newMessagesCount="newMessagesCount"
-        :isOpen="isChatOpen"
-        :close="closeChat"
-        :open="openChat"
-        :showEmoji="true"
-        :showFile="true"
-        :showEdition="true"
-        :showDeletion="true"
-        :deletionConfirmation="true"
-        :showTypingIndicator="showTypingIndicator"
-        :showLauncher="true"
-        :showCloseButton="true"
-        :colors="colors"
-        :alwaysScrollToBottom="alwaysScrollToBottom"
-        :disableUserListToggle="false"
-        :messageStyling="messageStyling"
-        @onType="handleOnType"
-        @edit="editMessage" />
+
   </div>
 </template>
 
 <script>
 import UserService from "../services/user.service";
-import { io } from 'socket.io-client';
-const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
+
+
 
 export default {
   name: "User",
-  setup() {
 
-    //События еслли уходит с сайта
-/*    window.onbeforeunload = () => {
-      socket.emit("leave", this.$store.state.auth.user.id);
-    };*/
-
-    socket.on("user joined", user => {
-      console.log(user);
-    });
-
-    socket.on("connection", sockets => {
-      console.log(sockets);
-
-    });
-
-    //
-
-
-  },
   created() {
-    this.getRealtimeMsg()
+
   },
   data() {
-    let user = this.$store.state.auth.user;
-    let manager = this.$store.state.auth.user.manager;
+
     //console.log(this.$store.state.auth.user.manager);
     return {
       content: "",
 
-      participants: [
-        {
-          id: user.id,
-          name: user.username,
-          imageUrl: 'http://panel.kdm1.biz/uploads/'+user.id+'/'+user.avatar
-        },
-        {
-          id: manager.id,
-          name: manager.username,
-          imageUrl: 'http://panel.kdm1.biz/uploads/'+manager.id+'/'+manager.avatar
-        }
-      ], // the list of all the participant of the conversation. `name` is the user name, `id` is used to establish the author of a message, `imageUrl` is supposed to be the user avatar.
-      titleImageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png',
-      messageList:[],
-      /*messageList: [
-        { id:this.$store.state.auth.user.id, type: 'text', author: `me`, data: { text: `Say yes!` } },
-        { type: 'text', author: `user1`, data: { text: `No.` } }
-      ],*/ // the list of the messages to show, can be paginated and adjusted dynamically
-      newMessagesCount: 0,
-      isChatOpen: false, // to determine whether the chat window should be open or closed
-      showTypingIndicator: '', // when set to a value matching the participant.id it shows the typing indicator for the specific user
-      colors: {
-        header: {
-          bg: '#EE735A',
-          text: '#ffffff'
-        },
-        launcher: {
-          bg: '#EE735A'
-        },
-        messageList: {
-          bg: '#ffffff'
-        },
-        sentMessage: {
-          bg: '#EE735A',
-          text: '#ffffff'
-        },
-        receivedMessage: {
-          bg: '#eaeaea',
-          text: '#222222'
-        },
-        userInput: {
-          bg: '#f4f7f9',
-          text: '#565867'
-        }
-      }, // specifies the color scheme for the component
-      alwaysScrollToBottom: false, // when set to true always scrolls the chat to the bottom when new events are in (new message, user starts typing...)
-      messageStyling: true // enables *bold* /emph/ _underline_ and such (more info at github.com/mattezza/msgdown)
+
     };
   },
   methods:{
-    sendMessage (data) {
-      if(data.type ==="emoji"){
-        let emoji = data.data.emoji;
-        this.newMessagesCount = this.isChatOpen ? this.newMessagesCount : this.newMessagesCount + 1
-        let message = {id:this.$store.state.auth.user.id, room:this.$store.state.auth.user.room, author: 'support', type: 'emoji', data: { emoji } };
-        socket.emit("message",message);
-        //console.log(message);
-        this.onMessageWasSent({ id:this.$store.state.auth.user.id,author: 'me', type: 'emoji', data: { emoji } })
-      } else {
-        let text = data.data.text
-        //console.log(data);
-        if (text.length > 0) {
-          this.newMessagesCount = this.isChatOpen ? this.newMessagesCount : this.newMessagesCount + 1
-          let message = {id:this.$store.state.auth.user.id, room:this.$store.state.auth.user.room, author: 'support', type: 'text', data: { text } };
-          socket.emit("message",message);
-          console.log(message);
-          this.onMessageWasSent({ id:this.$store.state.auth.user.id,author: 'me', type: 'text', data: { text } })
-        }
-      }
 
-    },
-    onMessageWasSent (message) {
-
-      //socket.emit('message', message);
-
-      // called when the user sends a message
-      this.messageList = [ ...this.messageList, message ]
-    },
-    openChat () {
-      // called when the user clicks on the fab button to open the chat
-      this.isChatOpen = true
-      this.newMessagesCount = 0
-    },
-    closeChat () {
-      // called when the user clicks on the botton to close the chat
-      this.isChatOpen = false
-    },
-    handleScrollToTop () {
-      // called when the user scrolls message list to top
-      // leverage pagination for loading another page of messages
-    },
-    handleOnType () {
-      console.log('Emit typing event')
-    },
-    editMessage(message){
-      const m = this.messageList.find(m=>m.id === message.id);
-      m.isEdited = true;
-      m.data.text = message.data.text;
-    },
-    getRealtimeMsg(){
-      socket.on("message", data => {
-        //console.log(data);
-        this.onMessageWasSent(data);
-        //this.messageList = [ ...this.messageList, data ]
-
-      });
-    },
-    getMsg(){
-      socket.on("get msg", data => {
-        //console.log(data);
-        //console.log(this.currentUser.id);
-        for (let i in data){
-          data[i].data = JSON.parse(data[i].data);
-          if(this.$store.state.auth.user.id === data[i].uid ){
-            data[i].author = 'me';
-          }
-          this.messageList = [ ...this.messageList,data[i] ]
-        }
-      });
-    },
     logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
@@ -422,12 +265,7 @@ export default {
         if(this.currentUser.manager === null){
           this.$router.push("/");
         }
-        let join ={
-          is: 'user',
-          rooms:this.currentUser.room,
-        }
-        socket.emit("subscribe", join);
-        socket.emit("get msg", this.currentUser.room);
+
 
         this.content = response.data;
       },
@@ -440,7 +278,7 @@ export default {
           error.toString();
       }
     );
-    this.getMsg();
+
   },
 };
 </script>
