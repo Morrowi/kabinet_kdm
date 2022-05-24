@@ -100,6 +100,10 @@ const routes = [
         component: () => import('./views/admin/AddUsers.vue')
       },
       {
+        path: 'reviews',
+        component: () => import('./views/admin/Reviews.vue'),
+      },
+      {
         path: 'profile',
         component: Profile
       }

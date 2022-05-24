@@ -1062,3 +1062,11 @@ button.close {
     background-color: rgba(91, 147, 255, 0.2);
     color: #5B93FF;
 }
+
+.true-icon {
+    color: #256029;
+}
+
+.false-icon {
+    color: #c63737;
+}

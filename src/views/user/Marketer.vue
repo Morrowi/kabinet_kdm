@@ -118,6 +118,7 @@
           </div>
         </div>
       </div>
+      <Toast />
     </div>
 
 
@@ -130,6 +131,11 @@ import Avatar from 'primevue/avatar';
 import axios from "axios";
 import authHeader from "@/services/auth-header";
 import StarRating from 'vue-star-rating'
+import 'primevue/resources/themes/saga-blue/theme.css';
+import 'primevue/resources/primevue.min.css';
+import 'primeicons/primeicons.css';
+
+import Toast from 'primevue/toast';
 
 import ChatWindow from 'vue-advanced-chat'
 import 'vue-advanced-chat/dist/vue-advanced-chat.css'
@@ -143,7 +149,8 @@ export default {
     Editor,
     Avatar,
     StarRating,
-    ChatWindow
+    ChatWindow,
+    Toast
   },
   data() {
     let user = this.$store.state.auth.user;
@@ -155,6 +162,7 @@ export default {
       open: false,
       valueEditor:null,
       rating:5,
+
       //chat
       room: [],
       roomsLoaded: true,
@@ -178,6 +186,36 @@ export default {
   methods: {
     setRating(rating){
       this.rating= rating;
+    },
+    submitForm(){
+      console.log(this.valueEditor);
+      console.log(this.rating);
+      let date={
+        marketolog: this.$store.state.auth.user.manager.id,
+        rating:this.rating,
+        text: this.valueEditor
+      }
+
+      axios.post( 'http://panel.kdm1.biz/api/reviews/add',
+          date,
+          {
+            headers: authHeader()
+          }
+      ).then((resp)=>{
+        if(resp.data === 'saccess'){
+          this.valueEditor='';
+          this.rating='';
+          this.open= false;
+          this.$toast.add({severity:'success', summary: 'Спасибо за оценку.', detail:'', life: 3000});
+        }
+        console.log(resp.data);
+
+        //this.openTask=true;
+      }).catch(function(error){
+        this.$toast.add({severity:'error', summary: 'Ошибка', detail:error, life: 3000});
+        console.log(error);
+      });
+
     },
 
     //chat
@@ -262,7 +300,6 @@ export default {
       }
       firestoreService.updateRoom(roomId, { lastUpdated: new Date() })*/
     },
-
     async formattedFiles(files) {
       const formattedFiles = []
       console.log(files);
@@ -299,7 +336,7 @@ export default {
     openFile({ file }) {
       window.open(file.file.url, '_blank')
     },
-    //chat
+    //chat - end
   },
   computed:{
     currentUser() {

@@ -9,15 +9,13 @@ import ToastService from 'primevue/toastservice';
 import 'dropzone-vue/dist/dropzone-vue.common.css';
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-//import { FontAwesomeIcon } from './plugins/font-awesome'
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import "./assets/css/style.css";
 import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
 import ContextMenu from '@imengyu/vue3-context-menu'
-//import SocketIO from 'socket.io-client'
-
 
 import Chat from 'vue3-beautiful-chat'
 
