@@ -174,7 +174,7 @@
         </div>
         <div class="row scrollBlock" v-if="selectedRate =='' " >
           <div class="col-4" v-for="rate in Rates" :key="rate.id" :id="rate.id">
-            <div class=" b-radius bg-white formTarifItem mx-3"   >
+            <div class=" b-radius bg-white  mx-3"   >
               <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
                 <div class="f-18 fw-600">
                   {{rate.name}}
@@ -262,7 +262,11 @@
                   </div>
                 </div>
               </div>
-              <div class="row justify-content-end">
+              <div class="row justify-content-between">
+                <div class="col-auto mx-2 my-3">
+                  <div v-if="marketolog.reviews_count > 0" class=" cursor-pointer px-5" @click="showReviews(marketolog.id);">Отзывы ({{marketolog.reviews_count}}) </div>
+                  <div v-else class=" px-5" >Отзывы ({{marketolog.reviews_count}}) </div>
+                </div>
                 <div class="col-auto mx-2 my-3">
                   <div class="button blueButton px-5" @click="selectedManager(marketolog.id);">Выбрать</div>
                 </div>
@@ -275,6 +279,16 @@
     </div>
 
   </div>
+  <Dialog header="Отзывы" v-model:visible="displayReviews" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
+    <DataTable :value="reviews" :paginator="true" :rows="1" responsiveLayout="scroll">
+      <Column field="moderation" >
+        <template #body="{data}">
+          <div>{{data.date_insert}}</div>
+          <div v-html="data.text"></div>
+        </template>
+      </Column>
+    </DataTable>
+  </Dialog>
   <div :class="{show: open}" :style="[open?'display: block':'display: none']"  class="modal fade " id="newTask">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
@@ -291,12 +305,20 @@
 </template>
 
 <script>
-
+import Dialog from 'primevue/dialog';
+import Column from 'primevue/column';
+import "primeflex/primeflex.css";
+import "primevue/resources/themes/saga-blue/theme.css";
+import "primevue/resources/primevue.min.css";
+import "primeicons/primeicons.css";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import Avatar from 'primevue/avatar';
+import DataTable from 'primevue/datatable';
 //import AddRates from "@/components/AddRates"
 //const AddRates = () => import("./components/AddRates.vue")
 import * as yup from "yup";
+import axios from "axios";
+//import authHeader from "@/services/auth-header";
 
 export default {
   name: "Home",
@@ -309,7 +331,10 @@ export default {
     Form,
     Field,
     ErrorMessage,
-    Avatar
+    Avatar,
+    Dialog,
+    DataTable,
+    Column
   },
   data() {
 
@@ -354,6 +379,8 @@ export default {
 
 
     return {
+      Marketologs:[],
+      reviews:null,
       open: false,
       username:'',
       showPass:false,
@@ -366,6 +393,7 @@ export default {
       currentStep,
       selectedRate:'',
       selectManager:'',
+      displayReviews: false,
     };
   },
   computed: {
@@ -384,28 +412,7 @@ export default {
       return  arr;
 
     },
-    Marketologs(){
-      let arr = {};
-      for (let key of Object.keys(this.$store.state.marketologs)) {
-        let src = 'http://panel.kdm1.biz/uploads/img/default_marketolog.svg';
-        if(this.$store.state.marketologs[key].avatar !==null){
-          src = 'http://panel.kdm1.biz/uploads/'+this.$store.state.marketologs[key].id+'/'+this.$store.state.marketologs[key].avatar
-        }
 
-        arr[key]={
-          id: this.$store.state.marketologs[key].id,
-          avatar: src,
-          description: this.$store.state.marketologs[key].description,
-          email: this.$store.state.marketologs[key].email,
-          rating: this.$store.state.marketologs[key].rating,
-          username: this.$store.state.marketologs[key].username,
-        }
-        //console.log(this.$store.state.rates[key]);
-      }
-      console.log(arr);
-      return  arr;
-
-    },
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
     },
@@ -440,6 +447,7 @@ export default {
       console.log()
       //this.$router.push("/profile");
     }
+    this.initMarketologs();
   },
   watch:{
     '$store.state.auth.user.status.loggedIn': function() {
@@ -454,7 +462,64 @@ export default {
   },
   methods: {
 
+    initMarketologs(){
 
+      axios.get( 'http://panel.kdm1.biz/api/marketolog/').then((resp)=>{
+        this.Marketologs = resp.data;
+      }).catch(function(error){
+        console.log(error);
+      });
+
+      //
+      // let arr = {};
+      // for (let key of Object.keys(this.$store.state.marketologs)) {
+      //   let src = 'http://panel.kdm1.biz/uploads/img/default_marketolog.svg';
+      //   if(this.$store.state.marketologs[key].avatar !==null){
+      //     src = 'http://panel.kdm1.biz/uploads/'+this.$store.state.marketologs[key].id+'/'+this.$store.state.marketologs[key].avatar
+      //   }
+      //
+      //   arr[key]={
+      //     id: this.$store.state.marketologs[key].id,
+      //     avatar: src,
+      //     description: this.$store.state.marketologs[key].description,
+      //     email: this.$store.state.marketologs[key].email,
+      //     rating: this.$store.state.marketologs[key].rating,
+      //     username: this.$store.state.marketologs[key].username,
+      //   }
+      //   //console.log(this.$store.state.rates[key]);
+      // }
+      // console.log(arr);
+      // return  arr;
+
+    },
+    showReviews(id){
+      axios.post( 'http://panel.kdm1.biz/api/reviews/show/'+id).then((resp)=>{
+        for ( const key in resp.data){
+          resp.data[key].date_insert= this.dateToYMD(new Date(resp.data[key].date_insert));
+        }
+        this.reviews = resp.data;
+
+        console.log(resp.data);
+      }).catch(function(error){
+        console.log(error);
+      });
+      console.log(id);
+
+      this.displayReviews=true;
+    },
+    dateToYMD(date) {
+      let d = date.getDate();
+      let m = date.getMonth() + 1; //Month from 0 to 11
+      let y = date.getFullYear();
+      let h = date.getHours();
+      h = ("0" + h).slice(-2);
+      let mm = date.getMinutes();
+      mm = ("0" + mm).slice(-2);
+      let ss = date.getSeconds();
+      ss = ("0" + ss).slice(-2);
+      return  ''+(d <= 9 ? '0' + d : d) + '.' + (m<=9 ? '0' + m : m) + '.' + y +' '+ h+':'+mm+':'+ss;
+
+    },
     selectedManager(id){
       this.message = "";
       this.loading = true;

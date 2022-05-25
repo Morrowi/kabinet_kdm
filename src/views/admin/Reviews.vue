@@ -49,9 +49,9 @@
         </template>
       </Column>
 
-      <Column :exportable="false" style="min-width:8rem">
+      <Column header="Акт." :exportable="false" style="min-width:8rem">
         <template #body="slotProps">
-          <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" @click="editProduct(slotProps.data)" />
+          <Button icon="pi pi-check-circle" :class="{'p-button-text p-button-danger mr-2': slotProps.data.moderation, 'p-button-text p-button-success mr-2': !slotProps.data.moderation}"  @click="activeReviews(slotProps.data.id,slotProps.data.moderation )" />
         </template>
       </Column>
     </DataTable>
@@ -107,8 +107,28 @@ export default {
 
   },
   methods: {
-    editProduct(data){
-      console.log(data);
+    activeReviews(id, status){
+      console.log(id);
+      let moderation = 1;
+      if(status){
+        moderation = 0;
+      }
+
+      axios.post( 'http://panel.kdm1.biz/api/reviews/'+id,
+          {moderation:moderation},
+          {
+            headers: authHeader()
+          }
+      ).then((resp)=>{
+        if(resp.data === 'saccess'){
+          this.listInit();
+        } else {
+          alert('error');
+        }
+
+      }).catch(function(error){
+        console.log(error);
+      });
     },
     initFilters() {
       this.filters = {
@@ -116,6 +136,25 @@ export default {
         'name': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
         'moderation': {value: null, matchMode: FilterMatchMode.EQUALS},
       }
+    },
+
+    listInit(){
+      // console.log(this.currentUser);
+      axios.post( 'http://panel.kdm1.biz/api/reviews/',
+          this.$store.state.auth.user.client,
+          {
+            headers: authHeader()
+          }
+      ).then((resp)=>{
+        for ( const key in resp.data){
+          resp.data[key].date_insert= this.dateToYMD(new Date(resp.data[key].date_insert));
+        }
+
+
+        this.usersList = resp.data;
+      }).catch(function(error){
+        console.log(error);
+      });
     },
     dateToYMD(date) {
       let d = date.getDate();
@@ -137,22 +176,7 @@ export default {
     },
   },
   mounted() {
-    // console.log(this.currentUser);
-    axios.post( 'http://panel.kdm1.biz/api/reviews/',
-        this.$store.state.auth.user.client,
-        {
-          headers: authHeader()
-        }
-    ).then((resp)=>{
-      for ( const key in resp.data){
-        resp.data[key].date_insert= this.dateToYMD(new Date(resp.data[key].date_insert));
-      }
-
-
-      this.usersList = resp.data;
-    }).catch(function(error){
-      console.log(error);
-    });
+    this.listInit();
   }
 };
 </script>
