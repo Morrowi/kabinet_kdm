@@ -174,28 +174,7 @@
       <div class="col-lg-10 px-0">
         <div class="vh-100 overflow-auto">
           <div class="d-flex bg-white p-3 justify-content-between align-items-center mb-3 sticky-top">
-            <a href="#">
-              <div class="d-flex align-items-center massageTopWrap active">
-                <div class="bellBlock me-2">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_250_45995)">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 6.79633C16.7071 8.05226 17.039 8.79253 17.7695 9.64559C18.3231 10.2741 18.5 11.0808 18.5 11.956C18.5 12.8302 18.2128 13.6601 17.6373 14.3339C16.884 15.1417 15.8215 15.6573 14.7372 15.747C13.1659 15.8809 11.5937 15.9937 10.0005 15.9937C8.40634 15.9937 6.83505 15.9263 5.26375 15.747C4.17846 15.6573 3.11602 15.1417 2.36367 14.3339C1.78822 13.6601 1.5 12.8302 1.5 11.956C1.5 11.0808 1.6779 10.2741 2.23049 9.64559C2.98384 8.79253 3.29392 8.05226 3.29392 6.79633V6.3703C3.29392 4.68834 3.71333 3.58852 4.577 2.51186C5.86106 0.941697 7.91935 0 9.95577 0H10.0452C12.1254 0 14.2502 0.987019 15.5125 2.62466C16.3314 3.67916 16.7071 4.73265 16.7071 6.3703V6.79633ZM7.07367 18.0608C7.07367 17.5573 7.53582 17.3266 7.96318 17.2279C8.46309 17.1222 11.5093 17.1222 12.0092 17.2279C12.4366 17.3266 12.8987 17.5573 12.8987 18.0608C12.8738 18.5402 12.5926 18.9653 12.204 19.2352C11.7001 19.628 11.1088 19.8767 10.4906 19.9664C10.1487 20.0107 9.81276 20.0117 9.48279 19.9664C8.86362 19.8767 8.27227 19.628 7.76938 19.2342C7.37978 18.9653 7.09852 18.5402 7.07367 18.0608Z" fill="#6A7686"/>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_250_45995">
-                        <rect width="20" height="20" fill="white"/>
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </div>
-                <div class="f-14 fw-400 color-blue messOn">
-                  Новых уведомлений <span>2</span>
-                </div>
-                <div class="f-14 fw-400 color-2 messOff">
-                  Нет новых уведомлений
-                </div>
-              </div>
-            </a>
+            <bellNoty/>
             <div class="d-flex align-items-center userTopWrap me-0 me-lg-5">
               <div class="imgUserTop me-2">
                 <img src="../assets/image/user.png" alt="">
@@ -222,12 +201,14 @@
 
 <script>
 import UserService from "../services/user.service";
-
+import bellNoty from "./bell-noty"
 
 
 export default {
   name: "User",
-
+  components: {
+    bellNoty
+  },
   created() {
 
   },

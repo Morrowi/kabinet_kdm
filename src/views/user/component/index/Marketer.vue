@@ -46,7 +46,8 @@
       </div>
       <div class="row me-0 ml-0 justify-content-center justify-content-lg-end">
         <div class="col-auto mx-2 my-3">
-          <div class="button buttonBorder">Написать сообщение</div>
+          <router-link class="button buttonBorder" to="/dashboard/marketer">Написать сообщение</router-link>
+
         </div>
       </div>
     </div>
@@ -82,7 +83,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.$store.state.auth.user);
     if(this.$store.state.auth.user.manager.id !== undefined){
 
       axios.put( 'http://panel.kdm1.biz/api/marketolog/'+this.$store.state.auth.user.manager.id,

@@ -344,6 +344,7 @@ export default {
     },
   },
   mounted() {
+    this.$toast.removeAllGroups();
     if(this.$store.state.auth.user.manager.id !== undefined){
 
       axios.put( 'http://panel.kdm1.biz/api/marketolog/'+this.$store.state.auth.user.manager.id,

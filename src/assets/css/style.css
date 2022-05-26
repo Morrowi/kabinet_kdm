@@ -1070,3 +1070,43 @@ button.close {
 .false-icon {
     color: #c63737;
 }
+
+
+.message-chat{
+    border: none;
+    background-color: rgba(0,0,0, 0.8);
+}
+.p-toast .message-chat .p-toast-message-content .p-toast-summary {
+    color: #ffffff;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+
+.p-toast .message-chat .p-toast-message-content{
+    justify-content: space-between;
+}
+
+.p-toast .message-chat .p-toast-icon-close{
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+}
+
+.p-toast .message-chat .p-toast-icon-close .p-toast-icon-close-icon{
+    color: #949494;
+}
+
+.p-toast .message-chat .p-toast-icon-close:hover {
+    background: none;
+}
+
+.p-toast .message-chat .p-toast-icon-close:hover .p-toast-icon-close-icon{
+    color:#ffffff;
+}
+
+.p-toast .message-chat .p-toast-message-content .p-toast-detail,
+.p-toast .message-chat .p-toast-message-content .p-toast-detail a{
+    color: #fff;
+    font-size: 12px;
+}

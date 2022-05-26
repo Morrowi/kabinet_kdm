@@ -12,7 +12,7 @@
         @send-message="sendMessage"
         @open-file ="openFile"
     />
-    <button @click="testSound"></button>
+
   </div>
 
 </template>
@@ -24,7 +24,7 @@ import axios from "axios";
 import ChatWindow from 'vue-advanced-chat'
 import 'vue-advanced-chat/dist/vue-advanced-chat.css'
 
-import {Howl} from 'howler';
+//import {Howl} from 'howler';
 
 
 import {io} from "socket.io-client";
@@ -40,6 +40,7 @@ export default {
     window.onbeforeunload = () => {
       socket.emit("leave", this.$store.state.auth.user.id);
     };
+
   },
   data() {
     let user = this.$store.state.auth.user;
@@ -62,13 +63,13 @@ export default {
 
   },
   methods: {
-    notySound(){
-      var sound = new Howl({
-        src: ['http://panel.kdm1.biz/sound/notification.mp3']
-      });
-
-      sound.play();
-    },
+    // notySound(){
+    //   var sound = new Howl({
+    //     src: ['http://panel.kdm1.biz/sound/notification.mp3']
+    //   });
+    //
+    //   sound.play();
+    // },
     getRooms(){
       socket.on("get room", data => {
         this.rooms=data;
@@ -86,7 +87,7 @@ export default {
               this.rooms[i].unreadCount++;
             }
           }
-          this.notySound();
+          //this.notySound();
           //console.log(this.rooms);
           //console.log(data);
         }
