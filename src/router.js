@@ -100,6 +100,25 @@ const routes = [
         component: () => import('./views/admin/AddUsers.vue')
       },
       {
+        path: 'mail',
+        component: () => import('./views/admin/mail/index.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('./views/admin/mail/setting.vue')
+          },
+          {
+            path: 'list',
+            component: () => import('./views/admin/mail/MailList.vue')
+          },
+          {
+            path: 'add',
+            component: () => import('./views/admin/mail/add.vue')
+          },
+        ]
+      },
+
+      {
         path: 'reviews',
         component: () => import('./views/admin/Reviews.vue'),
       },

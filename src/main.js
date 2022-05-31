@@ -17,7 +17,7 @@ import "./assets/css/style.css";
 import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
 import ContextMenu from '@imengyu/vue3-context-menu'
 
-import Chat from 'vue3-beautiful-chat'
+//import Chat from 'vue3-beautiful-chat'
 
 
 library.add(faUserSecret)
@@ -27,7 +27,7 @@ createApp(App)
     .use(router)
     .use(store)
     .use(DropZone)
-    .use(Chat)
+    //.use(Chat)
     .use(ToastService)
     .use(ContextMenu)
     .use(PrimeVue,{

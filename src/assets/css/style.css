@@ -156,6 +156,36 @@ body {
 .menuLinkBlock.active .menuLinkName{
     color: #ffffff;
 }
+.menuLinkBody li  ul li{
+    position: relative;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    padding-left: 27px;
+}
+
+.menuLinkBody li  ul li a{
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #6A7686;
+    transition: all 0.3s;
+}
+.menuLinkBody li  ul li a::before{
+    margin-right: 5px;
+    content: "";
+    width: 5px;
+    height: 5px;
+    display: block;
+    background-color: #6A7686;
+    border-radius: 50%;
+
+}
+
+.menuLinkBody li  ul li a.active::before{
+    background-color: #EE735A;
+}
 
 .input-error{
     display: block;
