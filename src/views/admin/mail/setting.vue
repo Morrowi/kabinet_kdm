@@ -26,8 +26,8 @@
               </div>
               <div class="field col-12 col-md-6">
                 <span class="p-float-label">
-                  <Dropdown v-model="port" :options="ports" optionLabel="name" />
-                   <label for="input_host">Порт</label>
+                  <Dropdown v-model="port" :options="ports" optionLabel="input_port" />
+                   <label for="input_port">Порт</label>
                 </span>
               </div>
               <div class="field col-12 col-6">

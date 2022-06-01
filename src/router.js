@@ -108,6 +108,10 @@ const routes = [
             component: () => import('./views/admin/mail/setting.vue')
           },
           {
+            path: 'type',
+            component: () => import('./views/admin/mail/type.vue')
+          },
+          {
             path: 'list',
             component: () => import('./views/admin/mail/MailList.vue')
           },

@@ -99,6 +99,7 @@
                       </div>
                     </div>
                     <ul>
+                      <li><router-link to="/admin/mail/type" active-class="active">Типы событий</router-link></li>
                       <li><router-link to="/admin/mail/list" active-class="active">Почтовые шаблона</router-link></li>
                       <li><router-link to="/admin/mail/add" active-class="active">Добавить</router-link></li>
 
