@@ -73,24 +73,24 @@
           </div>
         </div>
         <div class="col-lg-6">
-          <chat-window
-              :height="'calc(100vh - 40vh)'"
-              :current-user-id="currentUserId"
-              :rooms="room"
-              :rooms-list-opened ="roomsListOpened"
-              :rooms-loaded="roomsLoaded"
-              :show-add-room="showAddRoom"
-              :show-search="showSearch"
-              :show-reaction-emojis="showReactionEmojis"
-              :loading-rooms="loadingRooms"
-              :single-room="singleRoom"
-              :show-footer="true"
-              :messages="messages"
-              :messages-loaded="messagesLoaded"
-              @fetch-messages="onFetchMessages"
-              @send-message="sendMessage"
-              @open-file ="openFile"
-          />
+<!--          <chat-window-->
+<!--              :height="'calc(100vh - 40vh)'"-->
+<!--              :current-user-id="currentUserId"-->
+<!--              :rooms="room"-->
+<!--              :rooms-list-opened ="roomsListOpened"-->
+<!--              :rooms-loaded="roomsLoaded"-->
+<!--              :show-add-room="showAddRoom"-->
+<!--              :show-search="showSearch"-->
+<!--              :show-reaction-emojis="showReactionEmojis"-->
+<!--              :loading-rooms="loadingRooms"-->
+<!--              :single-room="singleRoom"-->
+<!--              :show-footer="true"-->
+<!--              :messages="messages"-->
+<!--              :messages-loaded="messagesLoaded"-->
+<!--              @fetch-messages="onFetchMessages"-->
+<!--              @send-message="sendMessage"-->
+<!--              @open-file ="openFile"-->
+<!--          />-->
         </div>
       </div>
       <div :class="{show: open}" :style="[open?'display: block':'display: none']"  class="modal fade ">
@@ -137,7 +137,7 @@ import 'primeicons/primeicons.css';
 
 import Toast from 'primevue/toast';
 
-import ChatWindow from 'vue-advanced-chat'
+//import ChatWindow from 'vue-advanced-chat'
 import 'vue-advanced-chat/dist/vue-advanced-chat.css'
 
 import {io} from "socket.io-client";
@@ -149,7 +149,7 @@ export default {
     Editor,
     Avatar,
     StarRating,
-    ChatWindow,
+    //ChatWindow,
     Toast
   },
   data() {
@@ -196,7 +196,7 @@ export default {
         text: this.valueEditor
       }
 
-      axios.post( 'http://panel.kdm1.biz/api/reviews/add',
+      axios.post( 'http://panel.kdm1.biz/api/reviews/add/',
           date,
           {
             headers: authHeader()
@@ -359,9 +359,9 @@ export default {
         console.log(error);
       }).finally(() => (this.loading = false));
     }
-    this.loadRoom();
-    this.getRooms();
-    this.getMsg();
+    //this.loadRoom();
+    //this.getRooms();
+    //this.getMsg();
   },
   created() {
 

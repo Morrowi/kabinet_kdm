@@ -53,8 +53,8 @@
             </div>
           </div>
           <div class="pr-3 pl-3 pt-2 pb-2 px-3">
-            <div class="row  justify-content-between align-items-center">
-              <div class="col-auto">
+            <div class="row align-items-center" :class="countTasksFlex">
+              <div class="col-auto" v-if="countTasks>=10">
                 <div class="colMessBlock f-14 color-blue">
                   Все задачи <span>({{ countTasks }})</span>
                 </div>
@@ -231,7 +231,7 @@ export default {
     return{
 
 
-
+      countTasksFlex: 'justify-content-between',
       countTasks:0,
       arrTasks:[],
       modalTaks:[],
@@ -302,6 +302,10 @@ export default {
           //status
         }
         this.countTasks = resp.data.length;
+        if(resp.data.length <= 10){
+
+          this.countTasksFlex ='justify-content-end';
+        }
         this.arrTasks = resp.data;
       }).catch(function(error){
         console.log(error);

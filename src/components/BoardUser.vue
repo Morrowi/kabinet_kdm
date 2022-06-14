@@ -195,33 +195,223 @@
         </div>
       </div>
     </div>
-
+    <div
+        v-if="showLauncher"
+        class="sc-launcher"
+        :class="{opened: isOpen}"
+        :style="{backgroundColor: colors.launcher.bg}"
+        @click.prevent="isOpen ? close() : openAndFocus()"
+    >
+      <img v-if="isOpen" class="sc-closed-icon" :src="icons.close.img" :alt="icons.close.name" />
+      <img v-else class="sc-open-icon" :src="icons.open.img" :alt="icons.open.name" />
+    </div>
+    <div class="sc-chat-window" :class="{opened: isOpen, closed: !isOpen}">
+      <chat-window
+          :height="'100%'"
+          :current-user-id="currentUserId"
+          :rooms="room"
+          :rooms-list-opened ="roomsListOpened"
+          :rooms-loaded="roomsLoaded"
+          :show-add-room="showAddRoom"
+          :show-search="showSearch"
+          :show-reaction-emojis="showReactionEmojis"
+          :loading-rooms="loadingRooms"
+          :single-room="singleRoom"
+          :show-footer="true"
+          :messages="messages"
+          :messages-loaded="messagesLoaded"
+          @fetch-messages="onFetchMessages"
+          @send-message="sendMessage"
+          @open-file ="openFile"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import UserService from "../services/user.service";
 import bellNoty from "./bell-noty"
+import CloseIcon from '../assets/image/close-icon.png'
+import OpenIcon from '../assets/image/logo-no-bg.svg'
+
+import ChatWindow from 'vue-advanced-chat'
+import 'vue-advanced-chat/dist/vue-advanced-chat.css'
+import {io} from "socket.io-client";
+const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
 
 
 export default {
   name: "User",
   components: {
-    bellNoty
+    bellNoty,
+    ChatWindow
   },
   created() {
 
   },
   data() {
-
+    let user = this.$store.state.auth.user;
     //console.log(this.$store.state.auth.user.manager);
     return {
+      icons :{
+        open: {
+          img: OpenIcon
+        },
+        close: {
+          img: CloseIcon
+        }
+      },
       content: "",
-
-
+      isOpen:false,
+      showLauncher: true,
+      colors: {
+        launcher: {
+          bg: '#ee7459'
+        },
+      },
+      //chat
+      room: [],
+      roomsLoaded: true,
+      showSearch:true,
+      roomsListOpened: false,
+      showAddRoom:false,
+      showReactionEmojis:false,
+      singleRoom:true,
+      messagesLoaded: false,
+      loadingRooms: false,
+      messages: [],
+      currentUserId: user.id
     };
   },
   methods:{
+    close() {
+      this.isOpen = false;
+    },
+    openAndFocus() {
+      this.isOpen = true;
+    },
+
+
+    //chat
+    getRooms(){
+      socket.on("get room", data => {
+        this.room=[data];
+        //console.log('151 - lime ',data);
+      });
+    },
+    getMsg(){
+      socket.on("message_m", data => {
+        //console.log('[line 63]',data);
+        /*let tmpMessage = [...this.messages, ...data];*/
+        this.messages.push(data.msg);
+        //console.log('[this.messages]',this.messages);
+      });
+    },
+    loadRoom(){
+      let join ={
+        is: 'user',
+        rooms:{
+          room: this.$store.state.auth.user.room,
+          id: this.$store.state.auth.user.id,
+          manager: this.$store.state.auth.user.manager.id
+        },
+      }
+      //console.log(join);
+      socket.emit("subscribe", join);
+    },
+    onFetchMessages(data) {
+      //console.log('178 line', data);
+
+
+      socket.emit("get msg", data.room.roomId);
+
+      socket.on("load msg", data => {
+        // console.log(data);
+        setTimeout(() => {
+          this.messages= data;
+          this.messagesLoaded = true;
+        })
+      });
+
+    },
+    async sendMessage({ content, roomId, files, replyMessage }) {
+      const message = {
+        sender_id: this.currentUserId,
+        content,
+        timestamp: new Date()
+      }
+      if (files) {
+        message.files = await this.formattedFiles(files)
+      }
+      let dataMsg = {
+        room: roomId,
+        message:message
+      }
+      console.log(message)
+      socket.emit("message_m", dataMsg);
+      /*socket.on("message_m", data => {
+        //console.log('[message_m] line 125',data);
+
+      });*/
+      console.log(message);
+      console.log(roomId);
+      console.log(replyMessage);
+      /*if (replyMessage) {
+        message.replyMessage = {
+          _id: replyMessage._id,
+          content: replyMessage.content,
+          sender_id: replyMessage.senderId
+        }
+        if (replyMessage.files) {
+          message.replyMessage.files = replyMessage.files
+        }
+      }
+      const { id } = await firestoreService.addMessage(roomId, message)
+      if (files) {
+        for (let index = 0; index < files.length; index++) {
+          await this.uploadFile({ file: files[index], messageId: id, roomId })
+        }
+      }
+      firestoreService.updateRoom(roomId, { lastUpdated: new Date() })*/
+    },
+    async formattedFiles(files) {
+      const formattedFiles = []
+      console.log(files);
+
+      for (let i in files){
+        let file =files[i];
+        const messageFile = {
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          extension: file.extension || file.type,
+          url: file.url || file.localUrl
+        }
+        if (file.audio) {
+          messageFile.audio = true
+          messageFile.duration = file.duration
+        }
+        const blobFile = await fetch(file.localUrl).then(res => res.blob());
+        console.log(blobFile);
+        messageFile.b64 = await this.blobToBase64(blobFile);
+
+        formattedFiles.push(messageFile)
+      }
+
+      return formattedFiles
+    },
+    async blobToBase64(blob) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+    },
+    openFile({ file }) {
+      window.open(file.file.url, '_blank')
+    },
+    //chat - end
+
 
     logOut() {
       this.$store.dispatch('auth/logout');
@@ -259,7 +449,130 @@ export default {
           error.toString();
       }
     );
-
+    //chat
+    this.loadRoom();
+    this.getRooms();
+    this.getMsg();
+    //chat - end
   },
 };
 </script>
+<style>
+.sc-launcher {
+  width: 60px;
+  height: 60px;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  border-radius: 50%;
+  box-shadow: none;
+  transition: box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+}
+.sc-launcher:before {
+  content: '';
+  position: relative;
+  display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  transition: box-shadow 0.2s ease-in-out;
+}
+.sc-launcher .sc-open-icon,
+.sc-launcher .sc-closed-icon {
+  width: 60px;
+  height: 60px;
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  transition: opacity 100ms ease-in-out, transform 100ms ease-in-out;
+}
+.sc-launcher .sc-closed-icon {
+  transition: opacity 100ms ease-in-out, transform 100ms ease-in-out;
+  width: 60px;
+  height: 60px;
+}
+.sc-launcher .sc-open-icon {
+  padding: 20px;
+  box-sizing: border-box;
+  opacity: 1;
+}
+.sc-launcher.opened .sc-open-icon {
+  transform: rotate(-90deg);
+  opacity: 1;
+}
+.sc-launcher.opened .sc-closed-icon {
+  transform: rotate(-90deg);
+  opacity: 1;
+}
+.sc-launcher.opened:before {
+  box-shadow: 0px 0px 400px 250px rgba(148, 149, 150, 0.2);
+}
+.sc-launcher:hover {
+  box-shadow: 0 0px 27px 1.5px rgba(0, 0, 0, 0.2);
+}
+
+.sc-chat-window {
+  width: 470px;
+  height: calc(100% - 120px);
+  max-height: 590px;
+  position: fixed;
+  right: 25px;
+  bottom: 100px;
+  box-sizing: border-box;
+  box-shadow: 0px 7px 40px 2px rgba(148, 149, 150, 0.1);
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  animation: fadeIn;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+}
+
+.sc-chat-window .vac-player-bar{
+  max-width:calc(100% - 50px);
+}
+
+.sc-chat-window.closed {
+  opacity: 0;
+  display: none;
+  bottom: 90px;
+}
+@keyframes fadeIn {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+  100% {
+    display: flex;
+    opacity: 1;
+  }
+}
+.sc-message--me {
+  text-align: right;
+}
+.sc-message--them {
+  text-align: left;
+}
+@media (max-width: 450px) {
+  .sc-chat-window {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    right: 0px;
+    bottom: 0px;
+    border-radius: 0px;
+  }
+  .sc-chat-window {
+    transition: 0.1s ease-in-out;
+  }
+  .sc-chat-window.closed {
+    bottom: 0px;
+  }
+}
+</style>

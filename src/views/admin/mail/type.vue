@@ -51,7 +51,7 @@
     </div>
     <template #footer>
       <Button label="Отмена" icon="pi pi-times" class="p-button-text" @click="showAddEvent = false"/>
-      <Button label="Добавить" icon="pi pi-check" />
+      <Button label="Добавить" icon="pi pi-check" @click="addType"/>
     </template>
   </Dialog>
 
@@ -86,7 +86,7 @@ export default {
   },
   data() {
     return {
-      showAddEvent: true,
+      showAddEvent: false,
       filters: null,
       typeList:null,
       //add
@@ -114,6 +114,54 @@ export default {
         console.log(error);
       });
     },
+    addType(){
+      //let formData = new FormData();
+      let data ={};
+      if(this.event_name !==null){
+        //formData.append('event_name', this.event_name);
+        data.event_name = this.event_name
+      }
+      if(this.event_type !==null){
+        //formData.append('event_type', this.event_type);
+        data.event_type = this.event_type
+      }
+      if(this.name !==null){
+        //formData.append('name', this.name);
+        data.name = this.name
+      }
+      if(this.description !==null){
+        //formData.append('description', this.description);
+        data.description = this.description
+      }
+
+      axios.post( 'http://panel.kdm1.biz/api/mail/type/add',
+          data,
+          {
+            headers: authHeader()
+            //headers: { authHeader(), 'Content-Type': 'multipart/form-data'}
+          }
+      ).then((resp) => {
+        if(resp.data === 'saccess'){
+          this.event_name = null;
+          this.event_type = null;
+          this.name = null;
+          this.description = null;
+          this.showAddEvent = false;
+          this.$toast.add({severity:'success', summary: 'Задача добавлена', detail:'', life: 3000});
+
+
+        } else {
+          this.$toast.add({severity:'error', summary: 'Ошибка', detail:'Попробуйте позже', life: 3000});
+        }
+
+
+      }).catch(function(error){
+        console.log(error);
+        console.log(this.$toast);
+        this.$toast.add({severity:'error', summary: 'Ошибка', detail:'Не введено название задачи', life: 3000});
+      });
+
+    }
   },
   mounted() {
     this.typeInit();

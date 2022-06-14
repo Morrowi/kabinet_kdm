@@ -114,7 +114,7 @@ export default {
         moderation = 0;
       }
 
-      axios.post( 'http://panel.kdm1.biz/api/reviews/'+id,
+      axios.post( 'http://panel.kdm1.biz/api/reviews/update/'+id,
           {moderation:moderation},
           {
             headers: authHeader()
