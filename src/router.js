@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from "./components/Home.vue";
 import Login from "./components/Login.vue";
 import Register from "./components/Register.vue";
+//import PageNotFound from "./views/PageNotFound.vue";
 // lazy-loaded
 const Profile = () => import("./components/Profile.vue")
 const BoardAdmin = () => import("./components/BoardAdmin.vue")
@@ -100,6 +101,10 @@ const routes = [
         component: () => import('./views/admin/AddUsers.vue')
       },
       {
+        path: 'noty',
+        component: () => import('./views/admin/noty.vue')
+      },
+      {
         path: 'mail',
         component: () => import('./views/admin/mail/index.vue'),
         children: [
@@ -167,6 +172,7 @@ const routes = [
     // lazy-loaded
     component: BoardUser,
   },*/
+  /*{ path: "*", component: PageNotFound }*/
 ];
 
 const router = createRouter({

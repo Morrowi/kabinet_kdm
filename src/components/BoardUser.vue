@@ -220,6 +220,7 @@
           :show-footer="true"
           :messages="messages"
           :messages-loaded="messagesLoaded"
+          :text-messages="textMessages"
           @fetch-messages="onFetchMessages"
           @send-message="sendMessage"
           @open-file ="openFile"
@@ -253,6 +254,7 @@ export default {
     let user = this.$store.state.auth.user;
     //console.log(this.$store.state.auth.user.manager);
     return {
+
       icons :{
         open: {
           img: OpenIcon
@@ -270,6 +272,16 @@ export default {
         },
       },
       //chat
+      textMessages:{
+        ROOMS_EMPTY: 'Чат не выбран',
+        ROOM_EMPTY: 'Комната не выбрана',
+        NEW_MESSAGES: 'Новое сообщение',
+        MESSAGE_DELETED: 'Сообщение удалено',
+        MESSAGES_EMPTY: 'Сообщений нет',
+        CONVERSATION_STARTED: 'Сообщение отправлено:',
+        TYPE_MESSAGE: 'Введите сообщениe',
+        SEARCH: 'Поиск',
+      },
       room: [],
       roomsLoaded: true,
       showSearch:true,
