@@ -91,7 +91,7 @@
                 </div>
                 <div class="col-12">
                   <div class="form-group mb-3">
-                    <Editor v-model="valueEditor" editorStyle="height: 190px" placeholder="Добавьте более подробное описание задачи"></Editor>
+                    <Textarea v-model="valueEditor" editorStyle="height: 190px" placeholder="Добавьте более подробное описание задачи"></Textarea>
                   </div>
                 </div>
                 <div class="col-lg-6">
@@ -194,7 +194,7 @@
 
 <script>
 //import UserService from "../../services/user.service";
-import Editor from 'primevue/editor';
+import Textarea from 'primevue/textarea';
 import Dropdown from 'primevue/dropdown';
 import Calendar from 'primevue/calendar';
 import FileUpload from 'primevue/fileupload';
@@ -221,7 +221,7 @@ export default {
     }
   },*/
   components: {
-    Editor,
+    Textarea,
     Dropdown,
     Calendar,
     FileUpload,

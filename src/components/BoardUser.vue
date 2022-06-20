@@ -5,16 +5,18 @@
         <div class="p-2 h-100">
           <div class="d-flex flex-column justify-content-between leftMenuBlockH  h-100">
             <div class="mb-5 stickyTop">
-              <div class="d-flex mb-3 align-items-center mb-4">
+
+                <router-link class="d-flex mb-3 align-items-center mb-4"  to="/dashboard">
                 <div class="kdmLogo me-2">
-                  <img src="./../assets/image/kdm-logo.png" alt="logo">
+                  <img src="./../assets/image/kdm-logo.svg" alt="logo">
                 </div>
                 <div class="f-14 color-1">
                   Клиника доброго
                   <br>
                   <span class="color-white">маркетолога</span>
                 </div>
-              </div>
+                </router-link>>
+
               <ul class="menuLinkBody">
                 <li class="d-flex firstBlockMenu">
                   <router-link to="/dashboard" active-class="active">
@@ -175,14 +177,14 @@
         <div class="vh-100 overflow-auto">
           <div class="d-flex bg-white p-3 justify-content-between align-items-center mb-3 sticky-top">
             <bellNoty/>
-            <div class="d-flex align-items-center userTopWrap me-0 me-lg-5">
+            <router-link to="/dashboard/profile" class="d-flex align-items-center userTopWrap me-0 me-lg-5">
               <div class="imgUserTop me-2">
                 <img src="../assets/image/user.png" alt="">
               </div>
               <div class="f-14 fw-400">
                 {{ currentUser.username }}
               </div>
-            </div>
+            </router-link>
             <div class="mobMenuButton">
               <span></span>
               <span></span>

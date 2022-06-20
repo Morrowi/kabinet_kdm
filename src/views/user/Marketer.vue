@@ -104,7 +104,7 @@
                 <div class="row">
                   <div class="col-12">
                     <div class="form-group mb-3">
-                      <Editor v-model="valueEditor" editorStyle="height: 190px" placeholder="Отзыв о работе маркетолога"></Editor>
+                      <Textarea v-model="valueEditor" :autoResize="false" rows="5" cols="30" placeholder="Отзыв о работе маркетолога"></Textarea>
                     </div>
                   </div>
                 </div>
@@ -126,7 +126,7 @@
 
 
 <script>
-import Editor from 'primevue/editor';
+import Textarea from 'primevue/textarea';
 import Avatar from 'primevue/avatar';
 import axios from "axios";
 import authHeader from "@/services/auth-header";
@@ -146,7 +146,7 @@ const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
 export default {
   name: "Marketer",
   components: {
-    Editor,
+    Textarea,
     Avatar,
     StarRating,
     //ChatWindow,
@@ -345,9 +345,7 @@ export default {
   },
   mounted() {
     this.$toast.removeAllGroups();
-    if(this.$store.state.auth.user.manager.id !== undefined){
-
-      axios.put( 'http://panel.kdm1.biz/api/marketolog/'+this.$store.state.auth.user.manager.id,
+      axios.post( 'http://panel.kdm1.biz/api/marketolog/',
           '',
           {
             headers: authHeader()
@@ -358,7 +356,7 @@ export default {
       }).catch(function(error){
         console.log(error);
       }).finally(() => (this.loading = false));
-    }
+
     //this.loadRoom();
     //this.getRooms();
     //this.getMsg();
@@ -370,4 +368,9 @@ export default {
 
 };
 </script>
-
+<style>
+  .p-inputtextarea{
+    width: 100%;
+    border: 1px solid #ced4da !important;
+  }
+</style>

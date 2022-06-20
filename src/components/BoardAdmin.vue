@@ -7,7 +7,7 @@
             <div class="mb-5 stickyTop">
               <div class="d-flex mb-3 align-items-center mb-4">
                 <div class="kdmLogo me-2">
-                  <img src="./../assets/image/kdm-logo.png" alt="logo">
+                  <img src="./../assets/image/kdm-logo.svg" alt="logo">
                 </div>
                 <div class="f-14 color-1">
                   Клиника доброго

@@ -21,13 +21,16 @@
         <div class="position-absolute" v-if="loading">Loading...</div>
         <div v-else class="d-flex justify-content-between me-0 ml-0 align-items-start">
           <div class="d-flex align-items-center">
+
             <div class="avaBlock me-3">
-              <Avatar size="xlarge"  shape="circle" :image="'http://panel.kdm1.biz/uploads/'+marketolog.id+'/'+marketolog.avatar" />
+              <router-link  to="/dashboard/marketer">
+                <Avatar size="xlarge"  shape="circle" :image="'http://panel.kdm1.biz/uploads/'+marketolog.id+'/'+marketolog.avatar" />
+              </router-link>
             </div>
-            <div class="d-flex flex-column">
-              <div class="f-16 mb-1">
+            <div class="d-flex flex-column warp_username">
+              <router-link  class="f-16 mb-1" to="/dashboard/marketer">
                 {{ marketolog.username }}
-              </div>
+              </router-link>
               <div class="f-18 fw-600 d-flex align-items-center lh-1">
                 <div class="me-1">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,7 +50,6 @@
       <div class="row me-0 ml-0 justify-content-center justify-content-lg-end">
         <div class="col-auto mx-2 my-3">
           <router-link class="button buttonBorder" to="/dashboard/marketer">Написать сообщение</router-link>
-
         </div>
       </div>
     </div>
@@ -83,20 +85,17 @@ export default {
     },
   },
   mounted() {
-    if(this.$store.state.auth.user.manager.id !== undefined){
-
-      axios.put( 'http://panel.kdm1.biz/api/marketolog/'+this.$store.state.auth.user.manager.id,
-          '',
-          {
-            headers: authHeader()
-          }
-      ).then((resp)=>{
-        //console.log(resp.data);
-        this.marketolog = resp.data;
-      }).catch(function(error){
-        console.log(error);
-      }).finally(() => (this.loading = false));
-    }
+    axios.post( 'http://panel.kdm1.biz/api/marketolog/',
+        '',
+        {
+          headers: authHeader()
+        }
+    ).then((resp)=>{
+      console.log(resp.data);
+      this.marketolog = resp.data;
+    }).catch(function(error){
+      console.log(error);
+    }).finally(() => (this.loading = false));
     //console.log(this.$store.state.auth.user.manager);
   },
   created() {
@@ -106,3 +105,11 @@ export default {
 
 };
 </script>
+<style>
+.warp_username a {
+  color: #171717;
+}
+.warp_username a:hover {
+  color: #EE735A;
+}
+</style>

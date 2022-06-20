@@ -26,13 +26,13 @@
           <Form @submit="handleRegister" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <div class="form-group mb-4">
+                <div class="form-group">
                   <Field name="email" placeholder="Эл. почта" class="w-100 formInput"/>
                   <ErrorMessage class="input-error" name="email" />
                 </div>
               </div>
               <div class="col-12">
-                <div class="form-group mb-4">
+                <div class="form-group ">
                   <Field name="password" type="password" class="w-100 formInput" placeholder="Пароль" v-show="!showPass"/>
                   <Field name="password" type="text" class="w-100 formInput" placeholder="Пароль" v-show="showPass"/>
                   <ErrorMessage class="input-error" name="password" />
@@ -57,7 +57,7 @@
                 </div>
               </div>
               <div class="col-12">
-                <div class="form-group mb-3">
+                <div class="form-group">
                   <Field v-slot="{ field }" name="mailing_list" type="checkbox" :value="true">
                     <label class="d-flex align-items-center checkBlockWrap" >
                       <input type="checkbox" name="mailing_list" class="d-none" v-bind="field" :value="true" />
@@ -72,7 +72,7 @@
                 </div>
               </div>
               <div class="col-12">
-                <div class="form-group mb-3">
+                <div class="form-group">
                   <Field v-slot="{ field }" name="rules" type="checkbox" :value="true">
                     <label class="d-flex align-items-center checkBlockWrap" >
                       <input type="checkbox" name="rules" class="d-none" v-bind="field" :value="true" />
@@ -164,7 +164,7 @@
           <form action="" class="mt-3 mb-4">
             <div class="row">
               <div class="col-12">
-                <button type="submit" class="button blueButton w-100 pt-3 pb-3">Выбрать тариф позже</button>
+                <button type="submit" class="button blueButton w-100 pt-3 pb-3" @click="currentStep=3">Выбрать тариф позже</button>
               </div>
             </div>
           </form>
@@ -195,7 +195,7 @@
 
         <div class="row justify-content-center" v-if="selectedRate !=='' " >
           <div class="col-lg-6">
-            <div class="b-radius bg-white formTarifItem ml-3 mr-3">
+            <div class="b-radius bg-white  ml-3 mr-3">
               <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
                 <div class="f-18 fw-600">
                   {{selectedRate.name}}
@@ -208,9 +208,9 @@
                 {{prop}}
               </div>
             </div>
-            <div class="col-lg-6 m-auto">
+            <div class="col-lg-8 m-auto">
               <div class="row mr-0 ml-0 p-3 justify-content-center flex-column">
-                <div class="button buttonBorder pl-5 pr-5 pt-3 pb-3 mb-3">Выбрать тариф позже</div>
+
                 <div class="showCurForm button blueButton pl-5 pr-5 pt-3 pb-3 mb-3" @click="currentStep=3" >Продолжить</div>
                 <span class="showCurForm backStep color-blue text-center cursor-pointer" @click="selectedRate=''" >Назад</span>
               </div>
@@ -273,7 +273,7 @@
               </div>
             </div>
           </div>
-
+          <span class="showCurForm backStep color-blue text-center cursor-pointer" @click="currentStep=2" >Назад</span>
         </div>
       </div>
     </div>
@@ -302,6 +302,7 @@
        </div>
     </div>
   </div>
+  <Toast />
 </template>
 
 <script>
@@ -314,11 +315,12 @@ import "primeicons/primeicons.css";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import Avatar from 'primevue/avatar';
 import DataTable from 'primevue/datatable';
-//import AddRates from "@/components/AddRates"
-//const AddRates = () => import("./components/AddRates.vue")
+import Toast from 'primevue/toast';
+
 import * as yup from "yup";
 import axios from "axios";
-//import authHeader from "@/services/auth-header";
+
+
 
 export default {
   name: "Home",
@@ -334,7 +336,8 @@ export default {
     Avatar,
     Dialog,
     DataTable,
-    Column
+    Column,
+    Toast
   },
   data() {
 
@@ -361,7 +364,7 @@ export default {
           .string()
           .required("Обязательное поле")
     });
-
+    console.log(this.$store.state.auth.user);
     if(this.$store.state.auth.status.loggedIn){
         if(this.$store.state.auth.user.username === null){
           showStep=true;
@@ -369,14 +372,11 @@ export default {
 
         } else if(this.$store.state.auth.user.username != null && this.$store.state.auth.user.rate === 0 ){
           showStep=true;
-          //console.log(this.$store.state.auth.user.username);
+
           currentStep=2;
         }
 
     }
-
-
-
 
     return {
       Marketologs:[],
@@ -463,34 +463,11 @@ export default {
   methods: {
 
     initMarketologs(){
-
       axios.get( 'http://panel.kdm1.biz/api/marketolog/').then((resp)=>{
         this.Marketologs = resp.data;
       }).catch(function(error){
         console.log(error);
       });
-
-      //
-      // let arr = {};
-      // for (let key of Object.keys(this.$store.state.marketologs)) {
-      //   let src = 'http://panel.kdm1.biz/uploads/img/default_marketolog.svg';
-      //   if(this.$store.state.marketologs[key].avatar !==null){
-      //     src = 'http://panel.kdm1.biz/uploads/'+this.$store.state.marketologs[key].id+'/'+this.$store.state.marketologs[key].avatar
-      //   }
-      //
-      //   arr[key]={
-      //     id: this.$store.state.marketologs[key].id,
-      //     avatar: src,
-      //     description: this.$store.state.marketologs[key].description,
-      //     email: this.$store.state.marketologs[key].email,
-      //     rating: this.$store.state.marketologs[key].rating,
-      //     username: this.$store.state.marketologs[key].username,
-      //   }
-      //   //console.log(this.$store.state.rates[key]);
-      // }
-      // console.log(arr);
-      // return  arr;
-
     },
     showReviews(id){
       axios.post( 'http://panel.kdm1.biz/api/reviews/show/'+id).then((resp)=>{
@@ -583,6 +560,23 @@ export default {
       this.successful = false;
       this.loading = true;
 
+      /*axios.post( 'http://panel.kdm1.biz/api/auth/signup/',
+          user
+      ).then((resp)=>{
+        if(resp.data.error === "Innvalid email"){
+          console.log(resp);
+          this.$toast.add({severity:'error', summary: 'Ошибка', detail:'Email уже используется', life: 3000});
+        } else {
+          this.showStep=true;
+          this.currentStep=1
+          state.status.loggedIn = true;
+          localStorage.setItem('user', JSON.stringify(resp.data));
+        }
+
+      }).catch(function(error){
+        console.log(error);
+      }).finally(() => (this.loading = false));*/
+
       this.$store.dispatch("auth/register", user).then(
           (data) => {
             this.message = data.message;
@@ -606,7 +600,15 @@ export default {
       this.loading = true;
       let userStorage = JSON.parse(localStorage.getItem('user'));
       user.id=userStorage.id;
-      console.log(userStorage);
+      console.log(userStorage)
+     /* axios.post( 'http://panel.kdm1.biz/api/auth/step1/',
+          user
+      ).then(()=>{
+        this.currentStep=2;
+        this.loading = false;
+      }).catch(function(error){
+        console.log(error);
+      }).finally(() => (this.loading = false));*/
       this.$store.dispatch("auth/step1", user).then(
           (data) => {
 
