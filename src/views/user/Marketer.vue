@@ -138,10 +138,10 @@ import 'primeicons/primeicons.css';
 import Toast from 'primevue/toast';
 
 //import ChatWindow from 'vue-advanced-chat'
-import 'vue-advanced-chat/dist/vue-advanced-chat.css'
-
-import {io} from "socket.io-client";
-const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
+// import 'vue-advanced-chat/dist/vue-advanced-chat.css'
+//
+// import {io} from "socket.io-client";
+// const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
 
 export default {
   name: "Marketer",
@@ -219,6 +219,7 @@ export default {
     },
 
     //chat
+    /*
     getRooms(){
       socket.on("get room", data => {
         this.room=[data];
@@ -228,7 +229,6 @@ export default {
     getMsg(){
       socket.on("message_m", data => {
         //console.log('[line 63]',data);
-        /*let tmpMessage = [...this.messages, ...data];*/
         this.messages.push(data.msg);
         //console.log('[this.messages]',this.messages);
       });
@@ -275,30 +275,11 @@ export default {
       }
       console.log(message)
       socket.emit("message_m", dataMsg);
-      /*socket.on("message_m", data => {
-        //console.log('[message_m] line 125',data);
 
-      });*/
       console.log(message);
       console.log(roomId);
       console.log(replyMessage);
-      /*if (replyMessage) {
-        message.replyMessage = {
-          _id: replyMessage._id,
-          content: replyMessage.content,
-          sender_id: replyMessage.senderId
-        }
-        if (replyMessage.files) {
-          message.replyMessage.files = replyMessage.files
-        }
-      }
-      const { id } = await firestoreService.addMessage(roomId, message)
-      if (files) {
-        for (let index = 0; index < files.length; index++) {
-          await this.uploadFile({ file: files[index], messageId: id, roomId })
-        }
-      }
-      firestoreService.updateRoom(roomId, { lastUpdated: new Date() })*/
+
     },
     async formattedFiles(files) {
       const formattedFiles = []
@@ -336,6 +317,7 @@ export default {
     openFile({ file }) {
       window.open(file.file.url, '_blank')
     },
+    */
     //chat - end
   },
   computed:{

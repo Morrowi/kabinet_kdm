@@ -91,7 +91,7 @@
                 </div>
                 <div class="col-12">
                   <div class="form-group mb-3">
-                    <Textarea v-model="valueEditor" editorStyle="height: 190px" placeholder="Добавьте более подробное описание задачи"></Textarea>
+                    <Textarea v-model="valueEditor" style="height: 190px; width: 100%;" placeholder="Добавьте более подробное описание задачи"></Textarea>
                   </div>
                 </div>
                 <div class="col-lg-6">
