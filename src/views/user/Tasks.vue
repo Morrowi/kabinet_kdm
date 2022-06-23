@@ -60,7 +60,7 @@
                 </div>
               </div>
               <div class="col-auto">
-                <div class="button buttonBorder" @click="open = true">
+                <div class="button buttonBorder" @click="showModa">
                   + Новая задача
                 </div>
               </div>
@@ -81,7 +81,7 @@
               <div class="row">
                 <div class="col-lg-8">
                   <div class="form-group mb-3">
-                    <input v-model="nameTask" type="text" class="w-100 formInput task" placeholder="Название задачи">
+                    <input autofocus ref="contentInput" v-model="nameTask" type="text" class="w-100 formInput task" placeholder="Название задачи">
                   </div>
                 </div>
                 <div class="col-lg-4">
@@ -267,7 +267,13 @@ export default {
     this.listTasks();
   },
   methods: {
+    showModa(){
+      this.open = true;
+      this.$nextTick(() => {
 
+        this.$refs.contentInput.focus();
+      })
+    },
     listTasks(){
       axios.post( 'http://panel.kdm1.biz/api/tasks/',
           '',
@@ -518,6 +524,15 @@ export default {
         ],
       });
     },
+  },
+  mounted() {
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode == 27) {
+        this.open = false;
+        this.openTask =false;
+      }
+    });
+
   },
 };
 </script>

@@ -54,7 +54,7 @@
               </div>
               <div class="px-3 py-2">
                 <div class="d-flex justify-content-center justify-content-lg-start">
-                  <div class="button buttonBorder" @click="open = true">
+                  <div class="button buttonBorder" @click="showModa">
                     Оценить работу
                   </div>
                 </div>
@@ -93,8 +93,8 @@
 <!--          />-->
         </div>
       </div>
-      <div :class="{show: open}" :style="[open?'display: block':'display: none']"  class="modal fade ">
-        <div class="modal-dialog modal-lg ">
+      <div :class="{show: open}" :style="[open?'display: block':'display: none']"  class="modal fade " @keydown.esc="open = false">
+        <div class="modal-dialog modal-md">
           <div class="modal-content">
             <div class="modal-header p-3">
               <div class="f-24 fw-600">Оценка работы </div>
@@ -102,16 +102,19 @@
             </div>
             <div class="modal-body">
                 <div class="row">
+                  <div class="col-12 d-flex justify-content-center">
+                    <star-rating @update:rating ="setRating" :rating="rating" :show-rating="false" v-bind:star-size="35"></star-rating>
+                  </div>
                   <div class="col-12">
                     <div class="form-group mb-3">
-                      <Textarea v-model="valueEditor" :autoResize="false" rows="5" cols="30" placeholder="Отзыв о работе маркетолога"></Textarea>
+                      <textarea ref="contentTextArea" id="contentTextArea" class="p-inputtextarea" rows="5" cols="30" placeholder="Отзыв о работе маркетолога" v-model="valueEditor"></textarea>
                     </div>
                   </div>
                 </div>
 
             </div>
             <div class="d-flex justify-content-start px-3 pb-3 justify-content-between">
-              <star-rating @update:rating ="setRating" :rating="rating" :show-rating="false" v-bind:star-size="20"></star-rating>
+
               <button @click="submitForm" type="button" class="button buttonBorder">Оценить</button>
             </div>
 
@@ -126,7 +129,7 @@
 
 
 <script>
-import Textarea from 'primevue/textarea';
+
 import Avatar from 'primevue/avatar';
 import axios from "axios";
 import authHeader from "@/services/auth-header";
@@ -146,7 +149,6 @@ import Toast from 'primevue/toast';
 export default {
   name: "Marketer",
   components: {
-    Textarea,
     Avatar,
     StarRating,
     //ChatWindow,
@@ -161,7 +163,7 @@ export default {
       marketolog:{},
       open: false,
       valueEditor:null,
-      rating:5,
+      rating:2,
 
       //chat
       room: [],
@@ -184,6 +186,13 @@ export default {
 
   },
   methods: {
+    showModa(){
+      this.open = true;
+      this.$nextTick(() => {
+
+        this.$refs.contentTextArea.focus();
+      })
+    },
     setRating(rating){
       this.rating= rating;
     },
@@ -342,6 +351,12 @@ export default {
     //this.loadRoom();
     //this.getRooms();
     //this.getMsg();
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode == 27) {
+        this.open = false;
+      }
+    });
+
   },
   created() {
 
@@ -354,5 +369,11 @@ export default {
   .p-inputtextarea{
     width: 100%;
     border: 1px solid #ced4da !important;
+    outline:none;
+  }
+  .p-inputtextarea:focus,
+  .p-inputtextarea:active{
+    border: 1px solid #ced4da !important;
+    outline:1px solid #ced4da;
   }
 </style>

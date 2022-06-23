@@ -45,9 +45,9 @@
               <div class="tarifItem p-3 border-bottom" v-for="prop in selectRates.props" :key="prop" >
                 {{prop}}
               </div>
-              <div class="d-flex mr-0 ml-0 p-3">
-                <div class="button blueButton px-5">Выбрать тариф</div>
-              </div>
+              <!--  <div class="d-flex mr-0 ml-0 p-3">
+                  <div class="button blueButton px-5">Выбрать тариф</div>
+                </div>-->
             </div>
           </div>
           <div class="col-lg-6 mb-3">
@@ -55,7 +55,7 @@
             <!--<img class="w-100" src="image/tarifImg1.png" alt="">-->
           </div>
         </div>
-        <div class="row mr-0 ml-0 justify-content-between mb-3 flex-column">
+        <!--<div class="row mr-0 ml-0 justify-content-between mb-3 flex-column">
           <div class="f-24 fw-600">
             Сменить тариф
           </div>
@@ -155,7 +155,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
       </div>
     </div>
   </transition>

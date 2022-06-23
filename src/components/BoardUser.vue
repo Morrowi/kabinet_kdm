@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid vh-100">
     <div class="row h-100">
-      <div class="col-lg-2 bg-black mobMenuWrap">
+      <div class="col-lg-2 bg-black mobMenuWrap" :class="mobMenu">
         <div class="p-2 h-100">
           <div class="d-flex flex-column justify-content-between leftMenuBlockH  h-100">
             <div class="mb-5 stickyTop">
@@ -34,7 +34,7 @@
                         </svg>
                       </div>
                       <div class="menuLinkName fw-500 f-14">
-                        Обзор
+                        Основная информация
                       </div>
                     </div>
                   </router-link>
@@ -167,7 +167,7 @@
                 </li>
               </ul>
             </div>
-            <div class="button buttonBorderBlack mt-4">
+            <div class="button buttonBorderBlack  mt-4">
               Написать в поддержку
             </div>
           </div>
@@ -179,13 +179,18 @@
             <bellNoty/>
             <router-link to="/dashboard/profile" class="d-flex align-items-center userTopWrap me-0 me-lg-5">
               <div class="imgUserTop me-2">
-                <img src="../assets/image/user.png" alt="">
+                <div v-if="image">
+                  <Avatar shape="circle" :image="image" />
+                </div>
+                <div v-else>
+                  <Avatar icon="pi pi-user" class="mr-2"  shape="circle" />
+                </div>
               </div>
               <div class="f-14 fw-400">
                 {{ currentUser.username }}
               </div>
             </router-link>
-            <div class="mobMenuButton">
+            <div class="mobMenuButton" :class="mobMenu" @click="openMenu">
               <span></span>
               <span></span>
               <span></span>
@@ -223,6 +228,7 @@
           :messages="messages"
           :messages-loaded="messagesLoaded"
           :text-messages="textMessages"
+          :message-actions="messageActions"
           @fetch-messages="onFetchMessages"
           @send-message="sendMessage"
           @open-file ="openFile"
@@ -236,10 +242,12 @@ import UserService from "../services/user.service";
 import bellNoty from "./bell-noty"
 import CloseIcon from '../assets/image/close-icon.png'
 import OpenIcon from '../assets/image/logo-no-bg.svg'
+import Avatar from 'primevue/avatar';
 
 import ChatWindow from 'vue-advanced-chat'
 import 'vue-advanced-chat/dist/vue-advanced-chat.css'
 import {io} from "socket.io-client";
+
 const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
 
 
@@ -247,16 +255,17 @@ export default {
   name: "User",
   components: {
     bellNoty,
-    ChatWindow
+    ChatWindow,
+    Avatar
   },
   created() {
 
   },
   data() {
     let user = this.$store.state.auth.user;
-    //console.log(this.$store.state.auth.user.manager);
     return {
-
+      image:null,
+      mobMenu:'',
       icons :{
         open: {
           img: OpenIcon
@@ -274,6 +283,27 @@ export default {
         },
       },
       //chat
+      messageActions:
+        [
+            {
+              name: 'replyMessage',
+              title: 'Ответить'
+            },
+            {
+              name: 'editMessage',
+              title: 'Отредактировать',
+                onlyMe: true
+            },
+            {
+              name: 'deleteMessage',
+                  title: 'Удалить сообщение',
+                  onlyMe: true
+            },
+            {
+              name: 'selectMessages',
+              title: 'Выбрать'
+            }
+          ],
       textMessages:{
         ROOMS_EMPTY: 'Чат не выбран',
         ROOM_EMPTY: 'Комната не выбрана',
@@ -298,6 +328,14 @@ export default {
     };
   },
   methods:{
+    openMenu(){
+      if(this.mobMenu === 'active'){
+        this.mobMenu = '';
+      } else {
+        this.mobMenu = 'active';
+      }
+
+    },
     close() {
       this.isOpen = false;
     },
@@ -310,12 +348,12 @@ export default {
     getRooms(){
       socket.on("get room", data => {
         this.room=[data];
-        //console.log('151 - lime ',data);
+        console.log('321 - lime ',data);
       });
     },
     getMsg(){
       socket.on("message_m", data => {
-        //console.log('[line 63]',data);
+        console.log('[line 63]',data);
         /*let tmpMessage = [...this.messages, ...data];*/
         this.messages.push(data.msg);
         //console.log('[this.messages]',this.messages);
@@ -330,7 +368,7 @@ export default {
           manager: this.$store.state.auth.user.manager.id
         },
       }
-      //console.log(join);
+      console.log(join);
       socket.emit("subscribe", join);
     },
     onFetchMessages(data) {
@@ -340,7 +378,7 @@ export default {
       socket.emit("get msg", data.room.roomId);
 
       socket.on("load msg", data => {
-        // console.log(data);
+        console.log('[line 351]',data);
         setTimeout(() => {
           this.messages= data;
           this.messagesLoaded = true;
@@ -426,6 +464,9 @@ export default {
     },
     //chat - end
 
+    /*reUser() {
+      this.$store.dispatch("auth/reuser");
+    },*/
 
     logOut() {
       this.$store.dispatch('auth/logout');
@@ -463,6 +504,7 @@ export default {
           error.toString();
       }
     );
+    //this.reUser();
     //chat
     this.loadRoom();
     this.getRooms();

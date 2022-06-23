@@ -364,7 +364,7 @@ export default {
           .string()
           .required("Обязательное поле")
     });
-    console.log(this.$store.state.auth.user);
+
     if(this.$store.state.auth.status.loggedIn){
         if(this.$store.state.auth.user.username === null){
           showStep=true;
@@ -631,7 +631,11 @@ export default {
       );
     }
   },
-
+  created() {
+    if (this.loggedIn) {
+      this.$router.push("/dashboard");
+    }
+  },
 };
 </script>
 

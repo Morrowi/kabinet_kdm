@@ -216,7 +216,7 @@ body {
 }
 .button.buttonBorderBlack {
     background: none;
-    color: #6A7686;
+    color: #ffffff;
     border: 1px solid #6A7686;
 }
 .button.buttonBorder{
@@ -237,6 +237,16 @@ body {
     background: #0D85FB;
     color: #ffffff;
 }
+
+.button.bt_orange{
+    background-color: #E66950;
+    color: #fff;
+}
+
+.button.bt_orange:hover{
+    background-color: #EC5A3D;
+}
+
 .leftMenuBlockH{
     height: calc(100% - 90px);
 }
@@ -745,10 +755,10 @@ input[type="checkbox"]:checked + .blockCheck:before{
     width: 100%;
 }
 .mobMenuButton {
-    width: 50px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     border: 1px solid #0D85FB;
-    border-radius: 10px;
+    border-radius: 8px;
     position: relative;
     align-items: center;
     justify-content: center;
@@ -756,7 +766,7 @@ input[type="checkbox"]:checked + .blockCheck:before{
     display: none;
 }
 .mobMenuButton span {
-    width: 30px;
+    width: 16px;
     height: 2px;
     background: #0d85fb;
     position: absolute;
@@ -766,19 +776,20 @@ input[type="checkbox"]:checked + .blockCheck:before{
     top: 10px;
 }
 .mobMenuButton span:last-child {
-    top: 26px;
+    top:auto;
+    bottom: 10px;
 }
 .mobMenuButton.active span {
     opacity: 0;
 }
 .mobMenuButton.active span:first-child {
     opacity: 1;
-    top: 17px;
+    top: 14px;
     transform: rotate(45deg);
 }
 .mobMenuButton.active span:last-child {
     opacity: 1;
-    top: 17px;
+    top: 14px;
     transform: rotate(-45deg);
 }
 .formRegWrapper {
@@ -1028,6 +1039,14 @@ button.close {
     border: 1px solid #dee2e6;
 }
 
+@media only screen and (max-width : 1200px) {
+    .tarifTabletInfo{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+
 @media (min-width: 992px){
 .modal-lg {
     max-width: 1150px;
@@ -1139,4 +1158,17 @@ button.close {
 .p-toast .message-chat .p-toast-message-content .p-toast-detail a{
     color: #fff;
     font-size: 12px;
+}
+
+.vac-message-actions-wrapper .vac-message-options{
+    width: 17px;
+    height: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vac-message-actions-wrapper .vac-message-options svg{
+    padding: 0 !important;
+    margin: 0 !important;
 }

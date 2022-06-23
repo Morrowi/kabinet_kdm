@@ -47,11 +47,7 @@
         </div>
         </transition>
       </div>
-      <div class="row me-0 ml-0 justify-content-center justify-content-lg-end">
-        <div class="col-auto mx-2 my-3">
-          <router-link class="button buttonBorder" to="/dashboard/marketer">Написать сообщение</router-link>
-        </div>
-      </div>
+
     </div>
   </div>
 </template>
