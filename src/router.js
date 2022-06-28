@@ -36,6 +36,10 @@ const routes = [
         component: () => import('./views/user/Tasks.vue'),
       },
       {
+        path: 'tasks/:id',
+        component: () => import('./views/user/Tasks_id.vue'),
+      },
+      {
         path: 'reports',
         component: () => import('./views/user/Reports.vue'),
       },
