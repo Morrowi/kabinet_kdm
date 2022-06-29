@@ -1,7 +1,13 @@
 <template>
   <div>
     <div class="row mr-0 ml-0 justify-content-between mb-3 flex-column" v-if="isShowHead">
-
+      <div class="f-24 fw-600 mb-2">
+        Задачи
+      </div>
+      <div class="f-14">
+        Вы можете создать задачу самостоятельно либо через личного менеджера, <a class="color-blue" href="marketolog.html">написав ему в
+        чат</a>
+      </div>
     </div>
     <div class="row">
       <div class="col-12">
@@ -20,7 +26,7 @@
             </div>
             <div class="contentBlock">
               <div class="itemBlock" v-for="tasks in arrTasks" :key="tasks.id">
-                <router-link :to = "{path: '/dashboard/tasks/'+tasks.id, params: {id:tasks.id}}" >{{tasks.nameTask}}</router-link>
+                <div class="titleBlock" @click="showTasks(tasks.id);">{{tasks.nameTask}}</div>
                 <div class="infoBlock">
                   <div class="tabletInfo" :class="tasks.status_class">
                     {{tasks.status_text}}

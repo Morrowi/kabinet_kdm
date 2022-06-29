@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12 mb-3 pt-0">
+  <div class="col-12 mb-3">
 
     <div class="b-radius bg-white">
       <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
