@@ -267,7 +267,7 @@ export default {
             method:'post',
 
             headers: {
-              "Authorization": "Bearer ******"
+              "Authorization": "Bearer ******1"
             }
           })
           .then(r => r.json())
@@ -280,7 +280,7 @@ export default {
           },
           {
             headers: {
-              "Authorization": "Bearer ******"
+              "Authorization": "Bearer ******1"
             }
           }
       ).then((resp)=>{
