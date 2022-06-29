@@ -243,15 +243,13 @@
 </template>
 
 <script>
-//import { Form, Field, ErrorMessage } from "vee-validate";
-//import AddRates from "@/components/AddRates"
-//const AddRates = () => import("./components/AddRates.vue")
-//import * as yup from "yup";
+import axios from "axios";
+//import authHeader from "@/services/auth-header";
 
 export default {
-  name: "Index admin",
+  name: "Reports",
   components: {
-//    AddRates,
+
 
   },
   data() {
@@ -261,7 +259,43 @@ export default {
 
   },
   methods: {
+    metrikaReport(){
+     // r = requests.get('https://api-metrika.yandex.ru/stat/v1/data?&id=21075004&accuracy=full&date1=yesterday&date2=yesterday&metrics=ym:s:visits&oauth_token=' + atoken)
 
+      /*fetch(
+          'https://api-sandbox.direct.yandex.com/json/v5/campaigns', {
+            method:'post',
+
+            headers: {
+              "Authorization": "Bearer AQAAAAA55yrgAAgEYr6OY9TfMU8dpMywqtgikcs"
+            }
+          })
+          .then(r => r.json())
+          .then(metrikaApiJSON => {
+          console.log(metrikaApiJSON);
+          })*/
+      axios.post( 'https://api-sandbox.direct.yandex.com/json/v5/campaigns',
+          {
+            FieldNames:["Id","Name"]
+          },
+          {
+            headers: {
+              "Authorization": "Bearer AQAAAAA55yrgAAgEYr6OY9TfMU8dpMywqtgikcs"
+            }
+          }
+      ).then((resp)=>{
+
+        console.log(resp.data);
+
+        //this.openTask=true;
+      }).catch(function(error){
+        this.$toast.add({severity:'error', summary: 'Ошибка', detail:error, life: 3000});
+        console.log(error);
+      });
+    }
   },
+  mounted() {
+    this.metrikaReport();
+  }
 };
 </script>
