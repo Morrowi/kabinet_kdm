@@ -267,7 +267,7 @@ export default {
             method:'post',
 
             headers: {
-              "Authorization": "Bearer AQAAAAA55yrgAAgEYr6OY9TfMU8dpMywqtgikcs"
+              "Authorization": "Bearer ***"
             }
           })
           .then(r => r.json())
@@ -280,7 +280,7 @@ export default {
           },
           {
             headers: {
-              "Authorization": "Bearer AQAAAAA55yrgAAgEYr6OY9TfMU8dpMywqtgikcs"
+              "Authorization": "Bearer ***"
             }
           }
       ).then((resp)=>{
