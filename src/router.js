@@ -154,6 +154,10 @@ const routes = [
         component: () => import('./views/mod/Tasks.vue'),
       },
       {
+        path: 'reports',
+        component: () => import('./views/mod/Reports.vue')
+      },
+      {
         path: 'profile',
         component: () => import('./views/mod/Profile.vue')
       },
