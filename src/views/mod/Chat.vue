@@ -9,9 +9,12 @@
         :messages="messages"
         :messages-loaded="messagesLoaded"
         :text-messages="textMessages"
+        :message-actions="messageActions"
         @fetch-messages="onFetchMessages"
         @send-message="sendMessage"
         @open-file ="openFile"
+        @delete-message="deleteMessage"
+        @edit-message="editMessage"
     />
 
   </div>
@@ -60,6 +63,26 @@ export default {
         TYPE_MESSAGE: 'Введите сообщениe',
         SEARCH: 'Поиск',
       },
+      messageActions:[
+        {
+          name: 'replyMessage',
+          title: 'Ответить'
+        },
+        {
+          name: 'editMessage',
+          title: 'Изменить',
+          onlyMe: true
+        },
+        {
+          name: 'deleteMessage',
+          title: 'Удалить',
+          onlyMe: true
+        },
+        {
+          name: 'selectMessages',
+          title: 'Выбрать'
+        }
+      ],
       activeRoom:'',
       roomsLoaded: true,
       messagesLoaded: false,
@@ -102,6 +125,15 @@ export default {
           //this.notySound();
           //console.log(this.rooms);
           //console.log(data);
+        }
+      });
+    },
+    editMsg(){
+      socket.on("edit_message", data => {
+        for (let k in this.messages){
+          if(this.messages[k]._id === data.msg._id){
+            this.messages[k] = data.msg;
+          }
         }
       });
     },
@@ -214,11 +246,42 @@ export default {
     openFile({ file }) {
       window.open(file.file.url, '_blank')
     },
+    async deleteMessage({ message, roomId }) {
+      message.deleted = 1;
+      console.log(roomId);
+      console.log(message);
+
+     let dataMsg = {
+        room:roomId,
+        message:message
+      };
+      socket.emit("deleted_msg", dataMsg);
+      const { files } = message
+      if (files) {
+        files.forEach(file => {
+          console.log(this.currentUserId, message._id, file);
+        })
+      }
+    },
+    async editMessage({ messageId, newContent, roomId }) {
+      let dataMsg={
+        messageId:messageId,
+        newContent:newContent,
+        room:roomId
+      }
+      socket.emit("edit_msg", dataMsg);
+      for (let k in this.messages){
+        if(this.messages[k]._id === messageId){
+          this.messages[k].content = newContent;
+        }
+      }
+    },
   },
   mounted() {
     this.loadRoom();
     this.getRooms();
     this.getMsg();
+    this.editMsg();
   },
 
 };

@@ -324,7 +324,6 @@ export default {
             headers: authHeader()
           }
       ).then((resp)=>{
-        console.log(resp.data);
         let resDate = new Date(resp.data[0].date).toLocaleString();
         switch (resp.data[0].selectedLabel) {
           case 'important':
@@ -340,7 +339,7 @@ export default {
 
 
         resp.data[0].date=resDate;
-        console.log(resp.data[0]);
+
         this.modalTaks = resp.data[0];
 
         this.openTask=true;
@@ -457,7 +456,6 @@ export default {
         if(resp.data === 'saccess'){
           this.listTasks();
         }
-        console.log(resp.data);
 
       }).catch(function(error){
         console.log(error);
@@ -465,7 +463,6 @@ export default {
     },
     onContextMenu(e, task_id) {
       e.preventDefault();
-      console.log(task_id);
       let show_x =e.x;
       let tmp_x = e.x+150;
 

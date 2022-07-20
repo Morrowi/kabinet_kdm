@@ -232,6 +232,8 @@
           @fetch-messages="onFetchMessages"
           @send-message="sendMessage"
           @open-file ="openFile"
+          @delete-message="deleteMessage"
+          @edit-message="editMessage"
       />
     </div>
   </div>
@@ -348,7 +350,6 @@ export default {
     getRooms(){
       socket.on("get room", data => {
         this.room=[data];
-        console.log('321 - lime ',data);
       });
     },
     getMsg(){
@@ -357,6 +358,19 @@ export default {
         /*let tmpMessage = [...this.messages, ...data];*/
         this.messages.push(data.msg);
         //console.log('[this.messages]',this.messages);
+      });
+    },
+    editMsg(){
+      socket.on("edit_message", data => {
+        console.log('[line 362]',data);
+        for (let k in this.messages){
+          if(this.messages[k]._id === data.msg._id){
+            this.messages[k] = data.msg;
+          }
+        }
+        /*let tmpMessage = [...this.messages, ...data];*/
+        //this.messages.push(data.msg);
+        console.log('[this.messages]',this.messages);
       });
     },
     loadRoom(){
@@ -368,7 +382,7 @@ export default {
           manager: this.$store.state.auth.user.manager.id
         },
       }
-      console.log(join);
+
       socket.emit("subscribe", join);
     },
     onFetchMessages(data) {
@@ -378,7 +392,6 @@ export default {
       socket.emit("get msg", data.room.roomId);
 
       socket.on("load msg", data => {
-        console.log('[line 351]',data);
         setTimeout(() => {
           this.messages= data;
           this.messagesLoaded = true;
@@ -462,6 +475,36 @@ export default {
     openFile({ file }) {
       window.open(file.file.url, '_blank')
     },
+    async deleteMessage({ message, roomId }) {
+      message.deleted = 1;
+      console.log(roomId);
+      console.log(message);
+
+      let dataMsg = {
+        room:roomId,
+        message:message
+      };
+      socket.emit("deleted_msg", dataMsg);
+      const { files } = message
+      if (files) {
+        files.forEach(file => {
+          console.log(this.currentUserId, message._id, file);
+        })
+      }
+    },
+    async editMessage({ messageId, newContent, roomId }) {
+      let dataMsg={
+        messageId:messageId,
+        newContent:newContent,
+        room:roomId
+      }
+      socket.emit("edit_msg", dataMsg);
+      for (let k in this.messages){
+        if(this.messages[k]._id === messageId){
+          this.messages[k].content = newContent;
+        }
+      }
+    },
     //chat - end
 
     /*reUser() {
@@ -509,6 +552,7 @@ export default {
     this.loadRoom();
     this.getRooms();
     this.getMsg();
+    this.editMsg();
     //chat - end
   },
 };
