@@ -131,8 +131,9 @@
                         Тариф
                       </div>
                       <!-- без класса active -- нет оплаты  -->
-                      <div class="tarifTabletInfo active">
-                        Активен
+                      <div class="tarifTabletInfo" :class="{'active':pay}">
+                        <span v-if="pay">Активен</span>
+                        <span v-else>Ждет оплату</span>
                       </div>
                     </div>
                   </router-link>
@@ -249,6 +250,8 @@ import Avatar from 'primevue/avatar';
 import ChatWindow from 'vue-advanced-chat'
 import 'vue-advanced-chat/dist/vue-advanced-chat.css'
 import {io} from "socket.io-client";
+import axios from "axios";
+import authHeader from "@/services/auth-header";
 
 const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
 
@@ -266,6 +269,7 @@ export default {
   data() {
     let user = this.$store.state.auth.user;
     return {
+      pay:false,
       image:null,
       mobMenu:'',
       icons :{
@@ -412,36 +416,12 @@ export default {
         room: roomId,
         message:message
       }
-      console.log(message)
+      console.log(replyMessage)
       socket.emit("message_m", dataMsg);
-      /*socket.on("message_m", data => {
-        //console.log('[message_m] line 125',data);
 
-      });*/
-      console.log(message);
-      console.log(roomId);
-      console.log(replyMessage);
-      /*if (replyMessage) {
-        message.replyMessage = {
-          _id: replyMessage._id,
-          content: replyMessage.content,
-          sender_id: replyMessage.senderId
-        }
-        if (replyMessage.files) {
-          message.replyMessage.files = replyMessage.files
-        }
-      }
-      const { id } = await firestoreService.addMessage(roomId, message)
-      if (files) {
-        for (let index = 0; index < files.length; index++) {
-          await this.uploadFile({ file: files[index], messageId: id, roomId })
-        }
-      }
-      firestoreService.updateRoom(roomId, { lastUpdated: new Date() })*/
     },
     async formattedFiles(files) {
       const formattedFiles = []
-      console.log(files);
 
       for (let i in files){
         let file =files[i];
@@ -511,6 +491,23 @@ export default {
       this.$store.dispatch("auth/reuser");
     },*/
 
+    initPaymend(){
+      axios.post( 'http://panel.kdm1.biz/api/paymend/',
+          '',
+          {
+            headers: authHeader()
+          }
+      ).then((resp)=>{
+
+       if(resp.data.length>0){
+         this.pay=true;
+       }
+      }).catch(function(error){
+        console.log(error);
+
+      });
+    },
+
     logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
@@ -553,6 +550,7 @@ export default {
     this.getRooms();
     this.getMsg();
     this.editMsg();
+    this.initPaymend();
     //chat - end
   },
 };

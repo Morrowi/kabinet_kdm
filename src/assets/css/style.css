@@ -351,6 +351,7 @@ body {
     color: #94A2AB;
     position: relative;
     white-space: nowrap;
+    cursor:pointer;
 }
 .bessBlockItem .titleBlock{
     overflow: hidden;

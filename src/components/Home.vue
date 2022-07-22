@@ -23,19 +23,19 @@
           <div class="f-16 col-lg-9 mb-3">
             Если у вас уже есть аккаунт, <router-link to="/login" class="showCurForm color-blue cursor-pointer">войдите</router-link> в него
           </div>
-          <Form @submit="handleRegister" :validation-schema="schema">
+          <Form @submit="handleRegister">
             <div class="row">
               <div class="col-12">
-                <div class="form-group">
+                <div class="form-group" :class="{ 'form-input-error': errorClassEmail }">
                   <Field name="email" placeholder="Эл. почта" class="w-100 formInput"/>
-                  <ErrorMessage class="input-error" name="email" />
+                  <div class="warp_error_text"  v-if="errorEmailText">{{errorEmailText}}</div>
                 </div>
               </div>
               <div class="col-12">
-                <div class="form-group ">
+                <div class="form-group " :class="{ 'form-input-error': errorClassPassword }">
                   <Field name="password" type="password" class="w-100 formInput" placeholder="Пароль" v-show="!showPass"/>
                   <Field name="password" type="text" class="w-100 formInput" placeholder="Пароль" v-show="showPass"/>
-                  <ErrorMessage class="input-error" name="password" />
+                  <div class="warp_error_text"  v-if="errorPasswordText">{{errorPasswordText}}</div>
                   <div class="buttonShowPass" @click="showPassBt">
                     <input class="password-but" type="checkbox">
                     <div class="hidePass" v-show="!showPass">
@@ -57,56 +57,51 @@
                 </div>
               </div>
               <div class="col-12">
-                <div class="form-group">
-                  <Field v-slot="{ field }" name="mailing_list" type="checkbox" :value="true">
-                    <label class="d-flex align-items-center checkBlockWrap" >
-                      <input type="checkbox" name="mailing_list" class="d-none" v-bind="field" :value="true" />
-                      <div class="checkBloc me-2">
-                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M10.6668 0.5L4.25016 6.91667L1.3335 4" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                      </div>
-                      <span class="f-12">Получать рассылку с крутыми ништяками</span>
-                    </label>
-                  </Field>
+                  <div class="form-group">
+                    <Field v-slot="{ field }" name="mailing_list" type="checkbox" :value="true">
+                      <label class="d-flex align-items-center checkBlockWrap" >
+                        <input type="checkbox" name="mailing_list" class="d-none" v-bind="field" :value="true" />
+                        <div class="checkBloc me-2">
+                          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10.6668 0.5L4.25016 6.91667L1.3335 4" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </div>
+                        <span class="f-12">Получать рассылку с крутыми ништяками</span>
+                      </label>
+                    </Field>
+                  </div>
                 </div>
-              </div>
               <div class="col-12">
-                <div class="form-group">
-                  <Field v-slot="{ field }" name="rules" type="checkbox" :value="true">
-                    <label class="d-flex align-items-center checkBlockWrap" >
-                      <input type="checkbox" name="rules" class="d-none" v-bind="field" :value="true" />
-                      <div class="checkBloc me-2">
-                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M10.6668 0.5L4.25016 6.91667L1.3335 4" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                      </div>
-                      <span class="f-12">Я прочитал <a href="javascript:void(0);" @click="open = true" class="color-blue">правила</a> и согласен с ними</span>
-                    </label>
-                  </Field>
-                  <ErrorMessage class="input-error" name="rules" />
+                  <div class="form-group" :class="{ 'form-input-error': errorClassRules }" >
+                    <Field v-slot="{ field }" name="rules" type="checkbox" :value="true">
+                      <label class="d-flex align-items-center checkBlockWrap" >
+                        <input type="checkbox" name="rules" class="d-none" v-bind="field" :value="true" />
+                        <div class="checkBloc me-2">
+                          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10.6668 0.5L4.25016 6.91667L1.3335 4" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </div>
+                        <span class="f-12">Я прочитал <a href="javascript:void(0);" @click="open = true" class="color-blue">правила</a> и согласен с ними</span>
+                      </label>
+                    </Field>
+                    <div class="warp_error_text"  v-if="errorRulesText">{{errorRulesText}}</div>
+
+                  </div>
                 </div>
-              </div>
               <div class="col-12 mt-4">
-                <div class="form-group">
-                  <button class="button blueButton w-100 pt-3 pb-3" :disabled="loading">
-                              <span
-                                  v-show="loading"
-                                  class="spinner-border spinner-border-sm"
-                              ></span>
-                                Зарегистрироваться
-                  </button>
+                  <div class="form-group">
+                    <button class="button blueButton w-100 pt-3 pb-3" :disabled="loading">
+                                <span
+                                    v-show="loading"
+                                    class="spinner-border spinner-border-sm"
+                                ></span>
+                                  Зарегистрироваться
+                    </button>
+                  </div>
                 </div>
-              </div>
             </div>
           </Form>
-                <div
-                    v-if="message"
-                    class="alert"
-                    :class="successful ? 'alert-success' : 'alert-danger'"
-                >
-                  {{ message }}
-                </div>
+
         </div>
       </div>
 
@@ -127,12 +122,12 @@
           <div class="f-16 col-lg-9 m-auto">
             Укажите ваше имя или название компании
           </div>
-          <Form @submit="handleStep1" :validation-schema="schema2" class="mt-3">
+          <Form @submit="handleStep1"  class="mt-3">
             <div class="row">
               <div class="col-12">
-                <div class="form-group mb-3">
+                <div class="form-group mb-3" :class="{ 'form-input-error': errorClassUsername }" >
                   <Field name="username" placeholder="Имя или название организации" class="w-100 formInput"/>
-                  <ErrorMessage class="input-error" name="username" />
+                  <div class="warp_error_text"  v-if="errorUsernameText">{{errorUsernameText}}</div>
                 </div>
               </div>
               <div class="col-12">
@@ -312,12 +307,12 @@ import "primeflex/primeflex.css";
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-import { Form, Field, ErrorMessage } from "vee-validate";
+import { Form, Field } from "vee-validate";
 import Avatar from 'primevue/avatar';
 import DataTable from 'primevue/datatable';
 import Toast from 'primevue/toast';
 
-import * as yup from "yup";
+
 import axios from "axios";
 
 
@@ -332,7 +327,6 @@ export default {
 //    AddRates,
     Form,
     Field,
-    ErrorMessage,
     Avatar,
     Dialog,
     DataTable,
@@ -343,27 +337,6 @@ export default {
 
     let currentStep=0;
     let showStep=false;
-
-    const schema = yup.object().shape({
-      email: yup
-          .string()
-          .required("Эл.почта обязательное поле!")
-          .email("Не является почтой")
-          .max(50, "Максимальная длинна не может быть больше 50"),
-      password: yup
-          .string()
-          .required("Пароль обязателен!")
-          .min(6, "Минимальное кол-во символов 6")
-          .max(40, "Максимальное кол-во символов 40!"),
-      rules: yup
-          .string()
-          .required("Обязательное поле")
-    });
-    const schema2 = yup.object().shape({
-      username: yup
-          .string()
-          .required("Обязательное поле")
-    });
 
     if(this.$store.state.auth.status.loggedIn){
         if(this.$store.state.auth.user.username === null){
@@ -379,7 +352,17 @@ export default {
     }
 
     return {
+      error:0,
+      errorClassEmail: false,
+      errorEmailText:null,
+      errorClassPassword:false,
+      errorPasswordText:null,
+      errorClassRules:false,
+      errorRulesText:null,
+      errorUsernameText:null,
+      errorClassUsername:false,
       Marketologs:[],
+      Rates:[],
       reviews:null,
       open: false,
       username:'',
@@ -387,8 +370,6 @@ export default {
       successful: false,
       loading: false,
       message: "",
-      schema,
-      schema2,
       showStep,
       currentStep,
       selectedRate:'',
@@ -397,21 +378,7 @@ export default {
     };
   },
   computed: {
-    Rates(){
-      let arr = {};
-      for (let key of Object.keys(this.$store.state.rates)) {
-        arr[key]={
-          'id':this.$store.state.rates[key].id,
-          'name':this.$store.state.rates[key].name,
-          'price':this.$store.state.rates[key].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "),
-          'props':JSON.parse(this.$store.state.rates[key].props),
-        }
-        //console.log(this.$store.state.rates[key]);
-      }
-      //console.log(arr);
-      return  arr;
 
-    },
 
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
@@ -448,6 +415,7 @@ export default {
       //this.$router.push("/profile");
     }
     this.initMarketologs();
+    this.initRates();
   },
   watch:{
     '$store.state.auth.user.status.loggedIn': function() {
@@ -461,7 +429,28 @@ export default {
     }
   },
   methods: {
+    initRates(){
+      //
+      axios.get( 'http://panel.kdm1.biz/api/rates/list/').then((resp)=>{
+        console.log(resp.data);
+        for (let key of Object.keys(resp.data)) {
+          this.Rates[key]={
+            'id':resp.data[key].id,
+            'name':resp.data[key].name,
+            'price':resp.data[key].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "),
+            'props':JSON.parse(resp.data[key].props),
+          }
+          //console.log(this.$store.state.rates[key]);
+        }
 
+      }).catch(function(error){
+        console.log(error);
+      });
+      /*
+            //console.log(arr);
+            return  arr;*/
+
+    },
     initMarketologs(){
       axios.get( 'http://panel.kdm1.biz/api/marketolog/').then((resp)=>{
         this.Marketologs = resp.data;
@@ -560,75 +549,124 @@ export default {
       this.successful = false;
       this.loading = true;
 
-      /*axios.post( 'http://panel.kdm1.biz/api/auth/signup/',
-          user
-      ).then((resp)=>{
-        if(resp.data.error === "Innvalid email"){
-          console.log(resp);
-          this.$toast.add({severity:'error', summary: 'Ошибка', detail:'Email уже используется', life: 3000});
+      this.loading = true;
+      this.errorClassEmail=false;
+      this.errorEmailText = '';
+      this.errorClassPassword= false
+      this.errorPasswordText = '';
+      this.error=0;
+
+      console.log(user);
+
+      if (!user.email) {
+        this.errorClassEmail=true;
+        this.error++;
+        this.errorEmailText =  'E-mail не заполнен';
+      } else {
+        const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+        if (!regex.test(user.email)) {
+          this.errorClassEmail=true;
+          this.error++;
+          this.errorEmailText = 'Не является email';
         } else {
-          this.showStep=true;
-          this.currentStep=1
-          state.status.loggedIn = true;
-          localStorage.setItem('user', JSON.stringify(resp.data));
-        }
-
-      }).catch(function(error){
-        console.log(error);
-      }).finally(() => (this.loading = false));*/
-
-      this.$store.dispatch("auth/register", user).then(
-          (data) => {
-            this.message = data.message;
-            this.successful = true;
-            this.loading = false;
-          },
-          (error) => {
-            this.message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
-            this.successful = false;
-            this.loading = false;
+          let myarr = user.email.split("@");
+          if(myarr[0].length > 128 ||  myarr[1].length > 128){
+            this.errorClassEmail=true;
+            this.error++;
+            this.errorEmailText = 'Недопустимый формат email';
+          } else {
+            let firstPos = myarr[0].indexOf('.');
+            if(firstPos !== -1){
+              this.errorClassEmail=true;
+              this.error++;
+              this.errorEmailText = 'email не может начинатся с "."';
+            }
           }
-      );
+        }
+      }
+      if (!user.password) {
+        this.errorClassPassword=true;
+        this.error++;
+        this.errorPasswordText =  'Пароль не заполнен';
+      } else {
+        if (user.password.length < 6) {
+          this.errorClassPassword=true;
+          this.error++;
+          this.errorPasswordText =  'Пароль должен быть больше 6 символов';
+        }
+      }
+
+      if (user.rules === undefined) {
+        this.errorClassRules=true;
+        this.error++;
+          this.errorRulesText =  'Вы не согласились с правилами';
+      }
+
+      if(this.error === 0) {
+        -this.$store.dispatch("auth/register", user).then(
+            (data) => {
+              this.message = data.message;
+              this.successful = true;
+              this.loading = false;
+            },
+            (error) => {
+              this.message =
+                  (error.response &&
+                      error.response.data &&
+                      error.response.data.message) ||
+                  error.message ||
+                  error.toString();
+              console.log(error.response.data.error);
+              if(error.response.data.error === 'Innvalid email'){
+                this.$toast.add({severity:'error', summary: 'Ошибка', detail:'Такой Email уже используется', life: 3000});
+              }
+              this.successful = false;
+              this.loading = false;
+            }
+        );
+      } else {
+        this.loading = false;
+      }
+
     },
     handleStep1(user) {
+      this.error=0;
       this.message = "";
       this.loading = true;
-      let userStorage = JSON.parse(localStorage.getItem('user'));
-      user.id=userStorage.id;
-      console.log(userStorage)
-     /* axios.post( 'http://panel.kdm1.biz/api/auth/step1/',
-          user
-      ).then(()=>{
-        this.currentStep=2;
-        this.loading = false;
-      }).catch(function(error){
-        console.log(error);
-      }).finally(() => (this.loading = false));*/
-      this.$store.dispatch("auth/step1", user).then(
-          (data) => {
 
-            this.currentStep=2;
-            this.showStep=true;
-            this.message = data.message;
-            this.successful = true;
-            this.loading = false;
-          },
-          (error) => {
-            this.message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
-            this.successful = false;
-            this.loading = false;
-          }
-      );
+      if (!user.username) {
+        this.errorClassUsername=true;
+        this.error++;
+        this.errorUsernameText =  'Поле не может быть пустым';
+      }
+
+      if(this.error === 0){
+        let userStorage = JSON.parse(localStorage.getItem('user'));
+        user.id=userStorage.id;
+
+        this.$store.dispatch("auth/step1", user).then(
+            (data) => {
+
+              this.currentStep=2;
+              this.showStep=true;
+              this.message = data.message;
+              this.successful = true;
+              this.loading = false;
+            },
+            (error) => {
+              this.message =
+                  (error.response &&
+                      error.response.data &&
+                      error.response.data.message) ||
+                  error.message ||
+                  error.toString();
+              this.successful = false;
+              this.loading = false;
+            }
+        );
+      } else {
+        this.loading = false;
+      }
     }
   },
   created() {
@@ -675,5 +713,25 @@ label {
 
 .error-feedback {
   color: red;
+}
+.form-input-error input{
+  border:1px solid #EE735A;
+  outline-color: #EE735A;
+  color:#EE735A;
+}
+
+.warp_error_text{
+  padding: 15px 16px;
+  background: #FFE6E6;
+  border-radius: 6px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 160%;
+  color: #000000;
+  position: absolute;
+  left: calc(100% + 30px);
+  top: 0;
+  max-width: 270px;
+  width: 100%;
 }
 </style>

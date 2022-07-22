@@ -1,29 +1,24 @@
 <template>
-  <div class="contentBlock mb-5">
-    <div class="row mr-0 ml-0 justify-content-between mb-3 flex-column">
-      <div class="f-24 fw-600">
-        Уведомления
-      </div>
-    </div>
+  <div class="contentBlock">
     <transition name="fade" >
     <div class="position-absolute" v-if="loading">Loading...</div>
     <div class="row"  v-else>
-      <div class="col-12 mb-3">
+      <div class="col-12">
         <div class="b-radius bg-white">
           <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
             <div class="f-18 fw-600">
-              У вас <span class="color-orange">{{viewed}}</span> непрочитанных уведомления
+              Уведомления
             </div>
           </div>
-          <div class="myTable border-bottom pb-3">
-            <div class="topBlock">
-              <div class="titleBlock">Описание</div>
-              <div class="infoBlock">Дата создания</div>
+          <div class="messBlockWrap">
+            <div class="bessBlockItem f-14 border-bottom" v-for="noty in arrNoty" :key="noty.id" :class="{'active':noty.viewed}" @click="showNoty(noty.id);">
+              <div class="titleBlock cropBlock"><span>{{ noty.text }}</span></div>
             </div>
-            <div class="contentBlock">
-              <div class="itemBlock bessBlockItem" v-for="noty in arrNoty" :key="noty.id" :class="{'active':noty.viewed}" @click="showNoty(noty.id);">
-                <div class="titleBlock cropBlock"><span>{{ noty.text }}</span></div>
-                <div class="infoBlock">{{ noty.data_insert }}</div>
+          </div>
+          <div class="row me-0 ml-0 justify-content-between align-items-center">
+            <div class="col-auto mx-2 my-3">
+              <div class="colMessBlock f-14 color-blue">
+                У вас <span>{{viewed}}</span> непрочитанных уведомления
               </div>
             </div>
           </div>

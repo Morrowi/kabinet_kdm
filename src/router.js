@@ -1,6 +1,8 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "./components/Home.vue";
 import Login from "./components/Login.vue";
+import Recovery from "./components/Recovery.vue";
+
 import Register from "./components/Register.vue";
 //import PageNotFound from "./views/PageNotFound.vue";
 // lazy-loaded
@@ -72,6 +74,22 @@ const routes = [
     component: Register,
     meta:{
       title: 'Регистрация'
+    }
+  },
+  {
+    path: "/recovery",
+    component: Recovery,
+    name: 'Recovery',
+    meta:{
+      title: 'Добрый маркетолог — восстановление пароля'
+    }
+  },
+  {
+    path: "/recovery/:id",
+    name: 'Recovery id',
+    component: Recovery,
+    meta:{
+      title: 'Добрый маркетолог — восстановление пароля'
     }
   },
   {
@@ -185,7 +203,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/', '/login', '/register', '/home'];
+  const publicPages = ['/', '/login', '/register', '/home', '/recovery','/recovery/'];
+  //http://localhost:8080/recovery/6d167789a82410d87e6fa5b19585d844037823b5
+
+   to.path = to.path.replace(to.params.id,'');
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
   document.title = to.meta.title;

@@ -74,12 +74,43 @@ export default {
           (design) => {
             console.log('saveDesign', design);
           }
-      )
+      );
+      this.editor.exportHtml(
+          (data) => {
+            console.log('exportHtml', data);
+            console.log(this.selected_event_type.id);
+
+            console.log(data.html);
+
+            let dataSend = {
+              'event_type': this.selected_event_type.id,
+              'html':data.html
+            };
+
+
+            axios.post( 'http://panel.kdm1.biz/api/mail/add',
+                dataSend,
+                {
+                  headers: authHeader()
+                  //headers: { authHeader(), 'Content-Type': 'multipart/form-data'}
+                }
+            ).then((resp) => {
+              console.log(resp);
+            }).catch(function(error){
+              console.log(error);
+              console.log(this.$toast);
+              this.$toast.add({severity:'error', summary: 'Ошибка', detail:'Не введено название задачи', life: 3000});
+            });
+
+
+          }
+      );
     },
     exportHtml() {
       this.editor.exportHtml(
           (data) => {
             console.log('exportHtml', data);
+
           }
       )
     },

@@ -1,7 +1,7 @@
 <template>
   <div>
     <a href="#">
-      <div class="d-flex align-items-center massageTopWrap active">
+      <div class="d-flex align-items-center massageTopWrap" :class="{'active':viewedBell}">
         <div class="bellBlock me-2">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_250_45995)">
@@ -14,11 +14,12 @@
             </defs>
           </svg>
         </div>
-        <div class="f-14 fw-400 color-blue messOn">
-          Новых уведомлений <span>2</span>
+        <div class="f-14 fw-400 color-blue messOn" v-if="viewed!==0">
+          <router-link to="/dashboard/notifications" >Новых уведомлений <span>{{viewed}}</span></router-link>
         </div>
-        <div class="f-14 fw-400 color-2 messOff">
-          Нет новых уведомлений
+        <div class="f-14 fw-400 color-2 " v-if="viewed===0">
+          <router-link to="/dashboard/notifications" >Нет новых уведомлений</router-link>
+
         </div>
       </div>
     </a>
@@ -65,7 +66,8 @@ export default {
   data() {
 
     return{
-
+      viewed:0,
+      viewedBell:false
     }
   },
   watch: {},
@@ -97,44 +99,34 @@ export default {
       });
     },
 
-    listTasks(){
-      axios.post( 'http://panel.kdm1.biz/api/tasks/',
+    initNoty(){
+
+      axios.post( 'http://panel.kdm1.biz/api/notifications/',
           '',
           {
             headers: authHeader()
           }
       ).then((resp)=>{
-        for (const k in resp.data) {
-          resp.data[k].date_insert= this.dateToYMD(new Date(resp.data[k].date_insert));
-          switch (resp.data[k].status){
-            case 1:
-              resp.data[k].status_class='work';
-              resp.data[k].status_text='В работе';
-              break;
-            case 2:
-              resp.data[k].status_class='pause';
-              resp.data[k].status_text='На паузе';
-              break;
-            case 3:
-              resp.data[k].status_class='completed';
-              resp.data[k].status_text='Готово';
-              break;
-            case 4:
-              resp.data[k].status_class='wait';
-              resp.data[k].status_text='Ждем материалы';
-              break;
-            case 5:
-              resp.data[k].status_class='agreed';
-              resp.data[k].status_text='На согласовании';
-              break;
+        let viewedTmp=0;
+        for(let i in resp.data){
+          if(resp.data[i].viewed === 0){
+            viewedTmp ++;
+
           }
-          //status
         }
-        this.countTasks = resp.data.length;
-        this.arrTasks = resp.data;
+        if(viewedTmp>0){
+          this.viewedBell=true;
+        } else {
+          this.viewedBell=false;
+        }
+        this.viewed = viewedTmp;
+        setTimeout(()=>{
+          this.initNoty();
+        },5000);
       }).catch(function(error){
         console.log(error);
-      });
+
+      }).finally(() => (this.loading = false));
     },
     dateToYMD(date) {
       var d = date.getDate();
@@ -160,6 +152,9 @@ export default {
   mounted() {
     this.subscribeSocekt();
     this.getMsg();
+    this.initNoty();
+
+
   },
 };
 </script>

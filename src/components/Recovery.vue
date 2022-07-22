@@ -24,74 +24,54 @@
           </div>
 
         </div>
-        <div class="curFormBlock" data-target="login" >
-          <div class="f-24 fw-600 mb-3 col-lg-9">
-            Клиника доброго маркетолога вход <br>в личный кабинет
+        <div class="curFormBlock" data-target="forgot" >
+          <div class="f-24 fw-600 mb-3">
+            Восстановление пароля
           </div>
-          <div class="f-16 col-lg-9 mb-3">
-            Если у вас нет аккаунта, <router-link to="/" class="showCurForm color-blue cursor-pointer">зарегистрируйтесь</router-link>
+          <div v-if="step === 1" class="f-16 col-lg-9 mb-3">
+            Мы&nbsp;пришлем инструкции
+            по&nbsp;восстановлению пароля
+            на&nbsp;электронную почту.
           </div>
-          <Form @submit="handleLogin" >
+          <form v-if="step === 1"  action="">
             <div class="row">
               <div class="col-12">
-                <div class="form-group mb-2" :class="{ 'form-input-error': errorClassEmail }" >
-                  <Field name="email" placeholder="Эл. почта"  class="w-100 formInput" />
+                <div class="form-group" :class="{ 'form-input-error': errorClassEmail }">
+                  <input v-model="email" type="text" class="w-100 formInput" placeholder="Эл. почта">
                   <div class="warp_error_text"  v-if="errorEmailText">{{errorEmailText}}</div>
                 </div>
               </div>
               <div class="col-12">
-
-                <div class="form-group mb-2" :class="{ 'form-input-error': errorClassPassword }">
-                  <Field name="password" type="password" class="w-100 formInput" placeholder="Пароль" v-show="!showPass"/>
-                  <Field name="password" type="text" class="w-100 formInput" placeholder="Пароль" v-show="showPass"/>
-                  <ErrorMessage class="input-error" name="password" />
-                  <div class="warp_error_text"  v-if="errorPasswordText">{{errorPasswordText}}</div>
-
-                  <div class="buttonShowPass" @click="showPassBt">
-                    <input class="password-but" type="checkbox">
-                    <div class="hidePass" v-show="!showPass">
-                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4.00977 3.23535L16.309 16.7645" stroke="black" stroke-width="1.22993" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12.2289 12.275C11.6255 12.8235 10.8289 13.1098 10.0144 13.071C9.19986 13.0321 8.43411 12.6714 7.88558 12.068C7.33705 11.4646 7.05066 10.668 7.08941 9.8535C7.12817 9.03897 7.48888 8.27319 8.09222 7.72461" stroke="black" stroke-width="1.22993" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M6.00884 5.43262C2.87489 7.01965 1.55078 9.99922 1.55078 9.99922C1.55078 9.99922 4.01064 15.5333 10.1603 15.5333C11.6011 15.5448 13.024 15.2129 14.3111 14.5651" stroke="black" stroke-width="1.22993" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M16.3567 13.1595C18.0326 11.6584 18.7697 10.0001 18.7697 10.0001C18.7697 10.0001 16.3098 4.46486 10.1602 4.46486C9.62755 4.46399 9.09577 4.50729 8.57031 4.59432" stroke="black" stroke-width="1.22993" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M10.7383 6.97949C11.3918 7.10498 11.987 7.43899 12.4347 7.93141C12.8823 8.42382 13.1582 9.0481 13.221 9.7106" stroke="black" stroke-width="1.22993" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </div>
-                    <div class="showPass" v-show="showPass">
-                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.1608 4.46387C4.01112 4.46387 1.55127 9.99914 1.55127 9.99914C1.55127 9.99914 4.01112 15.5332 10.1608 15.5332C16.3104 15.5332 18.7702 9.99914 18.7702 9.99914C18.7702 9.99914 16.3104 4.46387 10.1608 4.46387Z" stroke="#171717" stroke-width="1.22993" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M10.1608 13.0744C11.8589 13.0744 13.2356 11.6978 13.2356 9.99962C13.2356 8.30145 11.8589 6.9248 10.1608 6.9248C8.46258 6.9248 7.08594 8.30145 7.08594 9.99962C7.08594 11.6978 8.46258 13.0744 10.1608 13.0744Z" stroke="#171717" stroke-width="1.22993" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-group mb-3">
-                  <button type="submit" class="button blueButton w-100 pt-3 pb-3">Войти</button>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-group mb-3">
-                  <label class="d-flex align-items-center justify-content-center checkBlockWrap">
-                    <input type="checkbox" class="d-none">
-                    <div class="checkBloc me-2">
-                      <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.6668 0.5L4.25016 6.91667L1.3335 4" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </div>
-                    <span class="f-12">Запомнить меня</span>
-                  </label>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-group mb-3">
-                  <router-link to="/recovery" class="showCurForm color-blue cursor-pointer f-12">Вспомнить пароль</router-link>
+                <div class="form-group">
+                  <button type="button" class="showCurForm button blueButton w-100 pt-3 pb-3" :disabled="loading" @click="submit">
+                    <span v-show="loading" class="spinner-border spinner-border-sm"></span> Сбросить пароль</button>
                 </div>
               </div>
             </div>
           </form>
+          <div class="row" v-if="step === 2">
+            <div class="col-12">
+              <div class="form-group mb-4" :class="{ 'form-input-error': errorClassPassword }">
+                <input v-model="password" type="password" class="w-100 formInput" placeholder="Пароль">
+                <div class="warp_error_text"  v-if="errorPasswordText">{{errorPasswordText}}</div>
+              </div>
+              <div class="form-group" :class="{ 'form-input-error': errorClassEmail }">
+                <input v-model="passwordConfirm" type="password" class="w-100 formInput" placeholder="Повторите пароль">
+              </div>
+
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <button type="button" class="showCurForm button blueButton w-100 pt-3 pb-3" :disabled="loading" @click="changePassword">
+                  <span v-show="loading" class="spinner-border spinner-border-sm"></span> Изменить пароль</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group mb-3">
+              <router-link to="/login" class="showCurForm color-blue cursor-pointer f-12">Вход</router-link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -100,47 +80,45 @@
 </template>
 
 <script>
-import { Form, Field, ErrorMessage } from "vee-validate";
+
 import Toast from 'primevue/toast';
-//import * as yup from "yup";
+import axios from "axios";
 
 export default {
-  name: "Login",
+  name: "Recovery",
   components: {
-    Form,
-    Field,
-    ErrorMessage,
+
     Toast
   },
   data() {
+    let step=1;
+    console.log(this.$route.params.id);
+    if(this.$route.params.id !==undefined && this.$route.params.id.length > 10){
+      step=2;
+    }
 
     return {
+      step,
       error:0,
       errorClassEmail: false,
       errorEmailText:null,
+      loading: false,
+      email:null,
       errorClassPassword:false,
       errorPasswordText:null,
-      showPass:false,
-      loading: false,
-      message: ""
+      password:null,
+      passwordConfirm:null,
+
     };
   },
   computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    },
+
   },
   created() {
-    if (this.loggedIn) {
-      this.$router.push("/dashboard");
-    }
+
   },
   methods: {
-    showPassBt(){
-      this.showPass=!this.showPass;
-    },
-    handleLogin(user) {
-
+    submit() {
       this.loading = true;
       this.errorClassEmail=false;
       this.errorEmailText = '';
@@ -148,18 +126,19 @@ export default {
       this.errorPasswordText = '';
       this.error=0;
       // if the field is empty
-      if (!user.email) {
+
+      if (!this.email) {
         this.errorClassEmail=true;
         this.error++;
         this.errorEmailText =  'E-mail не заполнен';
       } else {
         const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-        if (!regex.test(user.email)) {
+        if (!regex.test(this.email)) {
           this.errorClassEmail=true;
           this.error++;
           this.errorEmailText = 'Не является email';
         } else {
-          let myarr = user.email.split("@");
+          let myarr = this.email.split("@");
           if(myarr[0].length > 128 ||  myarr[1].length > 128){
             this.errorClassEmail=true;
             this.error++;
@@ -174,52 +153,79 @@ export default {
           }
         }
       }
-      if (!user.password) {
+      if(this.error === 0){
+
+          axios.post( 'http://panel.kdm1.biz/api/auth/recovery',{email:this.email}).then((resp)=>{
+            console.log(resp.data);
+            if(resp.data.error === 'not email'){
+              this.errorClassEmail=true;
+              this.errorEmailText = 'На эту почту нет зарегестрированных аккаунтов. Введите другую почту или зарегистрируйте новый аккаунт.';
+            }
+            if(resp.data === 'Email sent successfully'){
+              this.$toast.add({severity:'success', summary: 'Проверьте почту.', detail:'', life: 30000});
+            }
+            this.loading = false;
+          }).catch(function(error){
+            console.log(error);
+            this.$toast.add(  {severity:'error', summary: 'Ошибка', detail:'Что-то пошло не так, обратитесь к администратору.', life: 3000});
+            this.loading = false;
+          });
+
+      } else {
+        this.loading = false;
+      }
+    },
+    changePassword(){
+      this.error = 0;
+      this.loading = true;
+      this.errorClassPassword=false;
+      this.errorPasswordText =  null;
+      if (!this.password) {
         this.errorClassPassword=true;
         this.error++;
         this.errorPasswordText =  'Пароль не заполнен';
+        this.loading = false;
       } else {
-        if (user.password.length < 6) {
+        if(this.password === this.passwordConfirm){
+          if (this.password.length < 6) {
+            this.errorClassPassword=true;
+            this.error++;
+            this.errorPasswordText =  'Пароль должен быть больше 6 символов';
+            this.loading = false;
+          }
+        } else {
           this.errorClassPassword=true;
           this.error++;
-          this.errorPasswordText =  'Пароль должен быть больше 6 символов';
+          this.errorPasswordText =  'Пароль не совпадает';
+          this.loading = false;
         }
+
       }
-      // if the field is not a valid email
-
-      // All is good
-
-
 
       if(this.error === 0){
-        this.$store.dispatch("auth/login", user).then(
-            (data) => {
-              if(data.roles === 1){
-                this.$router.push("/admin");
-              } else if(data.roles === 2) {
-                this.$router.push('/mod');
-              }else{
-                this.$router.push('/dashboard');
-              }
+        axios.post( 'http://panel.kdm1.biz/api/auth/change',
+            {hash:this.$route.params.id, password:this.password}
+        ).then((resp)=>{
+          console.log(resp.data);
+          if(resp.data === 'success'){
+            this.$toast.add({severity:'success', summary: 'Пароль успешно изменент.', detail:'', life: 30000});
+            this.password=null;
+            this.passwordConfirm=null
+            this.loading = false;
+            setTimeout(()=>{
+              this.$router.push("/login");
+            },3000);
+          }
 
-            },
-            (error) => {
-              this.loading = false;
-              this.message =
-                  (error.response &&
-                      error.response.data &&
-                      error.response.data.message) ||
-                  error.message ||
-                  error.toString();
-              console.log(error.response.data.error);
-              if(error.response.data.error === 'Innvalid password'){
-                this.$toast.add({severity:'error', summary: 'Ошибка', detail:'Неверный логин или пароль', life: 3000});
-              }
-
-            }
-        );
+        }).catch(function(error){
+          this.loading = false;
+          console.log(error);
+          this.$toast.add(  {severity:'error', summary: 'Ошибка', detail:'Что-то пошло не так, обратитесь к администратору.', life: 3000});
+          this.loading = false;
+        });
       }
-    },
+
+    }
   },
 };
 </script>
