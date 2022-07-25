@@ -412,7 +412,14 @@ export default {
       changeTarifId:null,
       displayPay:false,
       paySys:1,
-      showSys:1
+      showSys:1,
+
+      inn:null,
+      kpp:null,
+      name_organiz:null,
+      addres:null,
+
+
     }
   },
   watch:{
