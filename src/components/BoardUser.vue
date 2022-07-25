@@ -268,9 +268,15 @@ export default {
   },
   data() {
     let user = this.$store.state.auth.user;
+    console.log(user.avatar);
+    let image = null;
+    if(user.avatar !== null){
+      image = 'http://panel.kdm1.biz/uploads/'+user.id+'/'+user.avatar;
+    }
+
     return {
       pay:false,
-      image:null,
+      image,
       mobMenu:'',
       icons :{
         open: {
