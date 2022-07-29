@@ -42,7 +42,7 @@ import axios from "axios";
 import authHeader from "@/services/auth-header";
 import Dialog from 'primevue/dialog';
 export default {
-  name: "Index admin",
+  name: "Index notification",
   components: {
     Dialog
 

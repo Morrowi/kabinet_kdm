@@ -13,7 +13,7 @@
 //import * as yup from "yup";
 
 export default {
-  name: "Index admin",
+  name: "Index marketolog",
   components: {
 //    AddRates,
 

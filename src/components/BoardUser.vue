@@ -180,7 +180,7 @@
             <bellNoty/>
             <router-link to="/dashboard/profile" class="d-flex align-items-center userTopWrap me-0 me-lg-5">
               <div class="imgUserTop me-2">
-                <div v-if="image">
+                <div v-if="image !== null">
                   <Avatar shape="circle" :image="image" />
                 </div>
                 <div v-else>
@@ -188,7 +188,7 @@
                 </div>
               </div>
               <div class="f-14 fw-400">
-                {{ currentUser.username }}
+                {{username }}
               </div>
             </router-link>
             <div class="mobMenuButton" :class="mobMenu" @click="openMenu">
@@ -267,8 +267,11 @@ export default {
 
   },
   data() {
-    let user = this.$store.state.auth.user;
-    console.log(user.avatar);
+    //let getItem = window.localStorage.getItem("user");
+   let user =  JSON.parse(localStorage.getItem('user'));
+    //console.log('user 272  ',user);
+    //let user = this.$store.state.auth.user;
+    //console.log(user.avatar);
     let image = null;
     if(user.avatar !== null){
       image = 'http://panel.kdm1.biz/uploads/'+user.id+'/'+user.avatar;
@@ -277,6 +280,7 @@ export default {
     return {
       pay:false,
       image,
+      username:user.username,
       mobMenu:'',
       icons :{
         open: {
@@ -384,15 +388,17 @@ export default {
       });
     },
     loadRoom(){
+      let user =  JSON.parse(localStorage.getItem('user'));
       let join ={
         is: 'user',
         rooms:{
-          room: this.$store.state.auth.user.room,
-          id: this.$store.state.auth.user.id,
-          manager: this.$store.state.auth.user.manager.id
+          room: user.room,
+          id: user.id,
+          manager: user.manager.id
         },
       }
-
+      //console.log('399 user',user);
+      //console.log('395 line', join);
       socket.emit("subscribe", join);
     },
     onFetchMessages(data) {
@@ -558,7 +564,7 @@ export default {
     this.editMsg();
     this.initPaymend();
     //chat - end
-  },
+  }
 };
 </script>
 <style>

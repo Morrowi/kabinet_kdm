@@ -10,10 +10,13 @@
         <div class="col-12 col-sm-8">
           <div class="py-3">
             <Textarea v-model="description" disabled :autoResize="true" cols="75" />
-
           </div>
         </div>
-
+      </div>
+      <div class="row">
+        <div class="col-5">
+          <InputText  type="text" v-model="subject" placeholder="Тема"/>
+        </div>
       </div>
 
       <EmailEditor
@@ -34,6 +37,7 @@
 import Button from 'primevue/button';
 import Dropdown from 'primevue/dropdown';
 import Textarea from 'primevue/textarea';
+import InputText from "primevue/inputtext";
 import { shallowRef } from 'vue';
 import EmailEditor from '@morrowi01/editor-email-tpl';
 import sample from './data/data.json';
@@ -46,7 +50,8 @@ export default {
     EmailEditor,
     Button,
     Dropdown,
-    Textarea
+    Textarea,
+    InputText
   },
   data(){
     let editor = shallowRef(null);
@@ -57,6 +62,9 @@ export default {
       selected_event_type:null,
       description:null,
       event_type:null,
+      subject:null,
+      dsg:null
+
     }
   },
   methods: {
@@ -72,23 +80,28 @@ export default {
     saveDesign() {
       this.editor.saveDesign(
           (design) => {
-            console.log('saveDesign', design);
+            //console.log('saveDesign', design);
+            this.dsg=design;
           }
       );
       this.editor.exportHtml(
           (data) => {
-            console.log('exportHtml', data);
-            console.log(this.selected_event_type.id);
+           // console.log('exportHtml', data);
+           // console.log(this.selected_event_type.id);
 
             console.log(data.html);
+            console.log('this.dsg',this.dsg);
 
-            let dataSend = {
+
+             let dataSend = {
               'event_type': this.selected_event_type.id,
-              'html':data.html
+              'html':data.html,
+              'dsg':this.dsg,
+              'subject':this.subject
             };
 
 
-            axios.post( 'http://panel.kdm1.biz/api/mail/add',
+           axios.post( 'http://panel.kdm1.biz/api/mail/add',
                 dataSend,
                 {
                   headers: authHeader()

@@ -397,7 +397,7 @@ import Button from 'primevue/button';
 import authHeader from "@/services/auth-header";
 
 export default {
-  name: "Index admin",
+  name: "Rate",
   components: {
     Dialog,
     Button

@@ -34,7 +34,7 @@ import 'vue-advanced-chat/dist/vue-advanced-chat.css'
 import {io} from "socket.io-client";
 const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
 export default {
-  name: "Index admin",
+  name: "Chat marketolog",
   components: {
     ChatWindow
 

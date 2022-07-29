@@ -237,7 +237,7 @@
 //import * as yup from "yup";
 
 export default {
-  name: "Index admin",
+  name: "In pay",
   components: {
 //    AddRates,
 

@@ -39,6 +39,18 @@
           </div>
           <div class="d-flex">
             <div class="col-3 ">
+              <div class="p-title">Регион</div>
+            </div>
+            <div class="col-6 d-flex align-items-center">
+              <div class="w-100">
+                <CascadeSelect v-model="selectedCity" :options="countries" optionLabel="cname" optionGroupLabel="name" :optionGroupChildren="['states', 'cities']" :placeholder="regionSelected" />
+              </div>
+            </div>
+          </div>
+
+
+          <div class="d-flex">
+            <div class="col-3 ">
               <div class="p-title">Пароль</div>
             </div>
             <div class="col-4 d-flex align-items-center">
@@ -117,6 +129,7 @@ import axios from "axios";
 import authHeader from "@/services/auth-header";
 import Toast from 'primevue/toast';
 import Button from 'primevue/button';
+import CascadeSelect from 'primevue/cascadeselect';
 
 export default {
   name: "Profile",
@@ -126,7 +139,9 @@ export default {
     InputMask,
     Toast,
     Dialog,
-    Button
+    Button,
+    CascadeSelect
+
   },
   data() {
     let user = this.$store.state.auth.user;
@@ -151,7 +166,10 @@ export default {
       errorClassPasswordOld:false,
       password:null,
       passwordConfirm:null,
-      errorClassPassword:false
+      errorClassPassword:false,
+      regionSelected:'Выберите регион',
+      selectedCity:null,
+      countries: []
     }
   },
 
@@ -164,8 +182,11 @@ export default {
       let data = {
         phone:this.phone,
         username:this.username,
-        email:this.email
+        email:this.email,
+        region:this.selectedCity.cname,
+        regionCode:this.selectedCity.code
       }
+      console.log(this.selectedCity);
       axios.post( 'http://panel.kdm1.biz/api/user/change/info',
           data,
           {
@@ -312,16 +333,49 @@ export default {
     },
     async initGeo(){
       let response = [];
+      let res=[];
+      let k=0;
       try {
-        // Comment this line and uncomment the next one to make local api calls
         response = await axios.get(
-            `http://panel.kdm1.biz/json.php`
+            `http://panel.kdm1.biz/geo.json`
         );
-        // response = await axios.get("./index.json");
+        for(let i in response.data ){
+
+          let states=[];
+          let k2=0;
+          for (let i2 in response.data[i].states){
+
+            let cities = [];
+            let k3=0;
+            for (let i3 in response.data[i].states[i2].cities){
+              cities[k3] = {
+                cname:response.data[i].states[i2].cities[i3].cname,
+                code:response.data[i].states[i2].cities[i3].code
+              }
+              k3++;
+            }
+            states[k2] = {
+              name:response.data[i].states[i2].name,
+              cities:cities
+            }
+            k2++;
+          }
+
+          res[k]={
+            name:response.data[i].name,
+            states:states
+          }
+          k++;
+        }
+        this.countries = res;
+        let user = this.$store.state.auth.user;
+        this.selectedCity = {
+            cname: user.region,
+            code: user.regionCode
+        };
       } catch (error) {
         console.error(error);
       }
-      console.log(response);
       //
     }
   },
@@ -346,12 +400,17 @@ export default {
   padding: 14px 0;
 }
 
-.warp_profile .p-inputtext{
+.warp_profile .p-inputtext,
+.p-cascadeselect{
   background: #FFFFFF;
   border: 1px solid #F0F2FA !important;
   border-radius: 6px !important;
   width: 100% !important;
   height: 54px;
+}
+
+.p-cascadeselect{
+  line-height: 33px;
 }
 
 .warp_profile .buttonBorder{

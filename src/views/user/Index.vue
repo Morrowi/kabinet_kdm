@@ -142,14 +142,16 @@ import Notifications from "@/views/user/component/index/Notifications"
 import Tasks from "@/views/user/Tasks"
 
 export default {
-  name: "Index admin",
+  name: "Index user",
   components: {
     Marketer,
     Notifications,
     Tasks
   },
   data() {
+    return{
 
+    }
   },
   watch:{
 

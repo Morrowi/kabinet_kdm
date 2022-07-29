@@ -93,8 +93,8 @@ export default {
     getMsg(){
       socket.on("message_m", data => {
         console.log(data);
-        let msg_c = this.kitcut(data.msg.content, 200);
-        this.$toast.add({summary: 'Новое сообщение', detail:msg_c, styleClass:'message-chat', group:'chat'});
+        //let msg_c = this.kitcut(data.msg.content, 200);
+        //this.$toast.add({summary: 'Новое сообщение', detail:msg_c, styleClass:'message-chat', group:'chat'});
         this.notySound();
       });
     },
@@ -122,7 +122,7 @@ export default {
         this.viewed = viewedTmp;
         setTimeout(()=>{
           this.initNoty();
-        },5000);
+        },30000);
       }).catch(function(error){
         console.log(error);
 

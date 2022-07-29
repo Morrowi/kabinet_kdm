@@ -9,7 +9,7 @@
 //import * as yup from "yup";
 
 export default {
-  name: "Index admin",
+  name: "Mail index",
   components: {
 //    AddRates,
 

@@ -64,10 +64,13 @@ class AuthService {
         }
     )
     .then(response => {
-      if (response.data.accessToken) {
+
+      if (response.data) {
+        console.log('response.data',response.data);
         localStorage.setItem('user', JSON.stringify(response.data));
+        return response;
       }
-      return response;
+      return null;
     });
   }
   reuser() {

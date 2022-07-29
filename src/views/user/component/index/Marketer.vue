@@ -41,9 +41,8 @@
               </div>
             </div>
           </div>
-          <div class="tabletInfo online">
-            Онлайн
-          </div>
+          <div class="tabletInfo online" v-if="online"> Онлайн </div>
+          <div class="tabletInfo" v-else> Оффлайн </div>
         </div>
         </transition>
       </div>
@@ -66,14 +65,34 @@ export default {
     let loading = true;
     return{
       loading,
-      marketolog
+      marketolog,
+      online:false
     }
   },
   watch:{
 
   },
   methods: {
+    initOnline(){
+      axios.post( 'http://panel.kdm1.biz/api/user/online',
+          '',
+          {
+            headers: authHeader()
+          }
+      ).then((resp)=>{
+        if(resp.data === 'online'){
+          this.online = true;
+        } else {
+          this.online = false;
+        }
+        setTimeout(()=>{
+          this.initOnline();
+        },30000);
+      }).catch(function(error){
+        console.log(error);
 
+      }).finally(() => (this.loading = false));
+    },
   },
   computed:{
     currentUser() {
@@ -92,6 +111,8 @@ export default {
     }).catch(function(error){
       console.log(error);
     }).finally(() => (this.loading = false));
+
+    this.initOnline();
     //console.log(this.$store.state.auth.user.manager);
   },
   created() {
