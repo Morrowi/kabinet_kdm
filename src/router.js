@@ -56,7 +56,27 @@ const routes = [
       {
         path: 'profile',
         component: () => import('./views/user/Profile.vue'),
-      }
+      },
+      {
+        path: 'support',
+        name: "Support",
+        component: () => import('./views/user/support/Index.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('./views/user/support/Support.vue'),
+          },
+          {
+            path: ':id',
+            component: () => import('./views/user/support/Tiket.vue'),
+          },
+          {
+            path: 'request',
+            component: () => import('./views/user/support/Request.vue'),
+          },
+        ]
+      },
+
     ],
     meta:{
       title: 'Добрый маркетолог — личный кабинет'

@@ -219,6 +219,9 @@ body {
     color: #ffffff;
     border: 1px solid #6A7686;
 }
+.button.buttonBorderBlack a{
+    color: #ffffff;
+}
 .button.buttonBorder{
     border: 1px solid #0D85FB;
     color: #0D85FB;
@@ -1027,8 +1030,8 @@ button.close {
 .p-datepicker{
     z-index: 1125 !important;
 }
-.p-fileupload-buttonbar,
-.p-progressbar{
+.warp_tast_upload .p-fileupload-buttonbar,
+.warp_tast_upload .p-progressbar{
     display: none;
 }
 .p-fileupload .p-fileupload-content{

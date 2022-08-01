@@ -133,7 +133,7 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row warp_tast_upload">
                 <FileUpload ref="btn_upload" :customUpload="true" @select="customPreSelected"  mode="advanced"   :showUploadButton="false" :showCancelButton="false"  name="demo[]" :multiple="true" :maxFileSize="300000000">
                 </FileUpload>
               </div>

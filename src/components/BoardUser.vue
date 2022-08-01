@@ -168,9 +168,10 @@
                 </li>
               </ul>
             </div>
-            <div class="button buttonBorderBlack  mt-4">
+              <router-link class="button buttonBorderBlack  mt-4" to="/dashboard/support" active-class="active">
               Написать в поддержку
-            </div>
+              </router-link>
+
           </div>
         </div>
       </div>
