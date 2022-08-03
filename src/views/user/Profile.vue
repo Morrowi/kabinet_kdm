@@ -196,6 +196,10 @@ export default {
         if(resp.data === 'success'){
           this.reUser();
           this.$toast.add({severity:'success', summary: 'Данные успешно изменены', detail:'', life: 5000});
+          setTimeout(()=>{
+            this.$router.push('/dashboard');
+          },3000);
+
         }
 
         this.loading = false;

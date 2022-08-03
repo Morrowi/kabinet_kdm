@@ -49,7 +49,8 @@
                     </div>
 
                   </div>
-                  <div class="tabletInfo online"> Онлайн </div>
+                  <div class="tabletInfo online" v-if="online"> Онлайн </div>
+                  <div class="tabletInfo" v-else> Оффлайн </div>
                 </div>
               </div>
               <div class="px-3 py-2">
@@ -65,7 +66,7 @@
                 На вашем тарифе вы можете заменить маркетолога
               </div>
               <div class="d-flex">
-                <div class="button buttonBorder">
+                <div class="button buttonBorder" @click="showChangeMarketolog = !showChangeMarketolog">
                   Заменить
                 </div>
               </div>
@@ -73,49 +74,32 @@
           </div>
         </div>
         <div class="col-lg-6">
-<!--          <chat-window-->
-<!--              :height="'calc(100vh - 40vh)'"-->
-<!--              :current-user-id="currentUserId"-->
-<!--              :rooms="room"-->
-<!--              :rooms-list-opened ="roomsListOpened"-->
-<!--              :rooms-loaded="roomsLoaded"-->
-<!--              :show-add-room="showAddRoom"-->
-<!--              :show-search="showSearch"-->
-<!--              :show-reaction-emojis="showReactionEmojis"-->
-<!--              :loading-rooms="loadingRooms"-->
-<!--              :single-room="singleRoom"-->
-<!--              :show-footer="true"-->
-<!--              :messages="messages"-->
-<!--              :messages-loaded="messagesLoaded"-->
-<!--              @fetch-messages="onFetchMessages"-->
-<!--              @send-message="sendMessage"-->
-<!--              @open-file ="openFile"-->
-<!--          />-->
+
         </div>
       </div>
-      <div :class="{show: open}" :style="[open?'display: block':'display: none']"  class="modal fade " @keydown.esc="open = false">
+      <div :class="{show: open}" :style="[open?'display: block':'display: none']"  class="modal fade warp_modal" @keydown.esc="open = false">
         <div class="modal-dialog modal-md">
           <div class="modal-content">
-            <div class="modal-header p-3">
-              <div class="f-24 fw-600">Оценка работы </div>
-              <button type="button" class="close" @click="open = false">&times;</button>
+            <div class="modal-header">
+              <div class="title">Оценка работы </div>
+              <div class="close" @click="open = false"></div>
             </div>
             <div class="modal-body">
                 <div class="row">
                   <div class="col-12 d-flex justify-content-center">
-                    <star-rating @update:rating ="setRating" :rating="rating" :show-rating="false" v-bind:star-size="35"></star-rating>
+                    {{textRaiting}}
+                  </div>
+                  <div class="col-12 d-flex justify-content-center">
+                    <star-rating @update:rating ="setRating" @hover:rating ="setRatingText" :rating="rating" :star-size="27" :rounded-corners="false" :border-width="0" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]" :padding="7" :show-rating="false" inactive-color="#EFF0F6" active-color="#EE735A" ></star-rating>
                   </div>
                   <div class="col-12">
-                    <div class="form-group mb-3">
-                      <textarea ref="contentTextArea" id="contentTextArea" class="p-inputtextarea" rows="5" cols="30" placeholder="Отзыв о работе маркетолога" v-model="valueEditor"></textarea>
-                    </div>
+                      <textarea ref="contentTextArea" id="contentTextArea" class="p-inputtextarea"  placeholder="Ваш комментарий..." v-model="valueEditor"></textarea>
                   </div>
                 </div>
 
             </div>
-            <div class="d-flex justify-content-start px-3 pb-3 justify-content-between">
-
-              <button @click="submitForm" type="button" class="button buttonBorder">Оценить</button>
+            <div class="d-flex justify-content-start justify-content-between">
+              <button @click="submitForm" type="button" class="button blueButton">Готово</button>
             </div>
 
           </div>
@@ -123,7 +107,63 @@
       </div>
       <Toast />
     </div>
+    <Dialog v-model:visible="showChangeMarketolog" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '70vw'}" :modal="true">
+    <template #header>
+      <h4>Заменить маркетолога</h4>
+    </template>
+      <div class="col-lg-12 mb-4" v-for="marketolog in Marketologs" :key="marketolog.id" :id="marketolog.id">
+        <div class="b-radius bg-white formTarifItem ml-3 mr-3">
+          <div class="border-bottom p-3">
+            <div class="row justify-content-between mr-0 ml-0 align-items-start position-relative">
+              <div class="d-flex">
+                <div class="avaBlock me-5 d-flex align-items-center flex-column">
+                  <div class="bigAvaBlock mb-3">
+                    <Avatar shape="circle" :image="marketolog.avatar" />
+                  </div>
+                  <div class="f-18 fw-600 d-flex align-items-center lh-1">
+                    <div class="me-1">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.15076 1.36588C7.54204 0.736562 8.45796 0.73656 8.84924 1.36587L10.8006 4.50441C10.9383 4.72583 11.157 4.88472 11.4101 4.94723L14.9981 5.83325C15.7175 6.01091 16.0005 6.882 15.5229 7.4486L13.141 10.2743C12.973 10.4737 12.8894 10.7308 12.9082 10.9908L13.1743 14.677C13.2276 15.4161 12.4866 15.9544 11.8002 15.6753L8.37669 14.2832C8.13517 14.185 7.86483 14.185 7.62331 14.2832L4.19982 15.6753C3.51337 15.9544 2.77238 15.4161 2.82573 14.677L3.0918 10.9908C3.11057 10.7308 3.02704 10.4737 2.859 10.2743L0.477088 7.4486C-0.000513792 6.882 0.282519 6.01091 1.00194 5.83325L4.58988 4.94723C4.843 4.88472 5.06171 4.72583 5.19937 4.50441L7.15076 1.36588Z" fill="#EE735A"/>
+                      </svg>
+                    </div>
+                    <span class="pt-1">{{ marketolog.rating}}</span>
+                  </div>
+                </div>
 
+                <div class="d-flex flex-column">
+                  <div class="f-18 fw-600 mb-3">
+                    {{ marketolog.username}}
+                  </div>
+                  <div class="f-14 color-2 lh-22" v-html="marketolog.description">
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-between">
+            <div class="col-auto mx-2 my-3">
+              <div v-if="marketolog.reviews_count > 0" class=" cursor-pointer px-5" @click="showReviews(marketolog.id);">Отзывы ({{marketolog.reviews_count}}) </div>
+              <div v-else class=" px-5" >Отзывы ({{marketolog.reviews_count}}) </div>
+            </div>
+            <div class="col-auto mx-2 my-3">
+              <div class="button blueButton px-5" @click="selectedManager(marketolog.id);">Выбрать</div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </Dialog>
+  <Dialog header="Отзывы" v-model:visible="displayReviews" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
+    <DataTable :value="reviews" :paginator="true" :rows="1" responsiveLayout="scroll">
+      <Column field="moderation" >
+        <template #body="{data}">
+          <div>{{data.date_insert}}</div>
+          <div v-html="data.text"></div>
+        </template>
+      </Column>
+    </DataTable>
+  </Dialog>
 
 </template>
 
@@ -134,25 +174,23 @@ import Avatar from 'primevue/avatar';
 import axios from "axios";
 import authHeader from "@/services/auth-header";
 import StarRating from 'vue-star-rating'
+import Dialog from 'primevue/dialog';
 import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
-
 import Toast from 'primevue/toast';
-
-//import ChatWindow from 'vue-advanced-chat'
-// import 'vue-advanced-chat/dist/vue-advanced-chat.css'
-//
-// import {io} from "socket.io-client";
-// const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 
 export default {
   name: "Marketer",
   components: {
     Avatar,
     StarRating,
-    //ChatWindow,
-    Toast
+    Dialog,
+    Toast,
+    DataTable,
+    Column
   },
   data() {
     let user = this.$store.state.auth.user;
@@ -163,29 +201,40 @@ export default {
       marketolog:{},
       open: false,
       valueEditor:null,
-      rating:2,
-
-      //chat
-      room: [],
-      roomsLoaded: true,
-      showSearch:true,
-      roomsListOpened: false,
-      showAddRoom:false,
-      showReactionEmojis:true,
-      singleRoom:true,
-      messagesLoaded: false,
-      loadingRooms: false,
-      messages: [],
-      currentUserId: user.id
-
-
-
+      rating:5,
+      Marketologs:[],
+      showChangeMarketolog:false,
+      reviews:null,
+      currentUserId: user.id,
+      displayReviews: false,
+      online:false,
+      textRaiting:'Отлично'
     }
   },
   watch:{
 
   },
   methods: {
+    initOnline(){
+      axios.post( 'http://panel.kdm1.biz/api/user/online',
+          '',
+          {
+            headers: authHeader()
+          }
+      ).then((resp)=>{
+        if(resp.data === 'online'){
+          this.online = true;
+        } else {
+          this.online = false;
+        }
+        setTimeout(()=>{
+          this.initOnline();
+        },30000);
+      }).catch(function(error){
+        console.log(error);
+
+      }).finally(() => (this.loading = false));
+    },
     showModa(){
       this.open = true;
       this.$nextTick(() => {
@@ -195,6 +244,26 @@ export default {
     },
     setRating(rating){
       this.rating= rating;
+    },
+    setRatingText(rating){
+      switch (rating) {
+        case 1:
+          this.textRaiting= 'Не то, что я ожидал';
+          break;
+        case 2:
+          this.textRaiting= 'Можно лучше';
+          break;
+        case 3:
+          this.textRaiting= 'Приемлемо';
+          break;
+        case 4:
+          this.textRaiting= 'Хорошо';
+          break;
+        case 5:
+          this.textRaiting= 'Отлично';
+          break;
+      }
+
     },
     submitForm(){
       console.log(this.valueEditor);
@@ -226,108 +295,41 @@ export default {
       });
 
     },
-
-    //chat
-    /*
-    getRooms(){
-      socket.on("get room", data => {
-        this.room=[data];
-        //console.log('151 - lime ',data);
+    initMarketologs(){
+      axios.get( 'http://panel.kdm1.biz/api/marketolog/').then((resp)=>{
+        this.Marketologs = resp.data;
+      }).catch(function(error){
+        console.log(error);
       });
     },
-    getMsg(){
-      socket.on("message_m", data => {
-        //console.log('[line 63]',data);
-        this.messages.push(data.msg);
-        //console.log('[this.messages]',this.messages);
-      });
-    },
-    loadRoom(){
-      let join ={
-        is: 'user',
-        rooms:{
-          room: this.$store.state.auth.user.room,
-          id: this.$store.state.auth.user.id,
-          manager: this.$store.state.auth.user.manager.id
-        },
-      }
-      //console.log(join);
-      socket.emit("subscribe", join);
-    },
-    onFetchMessages(data) {
-      //console.log('178 line', data);
-
-
-      socket.emit("get msg", data.room.roomId);
-
-      socket.on("load msg", data => {
-       // console.log(data);
-        setTimeout(() => {
-          this.messages= data;
-          this.messagesLoaded = true;
-        })
-      });
-
-    },
-    async sendMessage({ content, roomId, files, replyMessage }) {
-      const message = {
-        sender_id: this.currentUserId,
-        content,
-        timestamp: new Date()
-      }
-      if (files) {
-        message.files = await this.formattedFiles(files)
-      }
-      let dataMsg = {
-        room: roomId,
-        message:message
-      }
-      console.log(message)
-      socket.emit("message_m", dataMsg);
-
-      console.log(message);
-      console.log(roomId);
-      console.log(replyMessage);
-
-    },
-    async formattedFiles(files) {
-      const formattedFiles = []
-      console.log(files);
-
-      for (let i in files){
-        let file =files[i];
-        const messageFile = {
-          name: file.name,
-          size: file.size,
-          type: file.type,
-          extension: file.extension || file.type,
-          url: file.url || file.localUrl
+    showReviews(id){
+      axios.post( 'http://panel.kdm1.biz/api/reviews/show/'+id).then((resp)=>{
+        for ( const key in resp.data){
+          resp.data[key].date_insert= this.dateToYMD(new Date(resp.data[key].date_insert));
         }
-        if (file.audio) {
-          messageFile.audio = true
-          messageFile.duration = file.duration
-        }
-        const blobFile = await fetch(file.localUrl).then(res => res.blob());
-        console.log(blobFile);
-        messageFile.b64 = await this.blobToBase64(blobFile);
+        this.reviews = resp.data;
 
-        formattedFiles.push(messageFile)
-      }
-
-      return formattedFiles
-    },
-    async blobToBase64(blob) {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.readAsDataURL(blob);
+        console.log(resp.data);
+      }).catch(function(error){
+        console.log(error);
       });
+      console.log(id);
+
+      this.displayReviews=true;
     },
-    openFile({ file }) {
-      window.open(file.file.url, '_blank')
-    },
-    */
-    //chat - end
+    dateToYMD(date) {
+      let d = date.getDate();
+      let m = date.getMonth() + 1; //Month from 0 to 11
+      let y = date.getFullYear();
+      let h = date.getHours();
+      h = ("0" + h).slice(-2);
+      let mm = date.getMinutes();
+      mm = ("0" + mm).slice(-2);
+      let ss = date.getSeconds();
+      ss = ("0" + ss).slice(-2);
+      return  ''+(d <= 9 ? '0' + d : d) + '.' + (m<=9 ? '0' + m : m) + '.' + y +' '+ h+':'+mm+':'+ss;
+
+    }
   },
   computed:{
     currentUser() {
@@ -335,6 +337,8 @@ export default {
     },
   },
   mounted() {
+    this.initMarketologs();
+
     this.$toast.removeAllGroups();
       axios.post( 'http://panel.kdm1.biz/api/marketolog/',
           '',
@@ -368,12 +372,89 @@ export default {
 <style>
   .p-inputtextarea{
     width: 100%;
-    border: 1px solid #ced4da !important;
+    height: 54px;
+    background: #FFFFFF;
+    border: 1px solid #94A2AB;
+    border-radius: 6px;
     outline:none;
+    padding: 14px;
   }
   .p-inputtextarea:focus,
   .p-inputtextarea:active{
     border: 1px solid #ced4da !important;
     outline:1px solid #ced4da;
   }
+
+  .warp_modal .modal-dialog{
+    max-width: 360px;
+    border: 1px solid #EFF0F6;
+    overflow: hidden;
+    box-shadow: 0px 15px 50px rgba(160, 163, 189, 0.1);
+    border-radius: 10px;
+  }
+  .warp_modal .modal-content{
+    border: none;
+  }
+
+  .warp_modal .title{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 34px;
+    color: #171717;
+    font-family: 'Inter', sans-serif;
+  }
+  .warp_modal .modal-header{
+    padding: 11px 20px;
+    position: relative;
+    justify-content: center;
+  }
+  .warp_modal .modal-header .close{
+    position: absolute;
+    right: 23px;
+    top: 20px;
+    display: block;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+  }
+  .warp_modal .modal-header .close::before{
+    content:'';
+    width: 15px;
+    height: 1px;
+    background-color: #000000;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 7px);
+    transform: rotate(50grad);
+  }
+  .warp_modal .modal-header .close::after{
+    content:'';
+    width: 15px;
+    height: 1px;
+    background-color: #000000;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 7px);
+    transform: rotate(-50grad);
+  }
+
+  .warp_modal .button {
+    width: 100%;
+    padding: 15px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    margin: 0 20px 35px;
+  }
+
+  .warp_modal .modal-body{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 9px;
+  }
+
 </style>

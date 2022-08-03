@@ -146,8 +146,6 @@ export default {
         }
       }
 
-
-
       axios.post( 'http://panel.kdm1.biz/api/support/add',
           formData,
           {
@@ -161,7 +159,7 @@ export default {
           this.text=null;
           this.files=null;
 
-          this.$toast.add({severity:'success', summary: 'Задача добавлена', detail:'', life: 5000});
+          this.$toast.add({severity:'success', summary: 'Обращение отправлено', detail:'', life: 5000});
           setTimeout(()=>{
             this.$router.push("/dashboard/support/");
           },3000);
@@ -172,8 +170,8 @@ export default {
 
       }).catch(function(error){
         console.log(error);
-        console.log(this.$toast);
-        this.$toast.add({severity:'error', summary: 'Ошибка', detail:'Не введено название задачи', life: 3000});
+
+        this.$toast.add({severity:'error', summary: 'Ошибка', detail:'Попробуйте позже', life: 3000});
       }).finally(() => (this.loading = false));
 
       /* UserService.getAddTasks(formData).then(

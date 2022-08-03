@@ -4,12 +4,13 @@ import Login from "./components/Login.vue";
 import Recovery from "./components/Recovery.vue";
 
 import Register from "./components/Register.vue";
-//import PageNotFound from "./views/PageNotFound.vue";
+import PageNotFound from "./views/PageNotFound.vue";
 // lazy-loaded
 const Profile = () => import("./components/Profile.vue")
 const BoardAdmin = () => import("./components/BoardAdmin.vue")
 const BoardModerator = () => import("./components/BoardModerator.vue")
 const BoardUser = () => import("./components/BoardUser.vue")
+
 
 const routes = [
   {
@@ -59,7 +60,6 @@ const routes = [
       },
       {
         path: 'support',
-        name: "Support",
         component: () => import('./views/user/support/Index.vue'),
         children: [
           {
@@ -68,12 +68,12 @@ const routes = [
           },
           {
             path: ':id',
-            component: () => import('./views/user/support/Tiket.vue'),
+            component: () => import('./views/user/support/Ticket.vue'),
           },
           {
             path: 'request',
             component: () => import('./views/user/support/Request.vue'),
-          },
+          }
         ]
       },
 
@@ -141,6 +141,21 @@ const routes = [
       {
         path: 'noty',
         component: () => import('./views/admin/noty.vue')
+      },
+      {
+        path: 'support',
+        name: "Support",
+        component: () => import('./views/admin/support/Index.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('./views/admin/support/Support.vue'),
+          },
+          {
+            path: ':id',
+            component: () => import('./views/admin/support/Ticket.vue'),
+          }
+        ]
       },
       {
         path: 'mail',
@@ -214,7 +229,14 @@ const routes = [
     // lazy-loaded
     component: BoardUser,
   },*/
-  /*{ path: "*", component: PageNotFound }*/
+  // {
+  //   path: "*",
+  //   component: PageNotFound
+  // },
+  {
+    path: '/:pathMatch(.*)',
+    component: PageNotFound
+  }
 ];
 
 const router = createRouter({

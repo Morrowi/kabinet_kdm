@@ -69,7 +69,12 @@
               </div>
               <div class="col-12">
                 <div class="form-group mb-3">
-                  <button type="submit" class="button blueButton w-100 pt-3 pb-3">Войти</button>
+                  <button type="submit" class="button blueButton w-100 pt-3 pb-3" :disabled="loading">
+                    <span
+                        v-show="loading"
+                        class="spinner-border spinner-border-sm"
+                    ></span>
+                    Войти</button>
                 </div>
               </div>
               <div class="col-12">

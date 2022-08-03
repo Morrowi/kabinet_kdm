@@ -15,7 +15,7 @@
                   <br>
                   <span class="color-white">маркетолога</span>
                 </div>
-                </router-link>>
+                </router-link>
 
               <ul class="menuLinkBody">
                 <li class="d-flex firstBlockMenu">

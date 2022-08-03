@@ -13,7 +13,7 @@
     <div class="position-absolute" v-if="loading">Loading...</div>
     <div class="row"  v-else>
       <DataTable :value="tiketList" responsiveLayout="scroll" :paginator="true" :rows="10" @rowSelect="onRowSelect" selectionMode="single" dataKey="id">
-        <Column field="data_insert" header="Дата"></Column>
+        <Column field="date_insert" header="Дата"></Column>
         <Column field="id" header="Номер"></Column>
         <Column field="them" header="Тема"></Column>
         <Column field="status" header="Статус">
@@ -77,7 +77,7 @@ export default {
           }
       ).then((resp)=>{
         for ( const key in resp.data){
-          resp.data[key].data_insert= this.dateToYMD(new Date(resp.data[key].data_insert));
+          resp.data[key].date_insert= this.dateToYMD(new Date(resp.data[key].date_insert));
         }
 
 
@@ -87,7 +87,7 @@ export default {
       }).finally(() => (this.loading = false));
     },
     onRowSelect(e){
-      console.log(e.data.id);
+      this.$router.push('/dashboard/support/'+e.data.id);
     }
   },
   mounted() {

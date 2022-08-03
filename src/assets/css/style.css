@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 * {
     box-sizing: border-box;
     margin: 0;
@@ -102,7 +103,7 @@ body {
     background-color: #ffffff;
 }
 .bg-black{
-    background-color: #313A46;
+    background-color: #313A46 !important;
 }
 .b-radius{
     border-radius: 10px;
@@ -267,6 +268,11 @@ body {
 .tarifTabletInfo.active{
     background: #25CE98;
 }
+.tarifTabletInfo span{
+    white-space: nowrap;
+}
+
+
 .bellBlock {
     background: rgba(131, 144, 162, 0.1);
     border-radius: 50%;
@@ -985,31 +991,7 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
     background-color: rgb(0 0 0 / 50%);
     display: block;
 }
-button.close {
-    padding: 0;
-    background-color: transparent;
-    border: 0;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-.modal-header .close {
-    padding: 1rem 1rem;
-    margin: -1rem -1rem -1rem auto;
-}
-.close {
-    float: right;
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1;
-    color: #000;
-    text-shadow: 0 1px 0 #fff;
-    opacity: .5;
-}
 
-.close:hover{
-    opacity: 1;
-}
 
 .p-dropdown,
 .p-calendar{
@@ -1175,4 +1157,25 @@ button.close {
 .vac-message-actions-wrapper .vac-message-options svg{
     padding: 0 !important;
     margin: 0 !important;
+}
+
+.p-dialog{
+    border-radius: 0.3rem !important;
+    overflow: hidden !important;
+}
+
+.p-dialog .p-dialog-header{
+    border-bottom: 1px solid #dee2e6 !important;
+    padding: 11px 20px !important;
+}
+.p-dialog-title{
+    font-size: 24px !important;
+    line-height: 30px !important;
+}
+.p-dialog-content{
+    padding: 1rem!important;
+}
+
+.w-200{
+    width: 200px;
 }

@@ -5,15 +5,12 @@
         Поддержка
       </div>
 
-      <router-link class="button buttonBorder col-auto" to="/dashboard/support/request" active-class="active">
-        Отправить заявку
-      </router-link>
     </div>
     <transition name="fade" >
     <div class="position-absolute" v-if="loading">Loading...</div>
     <div class="row"  v-else>
       <DataTable :value="tiketList" responsiveLayout="scroll" :paginator="true" :rows="10" @rowSelect="onRowSelect" selectionMode="single" dataKey="id">
-        <Column field="data_insert" header="Дата"></Column>
+        <Column field="date_insert" header="Дата"></Column>
         <Column field="id" header="Номер"></Column>
         <Column field="them" header="Тема"></Column>
         <Column field="status" header="Статус">
@@ -45,7 +42,7 @@ export default {
     Column
   },
   data() {
-    console.log(this.$route.params.id);
+
     return {
       tiketList: null,
       loading:true,
@@ -68,28 +65,30 @@ export default {
       return  ''+(d <= 9 ? '0' + d : d) + '.' + (m<=9 ? '0' + m : m) + '.' + y +' '+ h+':'+mm+':'+ss;
 
     },
-    initTiket(){
-      let id =this.$route.params.id;
-      axios.post( 'http://panel.kdm1.biz/api/support/'+id,
-          '',
+    listTicket(){
+      // console.log(this.currentUser);
+      axios.post( 'http://panel.kdm1.biz/api/support/',
+          "",
           {
             headers: authHeader()
           }
       ).then((resp)=>{
+        for ( const key in resp.data){
+          resp.data[key].date_insert= this.dateToYMD(new Date(resp.data[key].date_insert));
+        }
 
-        console.log(resp);
 
+        this.tiketList = resp.data;
       }).catch(function(error){
         console.log(error);
       }).finally(() => (this.loading = false));
-
     },
     onRowSelect(e){
-      console.log(e.data.id);
+      this.$router.push('/admin/support/'+e.data.id);
     }
   },
   mounted() {
-    this.initTiket();
+    this.listTicket();
   }
 };
 </script>

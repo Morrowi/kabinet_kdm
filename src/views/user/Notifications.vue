@@ -1,13 +1,35 @@
 <template>
-  <div class="contentBlock mb-5">
+  <transition name="fade" >
+  <div class="loading" v-if="loading">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100"  xml:space="preserve">
+        <circle fill="none" stroke="#fff" stroke-width="4" stroke-miterlimit="10" cx="50" cy="50" r="48"/>
+      <line fill="none" stroke-linecap="round" stroke="#fff" stroke-width="4" stroke-miterlimit="10" x1="50" y1="50" x2="85" y2="50.5">
+          <animateTransform
+              attributeName="transform"
+              dur="2s"
+              type="rotate"
+              from="0 50 50"
+              to="360 50 50"
+              repeatCount="indefinite" />
+        </line>
+      <line fill="none" stroke-linecap="round" stroke="#fff" stroke-width="4" stroke-miterlimit="10" x1="50" y1="50" x2="49.5" y2="74">
+          <animateTransform
+              attributeName="transform"
+              dur="15s"
+              type="rotate"
+              from="0 50 50"
+              to="360 50 50"
+              repeatCount="indefinite" />
+        </line>
+      </svg>
+  </div>
+  <div class="contentBlock mb-5" v-else>
     <div class="row mr-0 ml-0 justify-content-between mb-3 flex-column">
       <div class="f-24 fw-600">
         Уведомления
       </div>
     </div>
-    <transition name="fade" >
-    <div class="position-absolute" v-if="loading">Loading...</div>
-    <div class="row"  v-else>
+    <div class="row">
       <div class="col-12 mb-3">
         <div class="b-radius bg-white">
           <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
@@ -30,9 +52,9 @@
         </div>
       </div>
     </div>
-    </transition>
   </div>
-  <Dialog header="Уведомление" v-model:visible="displayNoty" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}" class="warp_dialog" >
+  </transition>
+  <Dialog header="Уведомление" v-model:visible="displayNoty" position="top" :modal="true"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}" class="warp_dialog" >
     <div class="f-12 color-1 mb-3">
       {{ showNotyOne.data_insert }}
     </div>
@@ -141,20 +163,5 @@ export default {
 };
 </script>
 <style>
-.warp_dialog{
-  border-radius: 0.3rem;
-  overflow: hidden;
-}
-  .warp_dialog.p-dialog .p-dialog-header{
-    border-bottom: 1px solid #dee2e6;
-    padding: 1rem!important;
-  }
-  .warp_dialog .p-dialog-title{
-    font-size: 24px !important;
-    line-height: 30px;
-  }
-  .warp_dialog .p-dialog-content{
-    padding: 1rem!important;
-  }
 
 </style>

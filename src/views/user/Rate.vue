@@ -23,7 +23,6 @@
         </line>
       </svg>
     </div>
-
     <div v-else class="d-flex justify-content-between me-0 ml-0 align-items-start">
       <div class="contentBlock mb-5">
         <div class="row mr-0 ml-0 justify-content-between mb-3 flex-column">
@@ -458,10 +457,9 @@ export default {
       }).catch(function(error){
         this.loading = false;
         console.log(error);
-      }).finally(() => (this.loading = false));
+      });
     },
     async initRates(){
-      this.loading=true;
       axios.post( 'http://panel.kdm1.biz/api/rates/list',
           '',
           {
@@ -495,10 +493,13 @@ export default {
         }
 
 
+        setTimeout(()=>{
+          this.loading = false
+        },1000);
 
       }).catch(function(error){
         console.log(error);
-      }).finally(() => (this.loading = false));
+      });
     }
   },
   mounted() {

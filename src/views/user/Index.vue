@@ -139,7 +139,7 @@
 
 import Marketer from "@/views/user/component/index/Marketer"
 import Notifications from "@/views/user/component/index/Notifications"
-import Tasks from "@/views/user/Tasks"
+import Tasks from "@/views/user/component/index/Tasks"
 
 export default {
   name: "Index user",
