@@ -71,7 +71,7 @@
         </div>
       </div>
     </div>
-      <Dialog header="Новая задача" v-model:visible="open" position="top" :modal="true"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '70vw'}" class="warp_dialog" >
+      <Dialog header="Новая задача" v-model:visible="open" position="center" :modal="true"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '70vw'}"  >
 
           <form class="formTask" action="">
             <div class="row">
@@ -105,7 +105,7 @@
                 </div>
               </div>
               <div class="col-lg-6">
-                <div class="d-flex justify-content-lg-end justify-content-center align-items-center">
+                <div class="d-flex justify-content-end  align-items-center">
                   <div class="f-12 color-2 me-3">
                     Максимальный
                     <br>
@@ -140,7 +140,7 @@
         </div>
       </Dialog>
 
-      <Dialog :header="modalTaks.nameTask" v-model:visible="openTask" position="top" :modal="true"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '70vw'}" class="warp_dialog" >
+      <Dialog :header="modalTaks.nameTask" v-model:visible="openTask" position="center" :modal="true"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '70vw'}"  >
         <form class="formTask" action="">
           <div class="row">
             <div class="col-lg-4">

@@ -29,6 +29,7 @@ export default {
   created(){
     //this.$store.dispatch('getRatesAction')
   },
+
   methods: {
     logOut() {
       this.$store.dispatch('auth/logout');

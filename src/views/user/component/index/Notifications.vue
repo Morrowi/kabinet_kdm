@@ -1,5 +1,5 @@
 <template>
-  <div class="contentBlock">
+  <div class="contentBlock mb-20">
     <transition name="fade" >
     <div class="position-absolute" v-if="loading">Loading...</div>
     <div class="row"  v-else>
@@ -27,7 +27,7 @@
     </div>
     </transition>
   </div>
-  <Dialog header="Уведомление" v-model:visible="displayNoty" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}" class="warp_dialog" >
+  <Dialog header="Уведомление" v-model:visible="displayNoty" position="center" :modal="true" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
     <div class="f-12 color-1 mb-3">
       {{ showNotyOne.data_insert }}
     </div>
@@ -135,21 +135,3 @@ export default {
   }
 };
 </script>
-<style>
-.warp_dialog{
-  border-radius: 0.3rem;
-  overflow: hidden;
-}
-  .warp_dialog.p-dialog .p-dialog-header{
-    border-bottom: 1px solid #dee2e6;
-    padding: 1rem!important;
-  }
-  .warp_dialog .p-dialog-title{
-    font-size: 24px !important;
-    line-height: 30px;
-  }
-  .warp_dialog .p-dialog-content{
-    padding: 1rem!important;
-  }
-
-</style>

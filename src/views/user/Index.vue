@@ -3,7 +3,7 @@
     <div class="f-24 fw-600 mb-3">
       Обзор
     </div>
-    <div class="row mb-2">
+    <div class="row">
       <div class="col-lg-6">
         <div class="row justify-content-between h-100">
           <Marketer/>
@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="col-lg-6">
-        <div class="col-12">
+        <div class="col-12  mb-20">
           <div class="b-radius bg-white p-3">
           <div class="d-flex align-items-center flex-wrap justify-content-between mb-3">
             <div class="f-18 fw-600">
@@ -160,4 +160,6 @@ export default {
 
   },
 };
+
+
 </script>

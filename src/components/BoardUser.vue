@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid vh-100">
     <div class="row h-100">
-      <div class="col-lg-2 bg-black mobMenuWrap" :class="mobMenu">
-        <div class="p-2 h-100">
+      <div class="col-lg-2 bg-black mobMenuWrap" :class="mobMenu" id="js__mobMenuWrap">
+        <div class="p-xl-2 h-100">
           <div class="d-flex flex-column justify-content-between leftMenuBlockH  h-100">
             <div class="mb-5 stickyTop">
 
@@ -192,7 +192,7 @@
                 {{username }}
               </div>
             </router-link>
-            <div class="mobMenuButton" :class="mobMenu" @click="openMenu">
+            <div id="btn-showMenu" class="mobMenuButton" :class="mobMenu" @click="openMenu">
               <span></span>
               <span></span>
               <span></span>
@@ -205,6 +205,7 @@
       </div>
     </div>
     <div
+        id="warp_openChat"
         v-if="showLauncher"
         class="sc-launcher"
         :class="{opened: isOpen}"
@@ -351,7 +352,9 @@ export default {
       } else {
         this.mobMenu = 'active';
       }
-
+    },
+    closeMenu(){
+      this.mobMenu = '';
     },
     close() {
       this.isOpen = false;
@@ -565,6 +568,10 @@ export default {
     this.editMsg();
     this.initPaymend();
     //chat - end
+
+  },
+  beforeUnmount () {
+
   }
 };
 </script>

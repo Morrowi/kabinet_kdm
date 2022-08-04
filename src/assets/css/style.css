@@ -26,7 +26,7 @@ html,
 body {
     padding: 0;
     min-height: 100vh;
-    background: #E5E5E5;
+    background: #f0f1f5;
     font-family: 'Inter', sans-serif;
 
     margin: 0 auto;
@@ -35,6 +35,10 @@ body {
 .cursor-pointer{
     cursor: pointer;
 }
+.mb-20{
+    margin-bottom: 20px;
+}
+
 .mx-n075{
     margin-left: -0.75em;
     margin-right: -0.75em;
@@ -151,7 +155,7 @@ body {
 .menuLinkBlock:hover .menuLinkName{
     color: #ffffff;
 }
-.active svg path{
+a.active svg path{
     fill: #EE735A;
 }
 .menuLinkBlock.active .menuLinkName{
@@ -282,6 +286,7 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
+    flex: 0 0 40px;
 }
 .bellBlock:before{
     content: '';
@@ -496,14 +501,31 @@ table.c3-tooltip {
     top: 10px;
 }
 .formInput,
-.ui-selectmenu-button{
+.ui-selectmenu-button,
+.formInput_pv input{
     background: #FFFFFF;
-    border: 1px solid #F0F2FA;
+    border: 1px solid #94A2AB !important;
     border-radius: 6px;
     padding: 15px 20px;
     min-height: 56px;
     outline-color: #218ffb;
 }
+.form-group .p-dropdown, .form-group .p-calendar{
+    border: 1px solid #94A2AB !important;
+}
+
+.p-inputtext.p-invalid.p-component,
+.p-inputnumber.p-invalid.p-component > .p-inputtext {
+    border-color: #e24c4c !important;
+}
+.p-dropdown:not(.p-disabled).p-focus,
+.p-inputtext:enabled:focus{
+    outline:1px solid #218ffb;
+    box-shadow: none;
+    border-color: #94A2AB;
+}
+
+
 .formInput::placeholder{
     color: #94A2AB;
 }
@@ -774,6 +796,7 @@ input[type="checkbox"]:checked + .blockCheck:before{
     justify-content: center;
     transition: all 0.3s;
     display: none;
+    flex:0 0 32px;
 }
 .mobMenuButton span {
     width: 16px;
@@ -812,11 +835,12 @@ input[type="checkbox"]:checked + .blockCheck:before{
 }
 .form-group{
     position: relative;
+    margin-bottom: 10px;
 }
 .buttonShowPass {
     position: absolute;
-    top: 18px;
-    right: 30px;
+    top: 13px;
+    right: 20px;
     cursor: pointer;
 }
 .checkBlockWrap{
@@ -1002,12 +1026,12 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
     min-height: 36px !important;
     width: 100%;
 }
-.p-inputtext{
+/*.p-inputtext{
     font-size: 16px !important;
     color: #212529 !important;
     font-family: Arial,Helvetica,sans-serif;
     border:none !important;
-}
+}*/
 .p-dropdown-panel,
 .p-datepicker{
     z-index: 1125 !important;
@@ -1023,48 +1047,6 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
 .p-fileupload-files{
     padding: 2rem 1rem;
     border: 1px solid #dee2e6;
-}
-
-@media only screen and (max-width : 1200px) {
-    .tarifTabletInfo{
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-}
-
-
-@media (min-width: 992px){
-.modal-lg {
-    max-width: 1150px;
-}
-}
-@media all and (max-width: 991px){
-.mobMenuButton{
-    display: flex;
-}
-.mobMenuWrap {
-    position: fixed;
-    left: 0;
-    top: 70px;
-    z-index: 22;
-    max-width: 50%;
-    min-width: 290px;
-    height: calc(100% - 70px);
-    transform: translateX(-100%);
-    transition: all 0.3s;
-}
-.mobMenuWrap.active{
-    transform: translateX(0);
-}
-.mobMenuWrap .stickyTop{
-    position: unset;
-}
-}
-@media all and (max-width: 768px){
-.massageTopWrap .messOn,
-.massageTopWrap .messOff{
-    display: none !important;
-}
 }
 
 
@@ -1160,13 +1142,13 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
 }
 
 .p-dialog{
-    border-radius: 0.3rem !important;
+    border-radius: 10px !important;
     overflow: hidden !important;
 }
 
 .p-dialog .p-dialog-header{
     border-bottom: 1px solid #dee2e6 !important;
-    padding: 11px 20px !important;
+    padding: 11px 20px 10px 20px !important;
 }
 .p-dialog-title{
     font-size: 24px !important;
@@ -1179,3 +1161,112 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
 .w-200{
     width: 200px;
 }
+
+.pi{
+    font-size: 18px !important;
+}
+
+@media only screen and (max-width : 1200px) {
+    .tarifTabletInfo{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .button{
+        font-size: 12px;
+    }
+}
+@media only screen and (max-width : 1100px) {
+    .formTarifItem{
+        min-width: auto;
+    }
+    .kdmLogo img{
+        width: 60px;
+    }
+}
+@media only screen and (max-width : 1050px) {
+    .warp_profile .buttonBorder {
+        width: 100% !important;
+    }
+    .mobMenuWrap .button {
+        font-size: 11px;
+    }
+}
+@media only screen and (max-width : 1000px) {
+    .kdmLogo img{
+        width: 50px;
+    }
+}
+
+@media all and (max-width: 992px){
+    .modal-lg {
+        max-width: 1150px;
+    }
+    .mobMenuButton{
+        display: flex;
+    }
+    .mobMenuWrap {
+        position: fixed;
+        left: 0;
+        top: 70px;
+        z-index: 22;
+        width: 100%;
+        max-width: 290px;
+        height: calc(100% - 70px);
+        transform: translateX(-100%);
+        transition: all 0.3s;
+        padding-top: 15px;
+    }
+    .mobMenuWrap.active{
+        transform: translateX(0);
+    }
+    .mobMenuWrap .stickyTop{
+        position: unset;
+    }
+    .kdmLogo img {
+        width: auto;
+    }
+    .mobMenuWrap .button{
+        font-size: 14px;
+    }
+}
+@media all and (max-width: 768px){
+    .massageTopWrap .messOn,
+    .massageTopWrap .messOff{
+        display: none !important;
+    }
+    .myTable{
+        overflow: auto;
+    }
+}
+
+@media only screen and (max-width : 500px) {
+    .formRegWrapper{
+        margin-left: 15px;
+        margin-right: 15px;
+        width: auto;
+    }
+}
+@media only screen and (max-width : 436px) {
+    .formRegWrapper{
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    .inputFile{
+        width: 180px;
+    }
+}
+
+@media only screen and (max-width : 400px) {
+    .formRegWrapper{
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+@media only screen and (max-width : 370px) {
+    .formRegWrapper{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+

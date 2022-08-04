@@ -34,14 +34,14 @@
           <Form @submit="handleLogin" >
             <div class="row">
               <div class="col-12">
-                <div class="form-group mb-2" :class="{ 'form-input-error': errorClassEmail }" >
+                <div class="form-group" :class="{ 'form-input-error': errorClassEmail }" >
                   <Field name="email" placeholder="Эл. почта"  class="w-100 formInput" />
                   <div class="warp_error_text"  v-if="errorEmailText">{{errorEmailText}}</div>
                 </div>
               </div>
               <div class="col-12">
 
-                <div class="form-group mb-2" :class="{ 'form-input-error': errorClassPassword }">
+                <div class="form-group" :class="{ 'form-input-error': errorClassPassword }">
                   <Field name="password" type="password" class="w-100 formInput" placeholder="Пароль" v-show="!showPass"/>
                   <Field name="password" type="text" class="w-100 formInput" placeholder="Пароль" v-show="showPass"/>
                   <ErrorMessage class="input-error" name="password" />
@@ -68,7 +68,7 @@
                 </div>
               </div>
               <div class="col-12">
-                <div class="form-group mb-3">
+                <div class="form-group mb-25">
                   <button type="submit" class="button blueButton w-100 pt-3 pb-3" :disabled="loading">
                     <span
                         v-show="loading"
@@ -232,7 +232,10 @@ export default {
 <style scoped>
 label {
   display: block;
-  margin-top: 10px;
+
+}
+.mb-25{
+  margin-bottom: 25px;
 }
 
 .card-container.card {

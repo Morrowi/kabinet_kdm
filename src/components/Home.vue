@@ -88,9 +88,9 @@
 
                   </div>
                 </div>
-              <div class="col-12 mt-4">
+              <div class="col-12 ">
                   <div class="form-group">
-                    <button class="button blueButton w-100 pt-3 pb-3" :disabled="loading">
+                    <button class="button blueButton w-100 pt-3 pb-3 btn-mt-20" :disabled="loading">
                                 <span
                                     v-show="loading"
                                     class="spinner-border spinner-border-sm"
@@ -303,7 +303,7 @@
 <script>
 import Dialog from 'primevue/dialog';
 import Column from 'primevue/column';
-import "primeflex/primeflex.css";
+//import "primeflex/primeflex.css";
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
@@ -680,7 +680,9 @@ export default {
 <style scoped>
 label {
   display: block;
-  margin-top: 10px;
+}
+.btn-mt-20{
+  margin-top: 20px;
 }
 
 .card-container.card {

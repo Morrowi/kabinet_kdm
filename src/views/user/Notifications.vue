@@ -54,7 +54,7 @@
     </div>
   </div>
   </transition>
-  <Dialog header="Уведомление" v-model:visible="displayNoty" position="top" :modal="true"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}" class="warp_dialog" >
+  <Dialog header="Уведомление" v-model:visible="displayNoty" position="center" :modal="true"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
     <div class="f-12 color-1 mb-3">
       {{ showNotyOne.data_insert }}
     </div>

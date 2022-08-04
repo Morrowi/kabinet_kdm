@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12 mb-3">
+  <div class="col-12 mb-20">
 
     <div class="b-radius bg-white">
       <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
@@ -16,7 +16,7 @@
           </svg>
         </div>-->
       </div>
-      <div class="border-bottom p-3">
+      <div class=" p-3">
         <transition name="fade" >
         <div class="position-absolute" v-if="loading">Loading...</div>
         <div v-else class="d-flex justify-content-between me-0 ml-0 align-items-start">

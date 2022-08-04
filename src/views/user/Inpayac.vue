@@ -1,6 +1,6 @@
 <template>
   <div class="contentBlock mb-5 mx-n075">
-    <div class="row mr-0 ml-0 justify-content-between mb-3 flex-column">
+    <div class="row me-0 ms-0 justify-content-between mb-3 flex-column">
       <div class="f-24 fw-600">
         Счета, оплаты, акты
       </div>
@@ -34,7 +34,7 @@
       <div class="tabsBlock col-12" data-target="0" style="">
         <div class="b-radius bg-white">
           <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
-            <div class="mr-3">
+            <div class="me-3">
               <div class="f-16 mb-1">
                 Колосовский Денис Александрович
               </div>
@@ -63,7 +63,7 @@
             </div>
           </div>
           <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
-            <div class="mr-3">
+            <div class="me-3">
               <div class="f-16 mb-1">
                 Колосовский Денис Александрович
               </div>
@@ -96,7 +96,7 @@
       <div class="tabsBlock col-12" data-target="1" style="display: none;">
         <div class="b-radius bg-white">
           <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
-            <div class="mr-3">
+            <div class="me-3">
               <div class="f-16 mb-1">
                 Счет № 21231
               </div>
@@ -126,7 +126,7 @@
             </div>
           </div>
           <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
-            <div class="mr-3">
+            <div class="me-3">
               <div class="f-16 mb-1">
                 Счет № 21231
               </div>
@@ -163,7 +163,7 @@
       <div class="tabsBlock col-12" data-target="2" style="display: none;">
         <div class="b-radius bg-white">
           <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
-            <div class="mr-3">
+            <div class="me-3">
               <div class="f-16 mb-1">
                 Акт № 21231
               </div>
@@ -192,7 +192,7 @@
             </div>
           </div>
           <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
-            <div class="mr-3">
+            <div class="me-3">
               <div class="f-16 mb-1">
                 Акт № 21230
               </div>

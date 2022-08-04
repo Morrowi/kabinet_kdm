@@ -233,7 +233,7 @@ export default {
 <style scoped>
 label {
   display: block;
-  margin-top: 10px;
+
 }
 
 .card-container.card {

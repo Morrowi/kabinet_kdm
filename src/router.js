@@ -254,7 +254,14 @@ router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
   document.description = to.meta.description;
 
-
+  let btnShowMenu = document.getElementById("btn-showMenu");
+  if(btnShowMenu !== null){
+    let jsMobMenuWrap = document.getElementById("js__mobMenuWrap");
+    jsMobMenuWrap.classList.remove("active");
+    btnShowMenu.classList.remove("active");
+  }
+  console.log(btnShowMenu);
+  //
   // trying to access a restricted page + not logged in
   // redirect to login page
   if (authRequired && !loggedIn) {

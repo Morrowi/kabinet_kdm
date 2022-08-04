@@ -7,71 +7,75 @@
             Основная информация
           </div>
         </div>
-        <div class="col-12 warp_profile">
-          <div class="d-flex">
-            <div class="col-3">
+        <div class="container-fluid warp_profile">
+          <div class="row">
+            <div class="col-12 col-sm-5 col-lg-4 col-xl-3">
               <div class="p-title">Имя / Название компании</div>
             </div>
-            <div class="col-6 d-flex align-items-center">
-              <InputText type="text" v-model="username" placeholder="Укажите ваше имя или название компании"/>
+            <div class="col-12 col-sm-7 col-lg-7 col-xl-6 d-flex align-items-center">
+              <div class="form-group w-100">
+                <InputText type="text" v-model="username" placeholder="Укажите ваше имя или название компании"/>
+              </div>
             </div>
           </div>
-          <div class="d-flex">
-            <div class="col-3 ">
+          <div class="row">
+            <div class="col-12 col-sm-5 col-lg-4 col-xl-3">
               <div class="p-title">Почта</div>
             </div>
-            <div class="col-6 d-flex align-items-center">
-              <div class="w-100">
+            <div class="col-12 col-sm-7 col-lg-7 col-xl-6 d-flex align-items-center">
+              <div class="w-100 form-group">
                 <InputText  type="text" v-model="email" aria-describedby="email-help" placeholder="Добавьте почту"/>
                 <small id="email-help" class="helper-text">На этот адрес приходят важные уведомления,<br>ответы службы поддержки и платежные документы</small>
               </div>
             </div>
           </div>
-          <div class="d-flex">
-            <div class="col-3 ">
+          <div class="row">
+            <div class="col-12 col-sm-5 col-lg-4 col-xl-3">
               <div class="p-title">Номер телефона</div>
             </div>
-            <div class="col-6 d-flex align-items-center">
-              <div class="w-100">
+            <div class="col-12 col-sm-7 col-lg-7 col-xl-6 d-flex align-items-center">
+              <div class="w-100 form-group">
                 <InputMask mask="+9(999) 999-9999" v-model="phone" placeholder="Добавьте телефон" />
               </div>
             </div>
           </div>
-          <div class="d-flex">
-            <div class="col-3 ">
+          <div class="row">
+            <div class="col-12 col-sm-5 col-lg-4 col-xl-3">
               <div class="p-title">Регион</div>
             </div>
-            <div class="col-6 d-flex align-items-center">
-              <div class="w-100">
+            <div class="col-12 col-sm-7 col-lg-7 col-xl-6 d-flex align-items-center">
+              <div class="w-100 form-group">
                 <CascadeSelect v-model="selectedCity" :options="countries" optionLabel="cname" optionGroupLabel="name" :optionGroupChildren="['states', 'cities']" :placeholder="regionSelected" />
               </div>
             </div>
           </div>
 
 
-          <div class="d-flex">
-            <div class="col-3 ">
+          <div class="row">
+            <div class="col-12 col-sm-5 col-lg-4 col-xl-3">
               <div class="p-title">Пароль</div>
             </div>
-            <div class="col-4 d-flex align-items-center">
-              <div class="w-100">
+            <div class="col-12 col-sm-3 d-flex align-items-center">
+              <div class="w-100 form-group">
                 <InputText v-model="pasw" type="password" placeholder="******"/>
               </div>
             </div>
-            <div class="col-2 d-flex align-items-center justify-content-end">
-              <div class="button buttonBorder" @click="showModalChangePW">Изменить пароль</div>
+            <div class="col-12 col-sm-4 d-flex align-items-center justify-content-end">
+              <div class="form-group">
+                <div class="button buttonBorder" @click="showModalChangePW">Изменить пароль</div>
+              </div>
             </div>
           </div>
           <div class="d-flex">
-            <div class="col-3 d-flex align-items-center ">
+            <div class="col-5  col-lg-4 col-xl-3 d-flex align-items-center ">
               <div class="p-title">Фото профиля</div>
             </div>
             <div class="col-auto d-flex align-items-center p-2">
               <div v-if="image">
-                <Avatar shape="circle" class="mr-2" size="xlarge" @click="showEditAvata" :class="{'active':showEditAvataPanel}" :image="image" />
+                <Avatar shape="circle" class="me-2" size="xlarge" @click="showEditAvata" :class="{'active':showEditAvataPanel}" :image="image" />
               </div>
               <div v-else>
-                <Avatar icon="pi pi-user" class="mr-2" size="xlarge" shape="circle" @click="showEditAvata" :class="{'active':showEditAvataPanel}"/>
+                <Avatar icon="pi pi-user" class="me-2" size="xlarge" shape="circle" @click="showEditAvata" :class="{'active':showEditAvataPanel}"/>
               </div>
             </div>
             <div class="col-auto d-flex flex-column justify-content-center warp_edit_avatar" :class="{'active':showEditAvataPanel}">
@@ -80,9 +84,9 @@
               <div class="delited_avatar" @click="deleteAvatar">Удалить фото</div>
             </div>
           </div>
-          <div class="d-flex mt-3 mb-3">
-            <div class="col-3 "></div>
-            <div class="col-6 d-flex align-items-center">
+          <div class="row mt-3 mb-3">
+            <div class="col-12 col-sm-5 col-lg-4 col-xl-3 "></div>
+            <div class="col-12 col-sm-auto d-flex align-items-center justify-content-center">
                 <button class="button blueButton px-4" @click="saveInfo" :disabled="loading">
                   <span v-show="loading" class="spinner-border spinner-border-sm"></span>
                   Сохранить изменения
@@ -395,6 +399,14 @@ export default {
 
 </script>
 <style>
+.warp_profile{
+  padding-top: 13px;
+  padding-bottom: 25px;
+}
+.warp_profile .form-group{
+  margin-bottom: 20px;
+}
+
 .warp_profile .p-title{
   font-style: normal;
   font-weight: 400;

@@ -29,7 +29,7 @@
         Задачи
       </div>
       <div class="f-14">
-        Вы можете создать задачу самостоятельно либо через личного менеджера, <a class="color-blue" href="marketolog.html">написав ему в
+        Вы можете создать задачу самостоятельно либо через личного менеджера, <a class="color-blue" href="javascript:void(0);" @click="showChat">написав ему в
         чат</a>
       </div>
     </div>
@@ -93,7 +93,7 @@
         </div>
       </div>
     </div>
-      <Dialog header="Новая задача" v-model:visible="open" position="top" :modal="true"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '70vw'}" class="warp_dialog" >
+      <Dialog header="Новая задача" v-model:visible="open" position="center" :modal="true"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '70vw'}"  >
 
           <form class="formTask" action="">
             <div class="row">
@@ -127,7 +127,7 @@
                 </div>
               </div>
               <div class="col-lg-6">
-                <div class="d-flex justify-content-lg-end justify-content-center align-items-center">
+                <div class="d-flex justify-content-end  align-items-center">
                   <div class="f-12 color-2 me-3">
                     Максимальный
                     <br>
@@ -157,12 +157,12 @@
             </div>
           </form>
 
-        <div class="d-flex justify-content-start px-3 pb-3">
+        <div class="d-flex justify-content-start px-3 pb-3 mt-4 mt-md-0">
           <button @click="submitForm" type="button" class="button blueButton w-200">Создать задачу</button>
         </div>
       </Dialog>
 
-      <Dialog :header="modalTaks.nameTask" v-model:visible="openTask" position="top" :modal="true"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '70vw'}" class="warp_dialog" >
+      <Dialog :header="modalTaks.nameTask" v-model:visible="openTask" position="center" :modal="true"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '70vw'}" >
         <form class="formTask" action="">
           <div class="row">
             <div class="col-lg-4">
@@ -275,6 +275,10 @@ export default {
     this.listTasks();
   },
   methods: {
+    showChat(){
+      console.log(this.$refs);
+      document.querySelector("#warp_openChat").click();
+    },
     showModa(){
       this.open = true;
       this.$nextTick(() => {

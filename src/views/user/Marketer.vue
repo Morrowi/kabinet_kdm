@@ -29,7 +29,7 @@
                   <div class="d-flex align-items-center">
                     <div class="avaBlock me-3 d-flex align-items-center flex-column">
                       <Avatar size="xlarge"  shape="circle" :image="'http://panel.kdm1.biz/uploads/'+marketolog.id+'/'+marketolog.avatar" />
-                      <div class="f-18 fw-600 d-flex align-items-center lh-1">
+                      <div class="warp_stars f-18 fw-600 d-flex align-items-center lh-1">
                         <div class="me-1">
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7.15076 1.36588C7.54204 0.736562 8.45796 0.73656 8.84924 1.36587L10.8006 4.50441C10.9383 4.72583 11.157 4.88472 11.4101 4.94723L14.9981 5.83325C15.7175 6.01091 16.0005 6.882 15.5229 7.4486L13.141 10.2743C12.973 10.4737 12.8894 10.7308 12.9082 10.9908L13.1743 14.677C13.2276 15.4161 12.4866 15.9544 11.8002 15.6753L8.37669 14.2832C8.13517 14.185 7.86483 14.185 7.62331 14.2832L4.19982 15.6753C3.51337 15.9544 2.77238 15.4161 2.82573 14.677L3.0918 10.9908C3.11057 10.7308 3.02704 10.4737 2.859 10.2743L0.477088 7.4486C-0.000513792 6.882 0.282519 6.01091 1.00194 5.83325L4.58988 4.94723C4.843 4.88472 5.06171 4.72583 5.19937 4.50441L7.15076 1.36588Z" fill="#EE735A"/>
@@ -43,8 +43,8 @@
                       <div class="f-16 mb-1">
                         {{marketolog.username}}
                       </div>
-                      <div class="f-14 color-2 pr-5">
-                        {{marketolog.description}}
+                      <div class="f-14 color-2 pr-5" v-html="marketolog.description">
+
                       </div>
                     </div>
 
@@ -134,7 +134,7 @@
                   <div class="f-18 fw-600 mb-3">
                     {{ marketolog.username}}
                   </div>
-                  <div class="f-14 color-2 lh-22" v-html="marketolog.description">
+                  <div class="f-14 color-2 lh-22" v-html='marketolog.description'>
 
                   </div>
                 </div>
@@ -370,6 +370,9 @@ export default {
 };
 </script>
 <style>
+.warp_stars{
+  margin-top: 9px;
+}
   .p-inputtextarea{
     width: 100%;
     height: 54px;
