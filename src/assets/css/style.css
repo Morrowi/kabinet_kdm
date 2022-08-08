@@ -1026,6 +1026,12 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
     min-height: 36px !important;
     width: 100%;
 }
+
+
+.p-calendar .p-inputtext{
+    border:none !important;
+}
+
 /*.p-inputtext{
     font-size: 16px !important;
     color: #212529 !important;
