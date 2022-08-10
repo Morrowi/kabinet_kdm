@@ -61,11 +61,9 @@ export default {
     Avatar
   },
   data() {
-    let marketolog;
-    let loading = true;
     return{
-      loading,
-      marketolog,
+      loading:true,
+      marketolog:null,
       online:false
     }
   },
@@ -73,7 +71,20 @@ export default {
 
   },
   methods: {
-    initOnline(){
+    async initMarketolog(){
+      axios.post( 'http://panel.kdm1.biz/api/marketolog/',
+          '',
+          {
+            headers: authHeader()
+          }
+      ).then((resp)=>{
+        console.log(resp.data);
+        this.marketolog = resp.data;
+      }).catch(function(error){
+        console.log(error);
+      }).finally(() => (this.loading = false));
+    },
+    async initOnline(){
       axios.post( 'http://panel.kdm1.biz/api/user/online',
           '',
           {
@@ -99,20 +110,11 @@ export default {
       return this.$store.state.auth.user;
     },
   },
-  mounted() {
-    axios.post( 'http://panel.kdm1.biz/api/marketolog/',
-        '',
-        {
-          headers: authHeader()
-        }
-    ).then((resp)=>{
-      console.log(resp.data);
-      this.marketolog = resp.data;
-    }).catch(function(error){
-      console.log(error);
-    }).finally(() => (this.loading = false));
+  async  mounted() {
 
-    this.initOnline();
+
+   await this.initMarketolog();
+   await this.initOnline();
     //console.log(this.$store.state.auth.user.manager);
   },
   created() {

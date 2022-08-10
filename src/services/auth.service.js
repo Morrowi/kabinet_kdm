@@ -25,15 +25,13 @@ class AuthService {
 
   register(user) {
     return axios.post(API_URL + 'signup', {
-
       email: user.email,
-      password: user.password,
-      mailing_list: user.mailing_list,
       rules: user.rules
     })
     .then(response => {
       if (response.data.accessToken) {
         localStorage.setItem('user', JSON.stringify(response.data));
+        localStorage.setItem('step', 'step1');
       }
       return response;
     });
@@ -50,14 +48,13 @@ class AuthService {
     .then(response => {
       if (response.data.accessToken) {
         localStorage.setItem('user', JSON.stringify(response.data));
+        localStorage.setItem('step', 'step2');
       }
       return response;
     });
   }
   step2(user) {
     return axios.post(API_URL + 'step2', {
-      user_id:user.user_id,
-      rate: user.rate,
       manager: user.manager,
         },{
           headers: authHeader()
@@ -68,10 +65,29 @@ class AuthService {
       if (response.data) {
         console.log('response.data',response.data);
         localStorage.setItem('user', JSON.stringify(response.data));
+        localStorage.setItem('step', 'step3');
         return response;
       }
       return null;
     });
+  }
+  step3(user) {
+    return axios.post(API_URL + 'step3', {
+          rate: user.rate,
+        },{
+          headers: authHeader()
+        }
+    )
+        .then(response => {
+
+          if (response.data) {
+            console.log('response.data',response.data);
+            localStorage.setItem('user', JSON.stringify(response.data));
+            localStorage.removeItem('step');
+            return response;
+          }
+          return null;
+        });
   }
   reuser() {
     return axios.post(API_URL + 'reuser', {},{

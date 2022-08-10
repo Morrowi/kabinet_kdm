@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid vh-100">
-<!--    <AddRates/>-->
-    <div class="row justify-content-start align-items-center flex-column pt-4 pb-4">
+
+    <div class="d-flex flex-column justify-content-start align-items-center flex-column pt-4 pb-4">
       <div class="topLogo mb-4 col-auto">
         <svg width="207" height="51" viewBox="0 0 207 51" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
           <rect width="56.6667" height="51" fill="url(#pattern0)"/>
@@ -14,99 +14,120 @@
           </defs>
         </svg>
       </div>
-      <div class="formRegWrapper b-radius bg-white">
-        <div class="curFormBlock" data-target="reg">
-          <div class="f-24 fw-600 mb-3">
-            Добро пожаловать <br>
-            в хороший маркетинг
+      <div class="curFormBlock mb-4">
+        <div class="col-lg-12 m-auto">
+          <div class="d-flex ms-3 me-3 justify-content-between warp_steps">
+            <div class="stepWrap active" ><div class="stepBlock">1</div></div>
+            <div class="stepWrap active"><div class="stepBlock">2</div></div>
+            <div class="stepWrap"><div class="stepBlock">3</div></div>
           </div>
-          <div class="f-16 col-lg-9 mb-3">
-            Если у вас уже есть аккаунт, <router-link to="/login" class="showCurForm color-blue cursor-pointer">войдите</router-link> в него
-          </div>
-            <div class="row">
-              <div class="col-12">
-                <div class="form-group" :class="{ 'form-input-error': errorClassEmail }">
-                  <input v-model="email" type="email" placeholder="Эл. почта" class="w-100 formInput">
-                  <div class="warp_error_text"  v-if="errorClassEmail && textErrorEmail !==null">{{textErrorEmail}}</div>
-                </div>
-              </div>
-              <div class="col-12">
-                  <div class="form-group" :class="{ 'form-input-error': errorClassRules }" >
-                    <label class="d-flex align-items-center checkBlockWrap" >
-                      <input v-model="rules" type="checkbox" name="rules" class="d-none" :value="true" checked />
-                      <div class="checkBloc me-2">
-                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M10.6668 0.5L4.25016 6.91667L1.3335 4" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                      </div>
-                      <span class="f-12">Я прочитал <a href="javascript:void(0);" @click="open = true" class="color-blue">правила</a> и согласен с ними</span>
-                    </label>
-                  </div>
-                </div>
-              <div class="col-12 ">
-                  <div class="form-group">
-                    <button class="button blueButton w-100 pt-3 pb-3 btn-mt-20" :disabled="loading" @click="handleRegister">
-                                <span
-                                    v-show="loading"
-                                    class="spinner-border spinner-border-sm"
-                                ></span>
-                                  Зарегистрироваться
-                    </button>
-                  </div>
-                </div>
-            </div>
-
         </div>
       </div>
+      <div class="curFormBlock w-100"  >
+        <div class="col-lg-5 mh-auto text-center">
+          <div class="step2-title">
+            Выберите маркетолога
+          </div>
+          <div class="f-16 text-center step2_sub_title">
+             Не бойтесь, его можно будет поменять.
+          </div>
+        </div>
+        <div class="d-flex justify-content-center flex-column">
+          <div class=" mb-4" v-for="marketolog in Marketologs" :key="marketolog.id" :id="marketolog.id">
+            <div class="b-radius bg-white formTarifItem ml-3 mr-3">
+              <div class="border-bottom p-3">
+                <div class="row justify-content-between mr-0 ml-0 align-items-start position-relative">
+                  <div class="d-flex">
+                    <div class="avaBlock me-5 d-flex align-items-center flex-column">
+                      <div class="bigAvaBlock mb-3">
+                        <Avatar shape="circle" :image="marketolog.avatar" />
+                      </div>
+                      <div class="f-18 fw-600 d-flex align-items-center flex-column">
+                        <div class="me-1">
+                          {{marketolog.rating}}
+                        </div>
+                        <span class="pt-1">
+                          <star-rating :rating="marketolog.rating"  :read-only="true" :round-start-rating="false" :star-size="18" :rounded-corners="false" :border-width="0" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]" :padding="7" :show-rating="false" inactive-color="#EFF0F6" active-color="#EE735A" ></star-rating>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column">
+                      <div class="f-18 fw-600">
+                        {{ marketolog.username}}
+                      </div>
+                      <div class="d-flex warp_prop_marketolog">
+                        <div>
+                          <span>7</span>
+                          <br>
+                          лет опыта
+                        </div>
+                        <div>
+                          <span>160</span>
+                          <br>
+                          успешных проектов
+                        </div>
+                      </div>
+                      <div class="f-14 color-2 lh-22" v-html="marketolog.description">
+
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end">
+                <div class="wapr_btn_send_marketolog">
+                  <div class="button blueButton px-5" @click="selectedManager(marketolog.id);">Выбрать</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <router-link to="/step1" class="showCurForm color-blue text-center cursor-pointer">Назад</router-link>
+        </div>
+      </div>
+
     </div>
 
   </div>
-  <Dialog header="Правила" v-model:visible="open" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}" :modal="true" position="top">
-    <div class="modal-body">
 
-    </div>
-  </Dialog>
-
-  <Toast />
 </template>
 
 <script>
-import Dialog from 'primevue/dialog';
+
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
+import StarRating from 'vue-star-rating'
+import Avatar from 'primevue/avatar';
 
-import Toast from 'primevue/toast';
+
+
+import axios from "axios";
+
 
 
 export default {
-  name: "Home",
+  name: "Step 2",
   metaInfo: {
     title: 'Default App Title',
     titleTemplate: '%s | vue-meta Example App'
   },
   components: {
-    Dialog,
-    Toast
+    Avatar,
+    StarRating,
   },
   data() {
+
     return {
-      error:0,
-      errorClassEmail: false,
-      textErrorEmail:null,
-      errorClassRules:false,
-      email:null,
-      rules:true,
-      open: false,
-      successful: false,
+      Marketologs:[],
       loading: false,
       message: "",
+      selectManager:''
     };
   },
   computed: {
-
     loggedIn() {
-      console.log(this.$store.state.auth);
       return this.$store.state.auth.status.loggedIn;
     },
     currentUser() {
@@ -115,125 +136,106 @@ export default {
 
   },
   mounted() {
-    if(this.currentUser!==null){
-      if(this.currentUser.manager!=null){
 
-        if(this.currentUser.roles === 1){
-          //this.$router.push("/admin");
-        } else if(this.currentUser.roles === 2) {
-          this.$router.push("/mod");
-        } else {
-          //this.$router.push("/dashboard");
-        }
-      } else {
-        if(this.currentUser.roles === 1){
-          //this.$router.push("/admin");
-        } else if(this.currentUser.roles === 2) {
-          this.$router.push("/mod");
-        } else {
-          //this.$router.push("/dashboard");
-        }
-      }
-    }
     if (this.loggedIn) {
       console.log()
       //this.$router.push("/profile");
     }
+    this.initMarketologs();
+
   },
   watch:{
 
   },
   methods: {
+
+    initMarketologs(){
+      axios.get( 'http://panel.kdm1.biz/api/marketolog/').then((resp)=>{
+        this.Marketologs = resp.data;
+      }).catch(function(error){
+        console.log(error);
+      });
+    },
+    selectedManager(id){
+      this.message = "";
+      this.loading = true;
+
+      let user={
+        manager:id
+      }
+      this.$store.dispatch("auth/step2", user).then(
+          () => {
+            this.successful = true;
+            this.loading = false;
+            this.$router.push("/step3");
+          },
+          (error) => {
+            this.message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            this.successful = false;
+            this.loading = false;
+          }
+      );
+
+
+
+
+    },
+
     logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
     },
-    handleRegister() {
-      this.message = "";
-      this.successful = false;
-      this.loading = true;
-      this.errorClassEmail=false;
-      this.textErrorEmail=null;
-      this.errorClassRules=false;
-
-      this.error=0;
-
-
-
-      if (!this.email) {
-        this.errorClassEmail=true;
-        this.error++;
-      } else {
-        const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-        if (!regex.test(this.email)) {
-          this.errorClassEmail=true;
-          this.textErrorEmail='Неверный формат электронной почты';
-          this.error++;
-        } else {
-          let myarr = this.email.split("@");
-          if(myarr[0].length > 128 ||  myarr[1].length > 128){
-            this.errorClassEmail=true;
-
-            //masha.korsheva@ya.ru
-            this.textErrorEmail='Неверный формат электронной почты';
-            this.error++;
-          }
-        }
-      }
-
-
-      if (this.rules === false) {
-        this.errorClassRules=true;
-        this.error++;
-      }
-
-
-      if(this.error === 0) {
-
-        let user = {
-          email:this.email,
-          rules:this.rules
-        }
-
-        this.$store.dispatch("auth/register", user).then(
-            () => {
-              this.successful = true;
-              this.$router.push("/step1");
-              this.loading = false;
-
-            },
-            (error) => {
-              this.message =
-                  (error.response &&
-                      error.response.data &&
-                      error.response.data.message) ||
-                  error.message ||
-                  error.toString();
-              console.log(error.response.data.error);
-              if(error.response.data.error === 'email is busy'){
-                this.errorClassEmail=true;
-                this.textErrorEmail='Такой адрес электронной почты уже зарегистрирован';
-              }
-              this.successful = false;
-              this.loading = false;
-            }
-        );
-      } else {
-        this.loading = false;
-      }
-
-    },
 
   },
   created() {
-    if (this.loggedIn) {
-      this.$router.push("/step1");
-    }
+
   },
 };
 </script>
 
 <style scoped>
+.step2-title{
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 34px;
+  margin-bottom: 15px;
+}
+
+.step2_sub_title{
+  margin-bottom: 40px;
+}
+
+.warp_prop_marketolog{
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 160%;
+  color: #6A7686;
+  margin-bottom: 20px;
+  margin-top: 12px;
+}
+.warp_prop_marketolog > div{
+  margin-right: 60px;
+}
+
+.warp_prop_marketolog span{
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #171717;
+}
+
+.wapr_btn_send_marketolog{
+  margin: 10px 20px;
+}
+.wapr_btn_send_marketolog .button{
+  width: 200px;
+}
+
 label {
   display: block;
 }
@@ -273,21 +275,14 @@ label {
   color: red;
 }
 .form-input-error input{
-  border:1px solid #F23A11;
-  outline-color: #F23A11;
-  color:#F23A11;
+  border:1px solid #EE735A;
+  outline-color: #EE735A;
+  color:#EE735A;
 }
-.form-input-error span{
-  color:#F23A11;
-}
-.form-input-error input{
-  border:1px solid #F23A11;
-  outline-color: #F23A11;
-  color:#F23A11;
-}
+
 .warp_error_text{
-  padding: 10px 8px;
-  background: #FFD2C8;
+  padding: 15px 16px;
+  background: #FFE6E6;
   border-radius: 6px;
   font-weight: 400;
   font-size: 12px;
@@ -296,20 +291,18 @@ label {
   position: absolute;
   left: calc(100% + 30px);
   top: 0;
-  max-width: 192px;
+  max-width: 270px;
   width: 100%;
-  text-align: left;
-  font-family: 'Inter', sans-serif;
 }
 
 .form-input-error input{
-  border:1px solid #F23A11 !important;
-  outline-color: #F23A11;
-  color:#F23A11;
+  border:1px solid #EE735A !important;
+  outline-color: #EE735A;
+  color:#EE735A;
 }
 
 .form-input-error .checkBloc{
-  border:1px solid #F23A11 !important;
+  border:1px solid #EE735A !important;
 }
 
 </style>

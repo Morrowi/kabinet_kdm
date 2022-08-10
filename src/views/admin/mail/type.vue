@@ -22,28 +22,36 @@
     <div class="add_event">
       <div class="row mt-3">
         <div class="field col-12 col-md-6">
-          <span class="p-float-label">
-            <InputText id="input_event_name" type="text" v-model="event_name" />
-            <label for="input_event_name">Тип события (en)</label>
-          </span>
+          <div class="form-group">
+            <span class="p-float-label">
+              <InputText id="input_event_name" type="text" v-model="event_name" />
+              <label for="input_event_name">Тип события (en)</label>
+            </span>
+          </div>
         </div>
         <div class="field col-12 col-md-6">
+          <div class="form-group">
           <span class="p-float-label">
             <Dropdown id="input_vid" v-model="event_type" :options="event_types" optionLabel="name" optionValue="code" />
             <label  for="input_vid">Вид события</label>
           </span>
+          </div>
         </div>
         <div class="field col-12 col-md-6">
-          <span class="p-float-label">
-            <InputText id="input_name" type="text" v-model="name" />
-            <label for="input_name">Название</label>
-          </span>
+          <div class="form-group">
+            <span class="p-float-label">
+              <InputText id="input_name" type="text" v-model="name" />
+              <label for="input_name">Название</label>
+            </span>
+          </div>
         </div>
         <div class="field col-12">
-          <span class="p-float-label">
-            <Textarea id="input_description" v-model="description" rows="5" cols="30" />
-            <label for="input_description">Описание</label>
-          </span>
+          <div class="form-group">
+            <span class="p-float-label">
+              <Textarea id="input_description" v-model="description" rows="5" cols="30" />
+              <label for="input_description">Описание</label>
+            </span>
+          </div>
         </div>
 
 

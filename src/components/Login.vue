@@ -162,20 +162,13 @@ export default {
         if (!regex.test(user.email)) {
           this.errorClassEmail=true;
           this.error++;
-          this.errorEmailText = 'Не является email';
+          this.errorEmailText = 'Неверный формат электронной почты';
         } else {
           let myarr = user.email.split("@");
           if(myarr[0].length > 128 ||  myarr[1].length > 128){
             this.errorClassEmail=true;
             this.error++;
-            this.errorEmailText = 'Недопустимый формат email';
-          } else {
-            let firstPos = myarr[0].indexOf('.');
-            if(firstPos !== -1){
-              this.errorClassEmail=true;
-              this.error++;
-              this.errorEmailText = 'email не может начинатся с "."';
-            }
+            this.errorEmailText = 'Неверный формат электронной почты';
           }
         }
       }
@@ -184,10 +177,10 @@ export default {
         this.error++;
         this.errorPasswordText =  'Пароль не заполнен';
       } else {
-        if (user.password.length < 6) {
+        if (user.password.length < 8) {
           this.errorClassPassword=true;
           this.error++;
-          this.errorPasswordText =  'Пароль должен быть больше 6 символов';
+          this.errorPasswordText =  'Пароль должен быть больше 8 символов';
         }
       }
       // if the field is not a valid email
@@ -218,11 +211,15 @@ export default {
                   error.toString();
               console.log(error.response.data.error);
               if(error.response.data.error === 'Innvalid password'){
-                this.$toast.add({severity:'error', summary: 'Ошибка', detail:'Неверный логин или пароль', life: 3000});
+                this.errorClassPassword=true;
+                this.errorPasswordText =  'Неверный пароль, введите корректный или восстановите';
+//                this.$toast.add({severity:'error', summary: 'Ошибка', detail:'Неверный логин или пароль', life: 3000});
               }
 
             }
         );
+      } else {
+        this.loading = false;
       }
     },
   },
@@ -238,46 +235,18 @@ label {
   margin-bottom: 25px;
 }
 
-.card-container.card {
-  max-width: 350px !important;
-  padding: 40px 40px;
-}
-
-.card {
-  background-color: #f7f7f7;
-  padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-}
-
-.profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-}
-
 .error-feedback {
   color: red;
 }
 .form-input-error input{
-  border:1px solid #EE735A;
-  outline-color: #EE735A;
-  color:#EE735A;
+  border:1px solid #F23A11 !important;
+  outline-color: #F23A11 !important;
+  color:#F23A11 !important;
 }
 
 .warp_error_text{
-  padding: 15px 16px;
-  background: #FFE6E6;
+  padding: 10px 8px;
+  background: #FFD2C8;
   border-radius: 6px;
   font-weight: 400;
   font-size: 12px;
@@ -286,8 +255,14 @@ label {
   position: absolute;
   left: calc(100% + 30px);
   top: 0;
-  max-width: 270px;
+  max-width: 138px;
   width: 100%;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+}
+
+.form-input-error path{
+  stroke: #F23A11;
 }
 
 </style>

@@ -269,6 +269,7 @@ export default {
 
   },
   data() {
+
     //let getItem = window.localStorage.getItem("user");
    let user =  JSON.parse(localStorage.getItem('user'));
     //console.log('user 272  ',user);
@@ -346,6 +347,7 @@ export default {
     };
   },
   methods:{
+
     openMenu(){
       if(this.mobMenu === 'active'){
         this.mobMenu = '';
@@ -532,16 +534,33 @@ export default {
   },
   computed:{
     currentUser() {
+
       return this.$store.state.auth.user;
     },
   },
   mounted() {
+
+    if(this.$store.state.auth.step === 'step1') {
+      this.$router.push("/step1");
+    }else if(this.$store.state.auth.step === 'step2'){
+      this.$router.push("/step2");
+    }else if(this.$store.state.auth.step === 'step3'){
+      this.$router.push("/step3");
+    } else {
+      //chat
+      this.loadRoom();
+      this.getRooms();
+      this.getMsg();
+      this.editMsg();
+      this.initPaymend();
+      //chat - end
+    }
     UserService.getUserBoard().then(
       (response) => {
-
+        //this.initRoute();
         if(response.data.roles === 1){
           this.$router.push("/admin");
-        } else if(response.data.roles === 2){
+        } else if(response.data.roles === 1){
           this.$router.push("/mod");
         }
         if(this.currentUser.manager === null){
@@ -560,14 +579,7 @@ export default {
           error.toString();
       }
     );
-    //this.reUser();
-    //chat
-    this.loadRoom();
-    this.getRooms();
-    this.getMsg();
-    this.editMsg();
-    this.initPaymend();
-    //chat - end
+
 
   },
   beforeUnmount () {

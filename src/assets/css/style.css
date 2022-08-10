@@ -1,4 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+@font-face {
+    font-family: 'Muller';
+    src: local('Muller Regular'), local('Muller-Regular'),
+    url('../fonts/MullerRegular.woff') format('woff'),
+    url('../fonts/MullerRegular.ttf')  format('truetype'),
+    url("../fonts/Muller-Regular.otf") format("opentype");
+    font-weight: 400;
+    font-display: auto;
+    font-style: normal;
+}
 * {
     box-sizing: border-box;
     margin: 0;
@@ -697,20 +708,36 @@ textarea.formInput {
     min-width: 100px;
 }
 .tarifItem {
-    padding-left: 45px !important;
     position: relative;
+    margin-bottom: 25px;
+    font-family: 'Muller', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    color: #262626;
 }
 .tarifItem:before{
     content: '';
     position: absolute;
-    background: url(../image/arrowOr.svg)no-repeat;
-    background-size: contain;
-    background-position: center;
-    width: 13px;
-    height: 10px;
-    left: 20px;
-    top: 20px;
+    width: 4px;
+    height: 4px;
+    background-color: #E66950;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    left: -15px;
+    top: 10px;
 }
+.warp_ico{
+    margin-top: 6px;
+    margin-bottom: 37px;
+}
+
+.warp_ico .mb-16{
+    margin-bottom: 16px;
+}
+
 .bgTarif{
     background: url(../image/tarifImg1.png)no-repeat;
     background-size: contain;
@@ -873,7 +900,18 @@ input[type="checkbox"]:checked + .blockCheck:before{
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    max-width: 730px;
 }
+.curFormBlockStep3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1108px;
+}
+
+
 .stepBlock {
     border: 1px solid #94A2AB;
     border-radius: 50%;
@@ -886,7 +924,7 @@ input[type="checkbox"]:checked + .blockCheck:before{
     justify-content: center;
     position: relative;
     z-index: 2;
-    background: #e5e5e5;
+    background: #F0F1F5;
     transition: all 0.3s;
 }
 .stepBlock:before {
@@ -897,17 +935,30 @@ input[type="checkbox"]:checked + .blockCheck:before{
     z-index: -1;
     border-right: 20px solid;
     border-left: 20px solid;
-    border-color: #e5e5e5;
+    border-color: #F0F1F5;
     padding: 17.5px;
     border-radius: 50%;;
 }
+.warp_steps{
+    position: relative;
+}
+.warp_steps:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: calc(50% - 1px);
+    width: 100%;
+    height: 1px;
+    background: #94A2AB;
+    z-index: 1;
+}
+
 .stepWrap.active .stepBlock{
     background: #EE735A;
     border: 1px solid #FFFFFF;
     color: #ffffff;
 }
 .stepWrap {
-    width: calc(100% / 3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -978,7 +1029,7 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
     align-items: center;
 }
 .bigAvaBlock {
-    width: 135px;
+    width: 114px;
 }
 .bigAvaBlock .p-avatar{
     width: 100%;
@@ -1171,6 +1222,34 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
 .pi{
     font-size: 18px !important;
 }
+.warp_rate .sub_title{
+    font-family: 'Muller', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 27px;
+    color: #262626;
+
+}
+.warp_rate .sub_title span{
+    padding: 3px 6px;
+    transform: translate(0);
+    position: relative;
+    color: #fff;
+}
+.warp_rate .sub_title span:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #E66950;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transform: skew(-7deg, 0deg);
+    border-radius: 5px;
+}
+
 
 @media only screen and (max-width : 1200px) {
     .tarifTabletInfo{

@@ -1,5 +1,8 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "./components/Home.vue";
+import Step1 from "./components/Step1.vue";
+import Step2 from "./components/Step2.vue";
+import Step3 from "./components/Step3.vue";
 import Login from "./components/Login.vue";
 import Recovery from "./components/Recovery.vue";
 
@@ -17,6 +20,33 @@ const routes = [
     path: "/",
     name: "home",
     component: Home,
+    meta:{
+      title: 'Добрый маркетолог — личный кабинет',
+      description: 'Добрый маркетолог — личный кабинет',
+    }
+  },
+  {
+    path: "/step1",
+    name: "Step1",
+    component: Step1,
+    meta:{
+      title: 'Добрый маркетолог — личный кабинет',
+      description: 'Добрый маркетолог — личный кабинет',
+    }
+  },
+  {
+    path: "/step2",
+    name: "Step2",
+    component: Step2,
+    meta:{
+      title: 'Добрый маркетолог — личный кабинет',
+      description: 'Добрый маркетолог — личный кабинет',
+    }
+  },
+  {
+    path: "/step3",
+    name: "Step3",
+    component: Step3,
     meta:{
       title: 'Добрый маркетолог — личный кабинет',
       description: 'Добрый маркетолог — личный кабинет',
@@ -129,6 +159,11 @@ const routes = [
     children: [
       {path: '',
         component: () => import('./views/admin/Index.vue'),
+      },
+
+      {
+        path: 'rates/add',
+        component: () => import('./views/admin/AddRates.vue'),
       },
       {
         path: 'users',
@@ -245,10 +280,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/', '/login', '/register', '/home', '/recovery','/recovery/'];
+  const publicPages = ['/', '/step1', '/step2', '/login', '/register', '/home', '/recovery','/recovery/'];
   //http://localhost:8080/recovery/6d167789a82410d87e6fa5b19585d844037823b5
 
-   to.path = to.path.replace(to.params.id,'');
+  to.path = to.path.replace(to.params.id,'');
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
   document.title = to.meta.title;
@@ -260,8 +295,10 @@ router.beforeEach((to, from, next) => {
     jsMobMenuWrap.classList.remove("active");
     btnShowMenu.classList.remove("active");
   }
-  console.log(btnShowMenu);
-  //
+
+
+
+
   // trying to access a restricted page + not logged in
   // redirect to login page
   if (authRequired && !loggedIn) {

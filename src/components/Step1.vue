@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid vh-100">
-<!--    <AddRates/>-->
+
     <div class="row justify-content-start align-items-center flex-column pt-4 pb-4">
       <div class="topLogo mb-4 col-auto">
         <svg width="207" height="51" viewBox="0 0 207 51" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -14,69 +14,56 @@
           </defs>
         </svg>
       </div>
-      <div class="formRegWrapper b-radius bg-white">
-        <div class="curFormBlock" data-target="reg">
+      <div class="curFormBlock mb-4">
+        <div class="col-lg-12 m-auto">
+          <div class="d-flex ms-3 me-3 justify-content-between warp_steps">
+            <div class="stepWrap active" ><div class="stepBlock">1</div></div>
+            <div class="stepWrap "><div class="stepBlock">2</div></div>
+            <div class="stepWrap"><div class="stepBlock">3</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="formRegWrapper b-radius bg-white ">
+        <div class="text-center">
           <div class="f-24 fw-600 mb-3">
-            Добро пожаловать <br>
-            в хороший маркетинг
+            Осталось всего 3&nbsp;шага
           </div>
-          <div class="f-16 col-lg-9 mb-3">
-            Если у вас уже есть аккаунт, <router-link to="/login" class="showCurForm color-blue cursor-pointer">войдите</router-link> в него
+          <div class="f-16 col-lg-9 m-auto">
+            Укажите ваше имя или название компании
           </div>
+          <div  class="mt-3">
             <div class="row">
               <div class="col-12">
-                <div class="form-group" :class="{ 'form-input-error': errorClassEmail }">
-                  <input v-model="email" type="email" placeholder="Эл. почта" class="w-100 formInput">
-                  <div class="warp_error_text"  v-if="errorClassEmail && textErrorEmail !==null">{{textErrorEmail}}</div>
+                <div class="form-group mb-3" :class="{ 'form-input-error': errorClassUsername }">
+                  <input v-model="username" type="text" placeholder="Имя или название организации" class="w-100 formInput">
                 </div>
               </div>
               <div class="col-12">
-                  <div class="form-group" :class="{ 'form-input-error': errorClassRules }" >
-                    <label class="d-flex align-items-center checkBlockWrap" >
-                      <input v-model="rules" type="checkbox" name="rules" class="d-none" :value="true" checked />
-                      <div class="checkBloc me-2">
-                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M10.6668 0.5L4.25016 6.91667L1.3335 4" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                      </div>
-                      <span class="f-12">Я прочитал <a href="javascript:void(0);" @click="open = true" class="color-blue">правила</a> и согласен с ними</span>
-                    </label>
-                  </div>
-                </div>
-              <div class="col-12 ">
-                  <div class="form-group">
-                    <button class="button blueButton w-100 pt-3 pb-3 btn-mt-20" :disabled="loading" @click="handleRegister">
-                                <span
-                                    v-show="loading"
-                                    class="spinner-border spinner-border-sm"
-                                ></span>
-                                  Зарегистрироваться
-                    </button>
-                  </div>
-                </div>
+                <button type="submit" @click="handleStep1" class="button blueButton w-100 pt-3 pb-3" :disabled="loading">
+                  <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+                  Далее
+                </button>
+              </div>
             </div>
-
+          </div>
         </div>
       </div>
     </div>
 
   </div>
-  <Dialog header="Правила" v-model:visible="open" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}" :modal="true" position="top">
-    <div class="modal-body">
-
-    </div>
-  </Dialog>
-
-  <Toast />
 </template>
 
 <script>
-import Dialog from 'primevue/dialog';
+
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 
-import Toast from 'primevue/toast';
+
+
+
+//import axios from "axios";
+
 
 
 export default {
@@ -86,121 +73,72 @@ export default {
     titleTemplate: '%s | vue-meta Example App'
   },
   components: {
-    Dialog,
-    Toast
+
   },
   data() {
+
+
+
     return {
-      error:0,
-      errorClassEmail: false,
-      textErrorEmail:null,
-      errorClassRules:false,
-      email:null,
-      rules:true,
-      open: false,
-      successful: false,
+      errorClassUsername:false,
+      username:'',
       loading: false,
-      message: "",
     };
   },
   computed: {
-
     loggedIn() {
-      console.log(this.$store.state.auth);
+      console.log(this.$store.state);
       return this.$store.state.auth.status.loggedIn;
     },
     currentUser() {
+
       return this.$store.state.auth.user;
     },
 
   },
   mounted() {
-    if(this.currentUser!==null){
-      if(this.currentUser.manager!=null){
+    this.username = this.$store.state.auth.user.username;
+/*    if(this.$store.state.auth.step === 'step2'){
+      this.$router.push("/step2");
+    }*/
 
-        if(this.currentUser.roles === 1){
-          //this.$router.push("/admin");
-        } else if(this.currentUser.roles === 2) {
-          this.$router.push("/mod");
-        } else {
-          //this.$router.push("/dashboard");
-        }
-      } else {
-        if(this.currentUser.roles === 1){
-          //this.$router.push("/admin");
-        } else if(this.currentUser.roles === 2) {
-          this.$router.push("/mod");
-        } else {
-          //this.$router.push("/dashboard");
-        }
-      }
-    }
     if (this.loggedIn) {
       console.log()
       //this.$router.push("/profile");
     }
+
   },
   watch:{
-
   },
   methods: {
     logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
     },
-    handleRegister() {
-      this.message = "";
-      this.successful = false;
-      this.loading = true;
-      this.errorClassEmail=false;
-      this.textErrorEmail=null;
-      this.errorClassRules=false;
-
+    handleStep1() {
       this.error=0;
+      this.message = "";
+      this.loading = true;
 
-
-
-      if (!this.email) {
-        this.errorClassEmail=true;
-        this.error++;
-      } else {
-        const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-        if (!regex.test(this.email)) {
-          this.errorClassEmail=true;
-          this.textErrorEmail='Неверный формат электронной почты';
-          this.error++;
-        } else {
-          let myarr = this.email.split("@");
-          if(myarr[0].length > 128 ||  myarr[1].length > 128){
-            this.errorClassEmail=true;
-
-            //masha.korsheva@ya.ru
-            this.textErrorEmail='Неверный формат электронной почты';
-            this.error++;
-          }
-        }
-      }
-
-
-      if (this.rules === false) {
-        this.errorClassRules=true;
+      if (!this.username) {
+        this.errorClassUsername=true;
         this.error++;
       }
 
-
-      if(this.error === 0) {
+      if(this.error === 0){
+        let userStorage = JSON.parse(localStorage.getItem('user'));
 
         let user = {
-          email:this.email,
-          rules:this.rules
+          id:userStorage.id,
+          username:this.username
         }
 
-        this.$store.dispatch("auth/register", user).then(
-            () => {
+        this.$store.dispatch("auth/step1", user).then(
+            (data) => {
+              this.message = data.message;
               this.successful = true;
-              this.$router.push("/step1");
               this.loading = false;
-
+              this.$router.push("/step2");
             },
             (error) => {
               this.message =
@@ -209,11 +147,6 @@ export default {
                       error.response.data.message) ||
                   error.message ||
                   error.toString();
-              console.log(error.response.data.error);
-              if(error.response.data.error === 'email is busy'){
-                this.errorClassEmail=true;
-                this.textErrorEmail='Такой адрес электронной почты уже зарегистрирован';
-              }
               this.successful = false;
               this.loading = false;
             }
@@ -221,13 +154,11 @@ export default {
       } else {
         this.loading = false;
       }
-
-    },
-
+    }
   },
   created() {
     if (this.loggedIn) {
-      this.$router.push("/step1");
+      //this.$router.push("/dashboard");
     }
   },
 };
@@ -273,21 +204,14 @@ label {
   color: red;
 }
 .form-input-error input{
-  border:1px solid #F23A11;
-  outline-color: #F23A11;
-  color:#F23A11;
+  border:1px solid #EE735A;
+  outline-color: #EE735A;
+  color:#EE735A;
 }
-.form-input-error span{
-  color:#F23A11;
-}
-.form-input-error input{
-  border:1px solid #F23A11;
-  outline-color: #F23A11;
-  color:#F23A11;
-}
+
 .warp_error_text{
-  padding: 10px 8px;
-  background: #FFD2C8;
+  padding: 15px 16px;
+  background: #FFE6E6;
   border-radius: 6px;
   font-weight: 400;
   font-size: 12px;
@@ -296,20 +220,18 @@ label {
   position: absolute;
   left: calc(100% + 30px);
   top: 0;
-  max-width: 192px;
+  max-width: 270px;
   width: 100%;
-  text-align: left;
-  font-family: 'Inter', sans-serif;
 }
 
 .form-input-error input{
-  border:1px solid #F23A11 !important;
-  outline-color: #F23A11;
-  color:#F23A11;
+  border:1px solid #EE735A !important;
+  outline-color: #EE735A;
+  color:#EE735A;
 }
 
 .form-input-error .checkBloc{
-  border:1px solid #F23A11 !important;
+  border:1px solid #EE735A !important;
 }
 
 </style>

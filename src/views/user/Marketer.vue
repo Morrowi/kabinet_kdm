@@ -89,7 +89,7 @@
                   <div class="col-12 d-flex justify-content-center">
                     {{textRaiting}}
                   </div>
-                  <div class="col-12 d-flex justify-content-center">
+                  <div class="col-12 d-flex justify-content-center mb-3">
                     <star-rating @update:rating ="setRating" @hover:rating ="setRatingText" :rating="rating" :star-size="27" :rounded-corners="false" :border-width="0" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]" :padding="7" :show-rating="false" inactive-color="#EFF0F6" active-color="#EE735A" ></star-rating>
                   </div>
                   <div class="col-12">

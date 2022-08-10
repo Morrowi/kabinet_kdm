@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid vh-100">
-<!--    <AddRates/>-->
-    <div class="row justify-content-start align-items-center flex-column pt-4 pb-4">
+
+    <div class="d-flex flex-column justify-content-start align-items-center flex-column pt-4 pb-4">
       <div class="topLogo mb-4 col-auto">
         <svg width="207" height="51" viewBox="0 0 207 51" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
           <rect width="56.6667" height="51" fill="url(#pattern0)"/>
@@ -14,69 +14,109 @@
           </defs>
         </svg>
       </div>
-      <div class="formRegWrapper b-radius bg-white">
-        <div class="curFormBlock" data-target="reg">
-          <div class="f-24 fw-600 mb-3">
-            Добро пожаловать <br>
-            в хороший маркетинг
+      <div class="curFormBlock mb-4">
+        <div class="col-lg-12 m-auto">
+          <div class="d-flex ms-3 me-3 justify-content-between warp_steps">
+            <div class="stepWrap active"><div class="stepBlock">1</div></div>
+            <div class="stepWrap active"><div class="stepBlock">2</div></div>
+            <div class="stepWrap active"><div class="stepBlock">3</div></div>
           </div>
-          <div class="f-16 col-lg-9 mb-3">
-            Если у вас уже есть аккаунт, <router-link to="/login" class="showCurForm color-blue cursor-pointer">войдите</router-link> в него
+        </div>
+      </div>
+      <div class="curFormBlockStep3 w-100" v-if="loading">
+        <div class="formRegWrapper mw-480 mh-auto">
+         <div class="f-24 fw-600 mb-3">
+           Выберите тариф
+         </div>
+         <div class="f-16">
+           Вы&nbsp;можете выбрать тариф позже, <br>
+           после консультации с&nbsp;маркетологом.
+         </div>
+          <div class="mt-3 mb-4">
+              <button type="submit" class="button blueButton w-100 pt-3 pb-3" @click="selecteRate(0)">Выбрать тариф позже</button>
           </div>
-            <div class="row">
-              <div class="col-12">
-                <div class="form-group" :class="{ 'form-input-error': errorClassEmail }">
-                  <input v-model="email" type="email" placeholder="Эл. почта" class="w-100 formInput">
-                  <div class="warp_error_text"  v-if="errorClassEmail && textErrorEmail !==null">{{textErrorEmail}}</div>
+        </div>
+        <div class="row scrollBlock"  >
+          <div class="col-4 " v-for="rate in Rates" :key="rate.id" :id="rate.id">
+            <div class=" b-radius bg-white warp_rate"   >
+              <div class="d-flex align-items-center flex-wrap justify-content-between title_rate">
+                  {{rate.price}}<span>₽</span> в месяц
+              </div>
+              <div class="d-flex warp_btn_select_rate_top">
+                <div class="button blueButton px-5" @click="selecteRate(rate.id);">Выбрать тариф</div>
+              </div>
+              <div class="sub_title" v-html="rate.replaces"></div>
+              <div class="warp_ico">
+                <div v-if="rate.count === 1" class="d-flex justify-content-center">
+                  <img src="../assets/ico/1.png" alt="">
+                </div>
+                <div v-if="rate.count === 5" class="d-flex justify-content-center flex-column align-items-center">
+                  <div class="mb-16">
+                    <img src="../assets/ico/2.png" alt="">
+                    <img src="../assets/ico/3.png" alt="">
+                    <img src="../assets/ico/4.png" alt="">
+                  </div>
+                  <div>
+                    <img src="../assets/ico/5.png" alt="">
+                    <img src="../assets/ico/1.png" alt="">
+                  </div>
+                </div>
+                <div v-if="rate.count === 6" class="d-flex justify-content-center flex-column align-items-center">
+                  <div class="mb-16">
+                    <img src="../assets/ico/2.png" alt="">
+                    <img src="../assets/ico/3.png" alt="">
+                    <img src="../assets/ico/4.png" alt="">
+                    <img src="../assets/ico/5.png" alt="">
+                  </div>
+                  <div>
+                    <img src="../assets/ico/7.png" alt="">
+                    <img src="../assets/ico/6.png" alt="">
+                  </div>
                 </div>
               </div>
-              <div class="col-12">
-                  <div class="form-group" :class="{ 'form-input-error': errorClassRules }" >
-                    <label class="d-flex align-items-center checkBlockWrap" >
-                      <input v-model="rules" type="checkbox" name="rules" class="d-none" :value="true" checked />
-                      <div class="checkBloc me-2">
-                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M10.6668 0.5L4.25016 6.91667L1.3335 4" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                      </div>
-                      <span class="f-12">Я прочитал <a href="javascript:void(0);" @click="open = true" class="color-blue">правила</a> и согласен с ними</span>
-                    </label>
-                  </div>
-                </div>
-              <div class="col-12 ">
-                  <div class="form-group">
-                    <button class="button blueButton w-100 pt-3 pb-3 btn-mt-20" :disabled="loading" @click="handleRegister">
-                                <span
-                                    v-show="loading"
-                                    class="spinner-border spinner-border-sm"
-                                ></span>
-                                  Зарегистрироваться
-                    </button>
-                  </div>
-                </div>
+              <div class="tarifItem" v-for="prop in rate.props" :key="prop" >
+                {{prop}}
+              </div>
+              <div class="d-flex warp_btn_select_rate_top">
+                <div class="button blueButton px-5" @click="selecteRate(rate.id);">Выбрать тариф</div>
+              </div>
             </div>
-
+          </div>
         </div>
+
+<!--        <div class="row justify-content-center" v-if="selectedRate !==null " >
+          <div class="col-lg-6">
+            <div class="b-radius bg-white  ml-3 mr-3">
+              <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
+                <div class="f-18 fw-600">
+                  {{selectedRate.name}}
+                </div>
+                <div class="f-24 fw-600 color-orange">
+                  {{selectedRate.price}} ₽/месяц
+                </div>
+              </div>
+              <div class="tarifItem p-3 border-bottom" v-for="prop in selectedRate.props" :key="prop" >
+                {{prop}}
+              </div>
+            </div>
+          </div>
+        </div>-->
       </div>
     </div>
 
   </div>
-  <Dialog header="Правила" v-model:visible="open" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}" :modal="true" position="top">
-    <div class="modal-body">
-
-    </div>
-  </Dialog>
-
-  <Toast />
 </template>
 
 <script>
-import Dialog from 'primevue/dialog';
+
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 
-import Toast from 'primevue/toast';
+
+
+import axios from "axios";
+
 
 
 export default {
@@ -86,27 +126,22 @@ export default {
     titleTemplate: '%s | vue-meta Example App'
   },
   components: {
-    Dialog,
-    Toast
+
   },
   data() {
+
     return {
       error:0,
-      errorClassEmail: false,
-      textErrorEmail:null,
-      errorClassRules:false,
-      email:null,
-      rules:true,
-      open: false,
+      Rates:[],
       successful: false,
       loading: false,
-      message: "",
+      selectedRate:null,
     };
   },
   computed: {
 
+
     loggedIn() {
-      console.log(this.$store.state.auth);
       return this.$store.state.auth.status.loggedIn;
     },
     currentUser() {
@@ -114,126 +149,108 @@ export default {
     },
 
   },
-  mounted() {
-    if(this.currentUser!==null){
-      if(this.currentUser.manager!=null){
 
-        if(this.currentUser.roles === 1){
-          //this.$router.push("/admin");
-        } else if(this.currentUser.roles === 2) {
-          this.$router.push("/mod");
-        } else {
-          //this.$router.push("/dashboard");
-        }
-      } else {
-        if(this.currentUser.roles === 1){
-          //this.$router.push("/admin");
-        } else if(this.currentUser.roles === 2) {
-          this.$router.push("/mod");
-        } else {
-          //this.$router.push("/dashboard");
-        }
-      }
-    }
-    if (this.loggedIn) {
-      console.log()
-      //this.$router.push("/profile");
-    }
-  },
   watch:{
 
   },
   methods: {
+    initRates(){
+
+      axios.get( 'http://panel.kdm1.biz/api/rates/list/').then((resp)=>{
+
+        let tmpRates=[] ;
+        for (let key of Object.keys(resp.data)) {
+          tmpRates[key]={
+            'id':resp.data[key].id,
+            'name':resp.data[key].name,
+            'replaces':resp.data[key].replaces,
+            'count':resp.data[key].count,
+            'price':resp.data[key].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "),
+            'props':JSON.parse(resp.data[key].props),
+          }
+          //console.log(this.$store.state.rates[key]);
+        }
+        this.Rates = tmpRates;
+        this.loading=true;
+      }).catch(function(error){
+        console.log(error);
+      });
+      /*
+            //console.log(arr);
+            return  arr;*/
+
+    },
+
+    selecteRate(id){
+      console.log(id);
+      let user = {
+        rate:id
+      }
+      this.$store.dispatch("auth/step3", user).then(
+          () => {
+
+            this.successful = true;
+            this.loading = false;
+            this.$router.push("/dashboard");
+          },
+          (error) => {
+            this.message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            this.successful = false;
+            this.loading = false;
+          }
+      );
+
+    },
     logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
     },
-    handleRegister() {
-      this.message = "";
-      this.successful = false;
-      this.loading = true;
-      this.errorClassEmail=false;
-      this.textErrorEmail=null;
-      this.errorClassRules=false;
-
-      this.error=0;
-
-
-
-      if (!this.email) {
-        this.errorClassEmail=true;
-        this.error++;
-      } else {
-        const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-        if (!regex.test(this.email)) {
-          this.errorClassEmail=true;
-          this.textErrorEmail='Неверный формат электронной почты';
-          this.error++;
-        } else {
-          let myarr = this.email.split("@");
-          if(myarr[0].length > 128 ||  myarr[1].length > 128){
-            this.errorClassEmail=true;
-
-            //masha.korsheva@ya.ru
-            this.textErrorEmail='Неверный формат электронной почты';
-            this.error++;
-          }
-        }
-      }
-
-
-      if (this.rules === false) {
-        this.errorClassRules=true;
-        this.error++;
-      }
-
-
-      if(this.error === 0) {
-
-        let user = {
-          email:this.email,
-          rules:this.rules
-        }
-
-        this.$store.dispatch("auth/register", user).then(
-            () => {
-              this.successful = true;
-              this.$router.push("/step1");
-              this.loading = false;
-
-            },
-            (error) => {
-              this.message =
-                  (error.response &&
-                      error.response.data &&
-                      error.response.data.message) ||
-                  error.message ||
-                  error.toString();
-              console.log(error.response.data.error);
-              if(error.response.data.error === 'email is busy'){
-                this.errorClassEmail=true;
-                this.textErrorEmail='Такой адрес электронной почты уже зарегистрирован';
-              }
-              this.successful = false;
-              this.loading = false;
-            }
-        );
-      } else {
-        this.loading = false;
-      }
-
-    },
-
+  },
+  mounted() {
+    this.initRates();
   },
   created() {
-    if (this.loggedIn) {
-      this.$router.push("/step1");
-    }
+
   },
 };
 </script>
 
 <style scoped>
+.warp_rate{
+  padding: 25px 42px;
+}
+.title_rate{
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 130%;
+  color: #262626;
+}
+.title_rate span{
+  font-family: 'Montserrat',sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+}
+.warp_btn_select_rate_top{
+  justify-content: center;
+  margin-top: 12px;
+  margin-bottom: 32px;
+}
+.warp_btn_select_rate_top .button{
+  width: 100%;
+}
+
+
+
+
+.mw-480{
+  max-width: 480px;
+}
 label {
   display: block;
 }
@@ -273,21 +290,14 @@ label {
   color: red;
 }
 .form-input-error input{
-  border:1px solid #F23A11;
-  outline-color: #F23A11;
-  color:#F23A11;
+  border:1px solid #EE735A;
+  outline-color: #EE735A;
+  color:#EE735A;
 }
-.form-input-error span{
-  color:#F23A11;
-}
-.form-input-error input{
-  border:1px solid #F23A11;
-  outline-color: #F23A11;
-  color:#F23A11;
-}
+
 .warp_error_text{
-  padding: 10px 8px;
-  background: #FFD2C8;
+  padding: 15px 16px;
+  background: #FFE6E6;
   border-radius: 6px;
   font-weight: 400;
   font-size: 12px;
@@ -296,20 +306,18 @@ label {
   position: absolute;
   left: calc(100% + 30px);
   top: 0;
-  max-width: 192px;
+  max-width: 270px;
   width: 100%;
-  text-align: left;
-  font-family: 'Inter', sans-serif;
 }
 
 .form-input-error input{
-  border:1px solid #F23A11 !important;
-  outline-color: #F23A11;
-  color:#F23A11;
+  border:1px solid #EE735A !important;
+  outline-color: #EE735A;
+  color:#EE735A;
 }
 
 .form-input-error .checkBloc{
-  border:1px solid #F23A11 !important;
+  border:1px solid #EE735A !important;
 }
 
 </style>

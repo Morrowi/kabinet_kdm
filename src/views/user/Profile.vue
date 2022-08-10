@@ -75,7 +75,7 @@
                 <Avatar shape="circle" class="me-2" size="xlarge" @click="showEditAvata" :class="{'active':showEditAvataPanel}" :image="image" />
               </div>
               <div v-else>
-                <Avatar icon="pi pi-user" class="me-2" size="xlarge" shape="circle" @click="showEditAvata" :class="{'active':showEditAvataPanel}"/>
+                <Avatar class="me-2" size="xlarge" shape="circle" @click="showEditAvata" :class="{'active':showEditAvataPanel}"/>
               </div>
             </div>
             <div class="col-auto d-flex flex-column justify-content-center warp_edit_avatar" :class="{'active':showEditAvataPanel}">
@@ -150,7 +150,7 @@ export default {
   data() {
     let user = this.$store.state.auth.user;
     let image = null;
-    if(user.avatar !== null){
+    if(user.avatar !== null && user.avatar.length > 3){
       image = 'http://panel.kdm1.biz/uploads/'+user.id+'/'+user.avatar;
     }
 
