@@ -27,7 +27,7 @@
               <div class="col-12">
                 <div class="form-group" :class="{ 'form-input-error': errorClassEmail }">
                   <input v-model="email" type="email" placeholder="Эл. почта" class="w-100 formInput">
-                  <div class="warp_error_text"  v-if="errorClassEmail && textErrorEmail !==null">{{textErrorEmail}}</div>
+                  <div class="warp_error_text"  v-if="errorClassEmail && textErrorEmail !==null" v-html="textErrorEmail"></div>
                 </div>
               </div>
               <div class="col-12">
@@ -35,12 +35,13 @@
                     <label class="d-flex align-items-center checkBlockWrap" >
                       <input v-model="rules" type="checkbox" name="rules" class="d-none" :value="true" checked />
                       <div class="checkBloc me-2">
-                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M10.6668 0.5L4.25016 6.91667L1.3335 4" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                        <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M1 5.4L5.4 9.8L12 1" stroke="#0D85FB" stroke-width="2"/>
                         </svg>
                       </div>
                       <span class="f-12">Я прочитал <a href="javascript:void(0);" @click="open = true" class="color-blue">правила</a> и согласен с ними</span>
                     </label>
+                    <div class="warp_error_text small_error"  v-if="errorRulesText">{{errorRulesText}}</div>
                   </div>
                 </div>
               <div class="col-12 ">
@@ -95,6 +96,7 @@ export default {
       errorClassEmail: false,
       textErrorEmail:null,
       errorClassRules:false,
+      errorRulesText:null,
       email:null,
       rules:true,
       open: false,
@@ -155,6 +157,7 @@ export default {
       this.errorClassEmail=false;
       this.textErrorEmail=null;
       this.errorClassRules=false;
+      this.errorRulesText=null;
 
       this.error=0;
 
@@ -167,7 +170,7 @@ export default {
         const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
         if (!regex.test(this.email)) {
           this.errorClassEmail=true;
-          this.textErrorEmail='Неверный формат электронной почты';
+          this.textErrorEmail='Неверный формат<br>электронной почты';
           this.error++;
         } else {
           let myarr = this.email.split("@");
@@ -175,7 +178,7 @@ export default {
             this.errorClassEmail=true;
 
             //masha.korsheva@ya.ru
-            this.textErrorEmail='Неверный формат электронной почты';
+            this.textErrorEmail='Неверный формат<br>электронной почты';
             this.error++;
           }
         }
@@ -184,6 +187,7 @@ export default {
 
       if (this.rules === false) {
         this.errorClassRules=true;
+        this.errorRulesText = 'Примите правила';
         this.error++;
       }
 
@@ -212,7 +216,7 @@ export default {
               console.log(error.response.data.error);
               if(error.response.data.error === 'email is busy'){
                 this.errorClassEmail=true;
-                this.textErrorEmail='Такой адрес электронной почты уже зарегистрирован';
+                this.textErrorEmail='Такой адрес электронной почты<br>уже зарегистрирован';
               }
               this.successful = false;
               this.loading = false;
@@ -286,7 +290,7 @@ label {
   color:#F23A11;
 }
 .warp_error_text{
-  padding: 10px 8px;
+  padding: 8px 10px;
   background: #FFD2C8;
   border-radius: 6px;
   font-weight: 400;
@@ -294,12 +298,20 @@ label {
   line-height: 160%;
   color: #000000;
   position: absolute;
-  left: calc(100% + 30px);
+  left: calc(100% + 12px);
   top: 0;
-  max-width: 192px;
-  width: 100%;
+  white-space: nowrap;
   text-align: left;
   font-family: 'Inter', sans-serif;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+}
+
+.small_error{
+  padding: 4px 10px;
+  min-height: 10px;
+  top: -3px;
 }
 
 .form-input-error input{

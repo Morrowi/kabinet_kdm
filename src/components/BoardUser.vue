@@ -19,7 +19,7 @@
 
               <ul class="menuLinkBody">
                 <li class="d-flex firstBlockMenu">
-                  <router-link to="/dashboard" active-class="active">
+                  <router-link to="/dashboard" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,13 +34,13 @@
                         </svg>
                       </div>
                       <div class="menuLinkName fw-500 f-14">
-                        Основная информация
+                        Обзор
                       </div>
                     </div>
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/dashboard/marketer" active-class="active">
+                  <router-link to="/dashboard/marketer" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -55,7 +55,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/dashboard/tasks" active-class="active">
+                  <router-link to="/dashboard/tasks" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -69,7 +69,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/dashboard/reports" active-class="active">
+                  <router-link to="/dashboard/reports" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -85,7 +85,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/dashboard/inpayac" active-class="active">
+                  <router-link to="/dashboard/inpayac" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -99,7 +99,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/dashboard/notifications" active-class="active">
+                  <router-link to="/dashboard/notifications" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -120,7 +120,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/dashboard/rate" active-class="active">
+                  <router-link to="/dashboard/rate" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -139,7 +139,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/dashboard/profile" active-class="active">
+                  <router-link to="/dashboard/profile" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -168,7 +168,7 @@
                 </li>
               </ul>
             </div>
-              <router-link class="button buttonBorderBlack  mt-4" to="/dashboard/support" active-class="active">
+              <router-link class="button buttonBorderBlack  mt-4" to="/dashboard/support" >
               Написать в поддержку
               </router-link>
 
@@ -360,6 +360,7 @@ export default {
     },
     close() {
       this.isOpen = false;
+      this.$store.dispatch('showChat', false );
     },
     openAndFocus() {
       this.isOpen = true;
@@ -582,9 +583,11 @@ export default {
 
 
   },
-  beforeUnmount () {
-
-  }
+  watch:{
+    '$store.state.showChat': function() {
+        this.isOpen=!this.isOpen;
+    }
+  },
 };
 </script>
 <style>

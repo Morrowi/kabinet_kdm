@@ -32,47 +32,24 @@
            Вы&nbsp;можете выбрать тариф позже, <br>
            после консультации с&nbsp;маркетологом.
          </div>
-          <div class="mt-3 mb-4">
-              <button type="submit" class="button blueButton w-100 pt-3 pb-3" @click="selecteRate(0)">Выбрать тариф позже</button>
+          <div class="btn_tarif_later">
+              <a class="link-border" href="javascript:void(0);" @click="selecteRate(0)">Выбрать тариф позже</a>
           </div>
         </div>
         <div class="row scrollBlock"  >
           <div class="col-4 " v-for="rate in Rates" :key="rate.id" :id="rate.id">
             <div class=" b-radius bg-white warp_rate"   >
               <div class="d-flex align-items-center flex-wrap justify-content-between title_rate">
+                <div>
                   {{rate.price}}<span>₽</span> в месяц
+                </div>
               </div>
               <div class="d-flex warp_btn_select_rate_top">
                 <div class="button blueButton px-5" @click="selecteRate(rate.id);">Выбрать тариф</div>
               </div>
               <div class="sub_title" v-html="rate.replaces"></div>
-              <div class="warp_ico">
-                <div v-if="rate.count === 1" class="d-flex justify-content-center">
-                  <img src="../assets/ico/1.png" alt="">
-                </div>
-                <div v-if="rate.count === 5" class="d-flex justify-content-center flex-column align-items-center">
-                  <div class="mb-16">
-                    <img src="../assets/ico/2.png" alt="">
-                    <img src="../assets/ico/3.png" alt="">
-                    <img src="../assets/ico/4.png" alt="">
-                  </div>
-                  <div>
-                    <img src="../assets/ico/5.png" alt="">
-                    <img src="../assets/ico/1.png" alt="">
-                  </div>
-                </div>
-                <div v-if="rate.count === 6" class="d-flex justify-content-center flex-column align-items-center">
-                  <div class="mb-16">
-                    <img src="../assets/ico/2.png" alt="">
-                    <img src="../assets/ico/3.png" alt="">
-                    <img src="../assets/ico/4.png" alt="">
-                    <img src="../assets/ico/5.png" alt="">
-                  </div>
-                  <div>
-                    <img src="../assets/ico/7.png" alt="">
-                    <img src="../assets/ico/6.png" alt="">
-                  </div>
-                </div>
+              <div class="warp_sub_title">
+                Что входит?
               </div>
               <div class="tarifItem" v-for="prop in rate.props" :key="prop" >
                 {{prop}}
@@ -221,6 +198,12 @@ export default {
 </script>
 
 <style scoped>
+.btn_tarif_later{
+  margin-top: 24px;
+  margin-bottom: 34px;
+}
+
+
 .warp_rate{
   padding: 25px 42px;
 }

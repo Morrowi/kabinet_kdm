@@ -144,6 +144,19 @@ body {
     fill: #EE735A
 }
 
+.link-border {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    border-bottom: 2px solid #0D85FB;
+    color: #0D85FB;
+}
+.link-border:hover{
+    color: #EE735A;
+    border-bottom: 2px solid #EE735A;
+}
+
 .menuLinkBlock {
     display: flex;
     align-items: center;
@@ -166,10 +179,10 @@ body {
 .menuLinkBlock:hover .menuLinkName{
     color: #ffffff;
 }
-a.active svg path{
+a.router-link-exact-active svg path{
     fill: #EE735A;
 }
-.menuLinkBlock.active .menuLinkName{
+.router-link-exact-active .menuLinkBlock .menuLinkName{
     color: #ffffff;
 }
 .menuLinkBody li  ul li{
@@ -245,7 +258,7 @@ a.active svg path{
     background: transparent;
 }
 .button.blueButton:hover{
-    background: #1f51fb;
+    background: #EE735A;
 }
 .button.buttonBorderBlack:hover{
     background: #EE735A;
@@ -657,7 +670,8 @@ textarea.formInput {
     min-width: 200px;
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
+
 }
 .blockDropHeaderItem{
     cursor: pointer;
@@ -729,14 +743,17 @@ textarea.formInput {
     left: -15px;
     top: 10px;
 }
-.warp_ico{
-    margin-top: 6px;
-    margin-bottom: 37px;
+.warp_rate .warp_sub_title{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    margin-top: 24px;
+    margin-bottom: 12px;
 }
 
-.warp_ico .mb-16{
-    margin-bottom: 16px;
-}
 
 .bgTarif{
     background: url(../image/tarifImg1.png)no-repeat;
@@ -855,7 +872,8 @@ input[type="checkbox"]:checked + .blockCheck:before{
 .formRegWrapper {
     max-width: 500px;
     min-height: 600px;
-    height: 70vh;
+    max-height: 700px;
+    height: 100%;
     width: 100%;
     padding: 35px 80px;
     text-align: center;
@@ -874,8 +892,8 @@ input[type="checkbox"]:checked + .blockCheck:before{
     cursor: pointer;
 }
 .checkBloc {
-    min-width: 18px;
-    height: 19px;
+    width: 18px;
+    height: 18px;
     border: 1px solid #94A2AB;
     border-radius: 2px;
     background: #ffffff;
@@ -884,10 +902,17 @@ input[type="checkbox"]:checked + .blockCheck:before{
     justify-content: center;
     transition: all 0.3s;
 }
-.checkBlockWrap input[type="checkbox"]:checked + .checkBloc{
-    background: #0D85FB;
-    border-color: #0D85FB;
+.checkBloc svg path{
+    stroke: #fff;
 }
+.checkBlockWrap input[type="checkbox"]:checked + .checkBloc{
+    background: #ffffff;
+    border-color: #94A2AB;
+}
+.checkBlockWrap input[type="checkbox"]:checked + .checkBloc svg path{
+    stroke: #0D85FB;
+}
+
 .buttonShowPass input[type="checkbox"] {
     cursor: pointer;
     position: absolute;

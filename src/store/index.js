@@ -5,13 +5,20 @@ import { auth } from "./auth.module";
 const store = createStore({
   state: {
     rates: [],
+    showChat:false,
   },
   mutations: {
     getRates(state, rates){
       state.rates = rates
     },
+    showChat (state, showChat) {
+      state.showChat=showChat
+    },
   },
   actions: {
+    showChat({commit}, showChat) {
+      commit('showChat', showChat)
+    },
     getRatesAction({commit}){
 
       axios('http://panel.kdm1.biz/api/rates/list').then(res => {

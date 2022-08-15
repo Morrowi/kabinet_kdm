@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="curFormBlock w-100"  >
-        <div class="col-lg-5 mh-auto text-center">
+        <div class="col-auto mh-auto text-center">
           <div class="step2-title">
             Выберите маркетолога
           </div>
@@ -47,7 +47,7 @@
                           {{marketolog.rating}}
                         </div>
                         <span class="pt-1">
-                          <star-rating :rating="marketolog.rating"  :read-only="true" :round-start-rating="false" :star-size="18" :rounded-corners="false" :border-width="0" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]" :padding="7" :show-rating="false" inactive-color="#EFF0F6" active-color="#EE735A" ></star-rating>
+                          <star-rating :rating="marketolog.rating"  :read-only="true" :round-start-rating="false" :star-size="18" :rounded-corners="false" :border-width="0" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]" :padding="7" :show-rating="false" inactive-color="#B2BAC6" active-color="#EE735A" ></star-rating>
                         </span>
                       </div>
                     </div>
@@ -203,7 +203,7 @@ export default {
   font-weight: 600;
   font-size: 24px;
   line-height: 34px;
-  margin-bottom: 15px;
+  margin-bottom: 9px;
 }
 
 .step2_sub_title{

@@ -7,8 +7,6 @@
       <div class="col-lg-6">
         <div class="row justify-content-between h-100">
           <Marketer/>
-          <Notifications/>
-
         </div>
       </div>
       <div class="col-lg-6">
@@ -138,14 +136,12 @@
 //import * as yup from "yup";
 
 import Marketer from "@/views/user/component/index/Marketer"
-import Notifications from "@/views/user/component/index/Notifications"
 import Tasks from "@/views/user/component/index/Tasks"
 
 export default {
   name: "Index user",
   components: {
     Marketer,
-    Notifications,
     Tasks
   },
   data() {

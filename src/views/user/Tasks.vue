@@ -95,70 +95,74 @@
     </div>
       <Dialog header="Новая задача" v-model:visible="open" position="center" :modal="true"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '70vw'}"  >
 
-          <form class="formTask" action="">
-            <div class="row">
-              <div class="col-lg-8">
-                <div class="form-group mb-3">
-                  <input autofocus ref="contentInput" v-model="nameTask" type="text" class="w-100 formInput task" placeholder="Название задачи">
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="form-group mb-3">
-                  <Dropdown v-model="selectedLabel" :options="label" optionLabel="name" placeholder="Добавить метку" />
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-group mb-3">
-                  <Textarea v-model="valueEditor" style="height: 190px; width: 100%;" placeholder="Добавьте более подробное описание задачи"></Textarea>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="row">
-                  <div class="col-lg-7">
-                    <div class="form-group mb-3">
-                      <Calendar v-model="date"  dateFormat="dd.mm.yy" :showTime="true" :stepMinute="10" :manualInput="true"  placeholder="Укажите дату и время выполнения"/>
-                    </div>
-                  </div>
-                  <div class="col-lg-5">
-                    <div class="form-group mb-3">
-                      <Dropdown v-model="alertDay" :options="alert" optionLabel="name" placeholder="Напомнить" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="d-flex justify-content-end  align-items-center">
-                  <div class="f-12 color-2 me-3">
-                    Максимальный
-                    <br>
-                    размер 300 Мб
-                  </div>
-                  <div class="form-group mb-0">
-                    <div class="inputFile" @click="fileUpload">
-                      <div class="imgFile">
-                        <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                          <path
-                              d="M15.2414 8.60217C15.3468 8.70772 15.4059 8.85083 15.4058 9.00001C15.4057 9.14919 15.3464 9.29222 15.2408 9.39764L9.47147 15.1595C9.10582 15.5251 8.67174 15.8151 8.19401 16.013C7.71628 16.2108 7.20426 16.3126 6.68718 16.3126C5.64289 16.3126 4.64139 15.8977 3.903 15.1592C3.16461 14.4207 2.74982 13.4192 2.74988 12.3749C2.74993 11.3306 3.16483 10.3291 3.90329 9.59073L10.8831 2.51375C11.144 2.25206 11.4539 2.04435 11.7951 1.9025C12.1364 1.76064 12.5022 1.68742 12.8717 1.68701C13.2412 1.68661 13.6072 1.75903 13.9488 1.90013C14.2903 2.04124 14.6007 2.24826 14.8621 2.50937C15.1236 2.77049 15.3311 3.08057 15.4727 3.4219C15.6142 3.76323 15.6872 4.12911 15.6873 4.49864C15.6874 4.86817 15.6147 5.23409 15.4733 5.57551C15.3319 5.91692 15.1246 6.22713 14.8633 6.4884L7.88347 13.5654C7.72699 13.7225 7.5411 13.8472 7.33642 13.9323C7.13174 14.0175 6.91229 14.0615 6.69059 14.0619C6.4689 14.0622 6.24931 14.0188 6.04438 13.9343C5.83944 13.8497 5.65319 13.7256 5.49624 13.569C5.3393 13.4124 5.21475 13.2264 5.12971 13.0217C5.04467 12.817 5.0008 12.5975 5.00062 12.3758C5.00044 12.1541 5.04394 11.9345 5.12865 11.7296C5.21335 11.5248 5.3376 11.3386 5.49428 11.1818L11.3486 5.23019C11.4532 5.12383 11.5958 5.0634 11.745 5.06218C11.8942 5.06095 12.0377 5.11904 12.1441 5.22366C12.2504 5.32828 12.3109 5.47087 12.3121 5.62005C12.3133 5.76923 12.2552 5.91279 12.1506 6.01914L6.29303 11.974C6.24016 12.0259 6.19807 12.0878 6.16917 12.156C6.14028 12.2243 6.12516 12.2975 6.12467 12.3716C6.12418 12.4457 6.13834 12.5192 6.16632 12.5878C6.19431 12.6564 6.23558 12.7188 6.28776 12.7714C6.33994 12.824 6.402 12.8658 6.47038 12.8944C6.53876 12.9229 6.6121 12.9377 6.68621 12.9378C6.76031 12.938 6.8337 12.9234 6.90218 12.8951C6.97065 12.8668 7.03285 12.8252 7.08521 12.7728L14.0651 5.69566C14.2223 5.53921 14.3471 5.35331 14.4324 5.1486C14.5176 4.94388 14.5617 4.72436 14.5621 4.50259C14.5625 4.28083 14.5192 4.06116 14.4346 3.85615C14.35 3.65114 14.2259 3.46481 14.0692 3.30782C13.9126 3.15082 13.7265 3.02624 13.5217 2.9412C13.3169 2.85616 13.0973 2.81232 12.8756 2.8122C12.6538 2.81208 12.4342 2.85567 12.2293 2.94048C12.0244 3.02529 11.8382 3.14966 11.6814 3.30648L4.70152 10.3835C4.43983 10.6444 4.23212 10.9543 4.09026 11.2955C3.9484 11.6367 3.87518 12.0026 3.87477 12.3721C3.87436 12.7416 3.94678 13.1076 4.08789 13.4492C4.229 13.7907 4.43603 14.1011 4.69714 14.3625C4.95826 14.624 5.26835 14.8315 5.60968 14.9731C5.95102 15.1147 6.31691 15.1876 6.68644 15.1877C7.05598 15.1878 7.42191 15.1151 7.76333 14.9737C8.10475 14.8323 8.41496 14.6251 8.67623 14.3637L14.4458 8.60169C14.4981 8.54947 14.5601 8.50807 14.6284 8.47983C14.6967 8.4516 14.7698 8.43709 14.8437 8.43713C14.9176 8.43718 14.9907 8.45177 15.0589 8.48009C15.1272 8.50841 15.1892 8.54989 15.2414 8.60217Z"
-                              fill="#0D85FB"/>
-                        </svg>
-                      </div>
-                      <div class="inputFileName f-14 color-blue" >Прикрепите файл</div>
-                      <!--                        <input type="file" value="Прикрепите файл">-->
-                    </div>
-                    <div class="fileNameChange"></div>
-                  </div>
-                </div>
+        <form class="formTask" action="">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="form-group mb-3">
+                <input autofocus ref="contentInput" v-model="nameTask" type="text" class="w-100 formInput task" placeholder="Название задачи">
               </div>
             </div>
-            <div class="row warp_tast_upload">
-              <FileUpload ref="btn_upload" :customUpload="true" @select="customPreSelected"  mode="advanced"   :showUploadButton="false" :showCancelButton="false"  name="demo[]" :multiple="true" :maxFileSize="300000000">
-              </FileUpload>
+            <div class="col-lg-4">
+              <div class="form-group mb-3">
+                <label class="d-flex align-items-center checkBlockWrap" >
+                  <input v-model="urgent_task" type="checkbox" name="rules" class="d-none" :value="true"  />
+                  <div class="checkBloc me-2">
+                    <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 5.4L5.4 9.8L12 1" stroke="#0D85FB" stroke-width="2"/>
+                    </svg>
+                  </div>
+                  <span class="f-12">Срочная задача</span>
+                </label>
+              </div>
             </div>
-          </form>
+            <div class="col-12">
+              <div class="form-group mb-3">
+                <Textarea v-model="valueEditor" style="height: 190px; width: 100%;" placeholder="Добавьте более подробное описание задачи"></Textarea>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-lg-7">
+                  <div class="form-group mb-3">
+                    <Calendar v-model="date"  dateFormat="dd.mm.yy" :showTime="false" :manualInput="true"  placeholder="Укажите дату и время выполнения"/>
+                  </div>
+                </div>
 
-        <div class="d-flex justify-content-start px-3 pb-3 mt-4 mt-md-0">
-          <button @click="submitForm" type="button" class="button blueButton w-200">Создать задачу</button>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="d-flex justify-content-end  align-items-center">
+                <div class="f-12 color-2 me-3">
+                  Максимальный
+                  <br>
+                  размер 300 Мб
+                </div>
+                <div class="form-group mb-0">
+                  <div class="inputFile" @click="fileUpload">
+                    <div class="imgFile">
+                      <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
+                           xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M15.2414 8.60217C15.3468 8.70772 15.4059 8.85083 15.4058 9.00001C15.4057 9.14919 15.3464 9.29222 15.2408 9.39764L9.47147 15.1595C9.10582 15.5251 8.67174 15.8151 8.19401 16.013C7.71628 16.2108 7.20426 16.3126 6.68718 16.3126C5.64289 16.3126 4.64139 15.8977 3.903 15.1592C3.16461 14.4207 2.74982 13.4192 2.74988 12.3749C2.74993 11.3306 3.16483 10.3291 3.90329 9.59073L10.8831 2.51375C11.144 2.25206 11.4539 2.04435 11.7951 1.9025C12.1364 1.76064 12.5022 1.68742 12.8717 1.68701C13.2412 1.68661 13.6072 1.75903 13.9488 1.90013C14.2903 2.04124 14.6007 2.24826 14.8621 2.50937C15.1236 2.77049 15.3311 3.08057 15.4727 3.4219C15.6142 3.76323 15.6872 4.12911 15.6873 4.49864C15.6874 4.86817 15.6147 5.23409 15.4733 5.57551C15.3319 5.91692 15.1246 6.22713 14.8633 6.4884L7.88347 13.5654C7.72699 13.7225 7.5411 13.8472 7.33642 13.9323C7.13174 14.0175 6.91229 14.0615 6.69059 14.0619C6.4689 14.0622 6.24931 14.0188 6.04438 13.9343C5.83944 13.8497 5.65319 13.7256 5.49624 13.569C5.3393 13.4124 5.21475 13.2264 5.12971 13.0217C5.04467 12.817 5.0008 12.5975 5.00062 12.3758C5.00044 12.1541 5.04394 11.9345 5.12865 11.7296C5.21335 11.5248 5.3376 11.3386 5.49428 11.1818L11.3486 5.23019C11.4532 5.12383 11.5958 5.0634 11.745 5.06218C11.8942 5.06095 12.0377 5.11904 12.1441 5.22366C12.2504 5.32828 12.3109 5.47087 12.3121 5.62005C12.3133 5.76923 12.2552 5.91279 12.1506 6.01914L6.29303 11.974C6.24016 12.0259 6.19807 12.0878 6.16917 12.156C6.14028 12.2243 6.12516 12.2975 6.12467 12.3716C6.12418 12.4457 6.13834 12.5192 6.16632 12.5878C6.19431 12.6564 6.23558 12.7188 6.28776 12.7714C6.33994 12.824 6.402 12.8658 6.47038 12.8944C6.53876 12.9229 6.6121 12.9377 6.68621 12.9378C6.76031 12.938 6.8337 12.9234 6.90218 12.8951C6.97065 12.8668 7.03285 12.8252 7.08521 12.7728L14.0651 5.69566C14.2223 5.53921 14.3471 5.35331 14.4324 5.1486C14.5176 4.94388 14.5617 4.72436 14.5621 4.50259C14.5625 4.28083 14.5192 4.06116 14.4346 3.85615C14.35 3.65114 14.2259 3.46481 14.0692 3.30782C13.9126 3.15082 13.7265 3.02624 13.5217 2.9412C13.3169 2.85616 13.0973 2.81232 12.8756 2.8122C12.6538 2.81208 12.4342 2.85567 12.2293 2.94048C12.0244 3.02529 11.8382 3.14966 11.6814 3.30648L4.70152 10.3835C4.43983 10.6444 4.23212 10.9543 4.09026 11.2955C3.9484 11.6367 3.87518 12.0026 3.87477 12.3721C3.87436 12.7416 3.94678 13.1076 4.08789 13.4492C4.229 13.7907 4.43603 14.1011 4.69714 14.3625C4.95826 14.624 5.26835 14.8315 5.60968 14.9731C5.95102 15.1147 6.31691 15.1876 6.68644 15.1877C7.05598 15.1878 7.42191 15.1151 7.76333 14.9737C8.10475 14.8323 8.41496 14.6251 8.67623 14.3637L14.4458 8.60169C14.4981 8.54947 14.5601 8.50807 14.6284 8.47983C14.6967 8.4516 14.7698 8.43709 14.8437 8.43713C14.9176 8.43718 14.9907 8.45177 15.0589 8.48009C15.1272 8.50841 15.1892 8.54989 15.2414 8.60217Z"
+                            fill="#0D85FB"/>
+                      </svg>
+                    </div>
+                    <div class="inputFileName f-14 color-blue" >Прикрепите файл</div>
+                    <!--                        <input type="file" value="Прикрепите файл">-->
+                  </div>
+                  <div class="fileNameChange"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row warp_tast_upload">
+            <FileUpload ref="btn_upload" :customUpload="true" @select="customPreSelected"  mode="advanced"   :showUploadButton="false" :showCancelButton="false"  name="demo[]" :multiple="true" :maxFileSize="300000000">
+            </FileUpload>
+          </div>
+        </form>
+
+        <div class="d-flex justify-content-start px-3 pb-3">
+          <button @click="submitForm" type="button" class="button blueButton w-200">Поставить задачу</button>
         </div>
       </Dialog>
 
@@ -202,7 +206,6 @@
 <script>
 
 import Textarea from 'primevue/textarea';
-import Dropdown from 'primevue/dropdown';
 import Calendar from 'primevue/calendar';
 import FileUpload from 'primevue/fileupload';
 import  'primevue/resources/themes/saga-blue/theme.css';
@@ -221,15 +224,8 @@ export default {
       default: true,
     },
   },
-/*  emits: {
-    uploader(payload) {
-      return payload;
-      //console.log(payload);
-    }
-  },*/
   components: {
     Textarea,
-    Dropdown,
     Calendar,
     FileUpload,
     Toast,
@@ -246,22 +242,11 @@ export default {
       //add tasks
       nameTask:null,
 
-      selectedLabel:null,
 
-      label: [
-        {name: 'Важная', code: 'important'},
-        {name: 'Нормальная', code: 'normal'},
-        {name: 'Не очень', code: 'not very'}
-      ],
       valueEditor:null,
       date:null,
 
-      alertDay:{name: 'Напомнить за 1 день', code: '1'},
-      alert: [
-        {name: 'Напомнить за 1 день', code: '1'},
-        {name: 'Напомнить за 2 дня', code: '2'},
-        {name: 'Напомнить за неденю', code: '7'}
-      ],
+
       files:null,
       //add tasks END
 
@@ -297,25 +282,30 @@ export default {
           resp.data[k].date_insert= this.dateToYMD(new Date(resp.data[k].date_insert));
           switch (resp.data[k].status){
             case 1:
+              resp.data[k].status_class='staged';
+              resp.data[k].status_text='Поставлена';
+              break;
+            case 2:
               resp.data[k].status_class='work';
               resp.data[k].status_text='В работе';
               break;
-            case 2:
-              resp.data[k].status_class='pause';
-              resp.data[k].status_text='На паузе';
-              break;
             case 3:
+              resp.data[k].status_class='agreed';
+              resp.data[k].status_text='Согласование';
+              break;
+            case 4:
+              resp.data[k].status_class='edits';
+              resp.data[k].status_text='Правки';
+              break;
+            case 5:
               resp.data[k].status_class='completed';
               resp.data[k].status_text='Готово';
               break;
-            case 4:
-              resp.data[k].status_class='wait';
-              resp.data[k].status_text='Ждем материалы';
+            case 6:
+              resp.data[k].status_class='сancel';
+              resp.data[k].status_text='Отмена';
               break;
-            case 5:
-              resp.data[k].status_class='agreed';
-              resp.data[k].status_text='На согласовании';
-              break;
+
           }
           //status
         }

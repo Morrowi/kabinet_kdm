@@ -36,7 +36,7 @@
               <div class="col-12">
                 <div class="form-group" :class="{ 'form-input-error': errorClassEmail }" >
                   <Field name="email" placeholder="Эл. почта"  class="w-100 formInput" />
-                  <div class="warp_error_text"  v-if="errorEmailText">{{errorEmailText}}</div>
+                  <div class="warp_error_text"  v-if="errorEmailText" v-html="errorEmailText"></div>
                 </div>
               </div>
               <div class="col-12">
@@ -45,7 +45,7 @@
                   <Field name="password" type="password" class="w-100 formInput" placeholder="Пароль" v-show="!showPass"/>
                   <Field name="password" type="text" class="w-100 formInput" placeholder="Пароль" v-show="showPass"/>
                   <ErrorMessage class="input-error" name="password" />
-                  <div class="warp_error_text"  v-if="errorPasswordText">{{errorPasswordText}}</div>
+                  <div class="warp_error_text"  v-if="errorPasswordText" v-html="errorPasswordText"></div>
 
                   <div class="buttonShowPass" @click="showPassBt">
                     <input class="password-but" type="checkbox">
@@ -79,15 +79,16 @@
               </div>
               <div class="col-12">
                 <div class="form-group mb-3">
-                  <label class="d-flex align-items-center justify-content-center checkBlockWrap">
-                    <input type="checkbox" class="d-none">
+                  <label class="d-flex align-items-center justify-content-center checkBlockWrap" >
+                    <input type="checkbox" name="rules" class="d-none" checked />
                     <div class="checkBloc me-2">
-                      <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.6668 0.5L4.25016 6.91667L1.3335 4" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                      <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 5.4L5.4 9.8L12 1" stroke="#0D85FB" stroke-width="2"/>
                       </svg>
                     </div>
                     <span class="f-12">Запомнить меня</span>
                   </label>
+
                 </div>
               </div>
               <div class="col-12">
@@ -156,19 +157,19 @@ export default {
       if (!user.email) {
         this.errorClassEmail=true;
         this.error++;
-        this.errorEmailText =  'E-mail не заполнен';
+        this.errorEmailText =  'Адрес электронной<br>почты не заполнен';
       } else {
         const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
         if (!regex.test(user.email)) {
           this.errorClassEmail=true;
           this.error++;
-          this.errorEmailText = 'Неверный формат электронной почты';
+          this.errorEmailText = 'Неверный формат<br>электронной почты';
         } else {
           let myarr = user.email.split("@");
           if(myarr[0].length > 128 ||  myarr[1].length > 128){
             this.errorClassEmail=true;
             this.error++;
-            this.errorEmailText = 'Неверный формат электронной почты';
+            this.errorEmailText = 'Неверный формат<br>электронной почты';
           }
         }
       }
@@ -180,7 +181,7 @@ export default {
         if (user.password.length < 8) {
           this.errorClassPassword=true;
           this.error++;
-          this.errorPasswordText =  'Пароль должен быть больше 8 символов';
+          this.errorPasswordText =  'Неверный формат пароля. Пароль<br>не может быть меньше 8 символов';
         }
       }
       // if the field is not a valid email
@@ -212,7 +213,7 @@ export default {
               console.log(error.response.data.error);
               if(error.response.data.error === 'Innvalid password'){
                 this.errorClassPassword=true;
-                this.errorPasswordText =  'Неверный пароль, введите корректный или восстановите';
+                this.errorPasswordText =  'Неверный пароль, введите<br>корректный или восстановите';
 //                this.$toast.add({severity:'error', summary: 'Ошибка', detail:'Неверный логин или пароль', life: 3000});
               }
 
@@ -245,7 +246,7 @@ label {
 }
 
 .warp_error_text{
-  padding: 10px 8px;
+  padding: 8px 10px;
   background: #FFD2C8;
   border-radius: 6px;
   font-weight: 400;
@@ -253,12 +254,14 @@ label {
   line-height: 160%;
   color: #000000;
   position: absolute;
-  left: calc(100% + 30px);
+  left: calc(100% + 12px);
   top: 0;
-  max-width: 138px;
-  width: 100%;
+  white-space: nowrap;
   text-align: left;
   font-family: 'Inter', sans-serif;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
 }
 
 .form-input-error path{

@@ -82,7 +82,15 @@
               </div>
               <div class="col-lg-4">
                 <div class="form-group mb-3">
-                  <Dropdown v-model="selectedLabel" :options="label" optionLabel="name" placeholder="Добавить метку" />
+                  <label class="d-flex align-items-center checkBlockWrap" >
+                    <input v-model="urgent_task" type="checkbox" name="rules" class="d-none" :value="true"  />
+                    <div class="checkBloc me-2">
+                      <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 5.4L5.4 9.8L12 1" stroke="#0D85FB" stroke-width="2"/>
+                      </svg>
+                    </div>
+                    <span class="f-12">Срочная задача</span>
+                  </label>
                 </div>
               </div>
               <div class="col-12">
@@ -94,14 +102,10 @@
                 <div class="row">
                   <div class="col-lg-7">
                     <div class="form-group mb-3">
-                      <Calendar v-model="date"  dateFormat="dd.mm.yy" :showTime="true" :stepMinute="10" :manualInput="true"  placeholder="Укажите дату и время выполнения"/>
+                      <Calendar v-model="date"  dateFormat="dd.mm.yy" :showTime="false" :manualInput="true"  placeholder="Укажите дату и время выполнения"/>
                     </div>
                   </div>
-                  <div class="col-lg-5">
-                    <div class="form-group mb-3">
-                      <Dropdown v-model="alertDay" :options="alert" optionLabel="name" placeholder="Напомнить" />
-                    </div>
-                  </div>
+
                 </div>
               </div>
               <div class="col-lg-6">
@@ -136,7 +140,7 @@
           </form>
 
         <div class="d-flex justify-content-start px-3 pb-3">
-          <button @click="submitForm" type="button" class="button blueButton w-200">Создать задачу</button>
+          <button @click="submitForm" type="button" class="button blueButton w-200">Поставить задачу</button>
         </div>
       </Dialog>
 
@@ -179,7 +183,6 @@
 <script>
 
 import Textarea from 'primevue/textarea';
-import Dropdown from 'primevue/dropdown';
 import Calendar from 'primevue/calendar';
 import FileUpload from 'primevue/fileupload';
 import  'primevue/resources/themes/saga-blue/theme.css';
@@ -206,7 +209,6 @@ export default {
   },*/
   components: {
     Textarea,
-    Dropdown,
     Calendar,
     FileUpload,
     Toast,
@@ -222,23 +224,10 @@ export default {
       modalTaks:[],
       //add tasks
       nameTask:null,
-
-      selectedLabel:null,
-
-      label: [
-        {name: 'Важная', code: 'important'},
-        {name: 'Нормальная', code: 'normal'},
-        {name: 'Не очень', code: 'not very'}
-      ],
+      urgent_task:false,
       valueEditor:null,
       date:null,
 
-      alertDay:{name: 'Напомнить за 1 день', code: '1'},
-      alert: [
-        {name: 'Напомнить за 1 день', code: '1'},
-        {name: 'Напомнить за 2 дня', code: '2'},
-        {name: 'Напомнить за неденю', code: '7'}
-      ],
       files:null,
       //add tasks END
 
@@ -268,27 +257,33 @@ export default {
       ).then((resp)=>{
         for (const k in resp.data) {
           resp.data[k].date_insert= this.dateToYMD(new Date(resp.data[k].date_insert));
+
           switch (resp.data[k].status){
             case 1:
+              resp.data[k].status_class='staged';
+              resp.data[k].status_text='Поставлена';
+              break;
+            case 2:
               resp.data[k].status_class='work';
               resp.data[k].status_text='В работе';
               break;
-            case 2:
-              resp.data[k].status_class='pause';
-              resp.data[k].status_text='На паузе';
-              break;
             case 3:
+              resp.data[k].status_class='agreed';
+              resp.data[k].status_text='Согласование';
+              break;
+            case 4:
+              resp.data[k].status_class='edits';
+              resp.data[k].status_text='Правки';
+              break;
+            case 5:
               resp.data[k].status_class='completed';
               resp.data[k].status_text='Готово';
               break;
-            case 4:
-              resp.data[k].status_class='wait';
-              resp.data[k].status_text='Ждем материалы';
+            case 6:
+              resp.data[k].status_class='сancel';
+              resp.data[k].status_text='Отмена';
               break;
-            case 5:
-              resp.data[k].status_class='agreed';
-              resp.data[k].status_text='На согласовании';
-              break;
+
           }
           //status
         }
@@ -310,17 +305,17 @@ export default {
           }
       ).then((resp)=>{
         let resDate = new Date(resp.data[0].date).toLocaleString();
-        switch (resp.data[0].selectedLabel) {
-          case 'important':
-            resp.data[0].selectedLabel = 'Важная';
-            break;
-          case 'not very':
-            resp.data[0].selectedLabel = 'Не очень';
-            break;
-          default:
-            resp.data[0].selectedLabel = 'Нормальная';
-            break;
-        }
+        // switch (resp.data[0].selectedLabel) {
+        //   case 'important':
+        //     resp.data[0].selectedLabel = 'Важная';
+        //     break;
+        //   case 'not very':
+        //     resp.data[0].selectedLabel = 'Не очень';
+        //     break;
+        //   default:
+        //     resp.data[0].selectedLabel = 'Нормальная';
+        //     break;
+        // }
 
 
         resp.data[0].date=resDate;

@@ -17,7 +17,7 @@
               </div>
               <ul class="menuLinkBody">
                 <li class="d-flex mb-4">
-                  <router-link to="/mod" active-class="active">
+                  <router-link to="/mod" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,7 +38,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/mod/tasks" active-class="active">
+                  <router-link to="/mod/tasks" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,7 +52,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/mod/chat" active-class="active">
+                  <router-link to="/mod/chat" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,7 +66,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/mod/reports" active-class="active">
+                  <router-link to="/mod/reports" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -82,7 +82,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/mod/profile" active-class="active">
+                  <router-link to="/mod/profile" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

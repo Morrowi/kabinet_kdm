@@ -17,7 +17,7 @@
               </div>
               <ul class="menuLinkBody">
                 <li class="d-flex mb-4">
-                  <router-link to="/admin" active-class="active">
+                  <router-link to="/admin" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,7 +38,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/admin/rates/add" active-class="active">
+                  <router-link to="/admin/rates/add" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -59,7 +59,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/admin/users" active-class="active">
+                  <router-link to="/admin/users" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -81,7 +81,7 @@
                 </li>
 
                 <li class="d-flex mb-4">
-                  <router-link to="/admin/noty" active-class="active">
+                  <router-link to="/admin/noty" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -102,7 +102,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/admin/support/" active-class="active">
+                  <router-link to="/admin/support/" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -123,7 +123,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/admin/mail" active-class="active">
+                  <router-link to="/admin/mail" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -142,9 +142,9 @@
                       </div>
                     </div>
                     <ul>
-                      <li><router-link to="/admin/mail/type" active-class="active">Типы событий</router-link></li>
-                      <li><router-link to="/admin/mail/list" active-class="active">Почтовые шаблона</router-link></li>
-                      <li><router-link to="/admin/mail/add" active-class="active">Добавить</router-link></li>
+                      <li><router-link to="/admin/mail/type" >Типы событий</router-link></li>
+                      <li><router-link to="/admin/mail/list" >Почтовые шаблона</router-link></li>
+                      <li><router-link to="/admin/mail/add" >Добавить</router-link></li>
 
                     </ul>
                   </router-link>
