@@ -204,42 +204,22 @@
         </div>
       </div>
     </div>
-    <div
-        id="warp_openChat"
-        v-if="showLauncher"
-        class="sc-launcher"
-        :class="{opened: isOpen}"
-        :style="{backgroundColor: colors.launcher.bg}"
-        @click.prevent="isOpen ? close() : openAndFocus()"
-    >
-      <img v-if="isOpen" class="sc-closed-icon" :src="icons.close.img" :alt="icons.close.name" />
-      <img v-else class="sc-open-icon" :src="icons.open.img" :alt="icons.open.name" />
-    </div>
-    <div class="sc-chat-window" :class="{opened: isOpen, closed: !isOpen}">
-      <chat-window
-          :height="'100%'"
-          :current-user-id="currentUserId"
-          :rooms="room"
-          :rooms-list-opened ="roomsListOpened"
-          :rooms-loaded="roomsLoaded"
-          :show-add-room="showAddRoom"
-          :show-search="showSearch"
-          :show-reaction-emojis="showReactionEmojis"
-          :loading-rooms="loadingRooms"
-          :single-room="singleRoom"
-          :show-footer="true"
-          :messages="messages"
-          :messages-loaded="messagesLoaded"
-          :text-messages="textMessages"
-          :message-actions="messageActions"
-          @fetch-messages="onFetchMessages"
-          @send-message="sendMessage"
-          @open-file ="openFile"
-          @delete-message="deleteMessage"
-          @edit-message="editMessage"
-      />
-    </div>
   </div>
+  <Dialog header="Добро пожаловать в личный кабинет КДМ" v-model:visible="hello" position="top" :modal="true" :closeOnEscape="true"  :draggable="false"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" style="max-width: 1163px; width: 100%;" @hide="hideShowHello">
+    <div class="text-center" v-if="helloText === false">
+      Скоро с вашим маркетингом всё станет хорошо. <br>
+      Готовы приступить к работе сразу после оплаты счета. <br>
+      Найти раздел со счетами <a class="f-16 mb-1" href="javascript:void(0);" @click="nextLink('/dashboard/inpayac');">можно здесь</a>
+    </div>
+    <div class="text-center" v-else>
+      Скоро с вашим маркетингом всё станет хорошо.<br>
+      Не забудьте выбрать подходящий тариф.<br>
+      Сделать это <a class="f-16 mb-1" href="javascript:void(0);" @click="nextLink('/dashboard/rate');">можно здесь</a>
+    </div>
+    <template #footer>
+      <button class="button blueButton" @click="hello=false;" >Окей, начинаем </button>
+    </template>
+  </Dialog>
 </template>
 
 <script>
@@ -248,22 +228,22 @@ import bellNoty from "./bell-noty"
 import CloseIcon from '../assets/image/close-icon.png'
 import OpenIcon from '../assets/image/logo-no-bg.svg'
 import Avatar from 'primevue/avatar';
+import Dialog from 'primevue/dialog';
 
-import ChatWindow from 'vue-advanced-chat'
-import 'vue-advanced-chat/dist/vue-advanced-chat.css'
-import {io} from "socket.io-client";
+
+
 import axios from "axios";
 import authHeader from "@/services/auth-header";
 
-const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
+
 
 
 export default {
   name: "User",
   components: {
     bellNoty,
-    ChatWindow,
-    Avatar
+    Avatar,
+    Dialog
   },
   created() {
 
@@ -281,6 +261,8 @@ export default {
     }
 
     return {
+      hello:false,
+      helloText:false,
       pay:false,
       image,
       username:user.username,
@@ -294,60 +276,20 @@ export default {
         }
       },
       content: "",
-      isOpen:false,
       showLauncher: true,
       colors: {
         launcher: {
           bg: '#ee7459'
         },
       },
-      //chat
-      messageActions:
-        [
-            {
-              name: 'replyMessage',
-              title: 'Ответить'
-            },
-            {
-              name: 'editMessage',
-              title: 'Отредактировать',
-                onlyMe: true
-            },
-            {
-              name: 'deleteMessage',
-                  title: 'Удалить сообщение',
-                  onlyMe: true
-            },
-            {
-              name: 'selectMessages',
-              title: 'Выбрать'
-            }
-          ],
-      textMessages:{
-        ROOMS_EMPTY: 'Чат не выбран',
-        ROOM_EMPTY: 'Комната не выбрана',
-        NEW_MESSAGES: 'Новое сообщение',
-        MESSAGE_DELETED: 'Сообщение удалено',
-        MESSAGES_EMPTY: 'Сообщений нет',
-        CONVERSATION_STARTED: 'Сообщение отправлено:',
-        TYPE_MESSAGE: 'Введите сообщениe',
-        SEARCH: 'Поиск',
-      },
-      room: [],
-      roomsLoaded: true,
-      showSearch:true,
-      roomsListOpened: false,
-      showAddRoom:false,
-      showReactionEmojis:false,
-      singleRoom:true,
-      messagesLoaded: false,
-      loadingRooms: false,
-      messages: [],
-      currentUserId: user.id
+
     };
   },
   methods:{
-
+    nextLink(link){
+      this.hello = false;
+      this.$router.push(link);
+    },
     openMenu(){
       if(this.mobMenu === 'active'){
         this.mobMenu = '';
@@ -358,158 +300,42 @@ export default {
     closeMenu(){
       this.mobMenu = '';
     },
-    close() {
-      this.isOpen = false;
-      this.$store.dispatch('showChat', false );
-    },
-    openAndFocus() {
-      this.isOpen = true;
-    },
-
-
-    //chat
-    getRooms(){
-      socket.on("get room", data => {
-        this.room=[data];
-      });
-    },
-    getMsg(){
-      socket.on("message_m", data => {
-        console.log('[line 63]',data);
-        /*let tmpMessage = [...this.messages, ...data];*/
-        this.messages.push(data.msg);
-        //console.log('[this.messages]',this.messages);
-      });
-    },
-    editMsg(){
-      socket.on("edit_message", data => {
-        console.log('[line 362]',data);
-        for (let k in this.messages){
-          if(this.messages[k]._id === data.msg._id){
-            this.messages[k] = data.msg;
-          }
-        }
-        /*let tmpMessage = [...this.messages, ...data];*/
-        //this.messages.push(data.msg);
-        console.log('[this.messages]',this.messages);
-      });
-    },
-    loadRoom(){
-      let user =  JSON.parse(localStorage.getItem('user'));
-      let join ={
-        is: 'user',
-        rooms:{
-          room: user.room,
-          id: user.id,
-          manager: user.manager.id
-        },
-      }
-      //console.log('399 user',user);
-      //console.log('395 line', join);
-      socket.emit("subscribe", join);
-    },
-    onFetchMessages(data) {
-      //console.log('178 line', data);
-
-
-      socket.emit("get msg", data.room.roomId);
-
-      socket.on("load msg", data => {
-        setTimeout(() => {
-          this.messages= data;
-          this.messagesLoaded = true;
-        })
-      });
-
-    },
-    async sendMessage({ content, roomId, files, replyMessage }) {
-      const message = {
-        sender_id: this.currentUserId,
-        content,
-        timestamp: new Date()
-      }
-      if (files) {
-        message.files = await this.formattedFiles(files)
-      }
-      let dataMsg = {
-        room: roomId,
-        message:message
-      }
-      console.log(replyMessage)
-      socket.emit("message_m", dataMsg);
-
-    },
-    async formattedFiles(files) {
-      const formattedFiles = []
-
-      for (let i in files){
-        let file =files[i];
-        const messageFile = {
-          name: file.name,
-          size: file.size,
-          type: file.type,
-          extension: file.extension || file.type,
-          url: file.url || file.localUrl
-        }
-        if (file.audio) {
-          messageFile.audio = true
-          messageFile.duration = file.duration
-        }
-        const blobFile = await fetch(file.localUrl).then(res => res.blob());
-        console.log(blobFile);
-        messageFile.b64 = await this.blobToBase64(blobFile);
-
-        formattedFiles.push(messageFile)
-      }
-
-      return formattedFiles
-    },
-    async blobToBase64(blob) {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.readAsDataURL(blob);
-      });
-    },
-    openFile({ file }) {
-      window.open(file.file.url, '_blank')
-    },
-    async deleteMessage({ message, roomId }) {
-      message.deleted = 1;
-      console.log(roomId);
-      console.log(message);
-
-      let dataMsg = {
-        room:roomId,
-        message:message
-      };
-      socket.emit("deleted_msg", dataMsg);
-      const { files } = message
-      if (files) {
-        files.forEach(file => {
-          console.log(this.currentUserId, message._id, file);
-        })
-      }
-    },
-    async editMessage({ messageId, newContent, roomId }) {
-      let dataMsg={
-        messageId:messageId,
-        newContent:newContent,
-        room:roomId
-      }
-      socket.emit("edit_msg", dataMsg);
-      for (let k in this.messages){
-        if(this.messages[k]._id === messageId){
-          this.messages[k].content = newContent;
-        }
-      }
-    },
-    //chat - end
-
     /*reUser() {
       this.$store.dispatch("auth/reuser");
     },*/
+    initHellow(){
+      axios.post( 'http://panel.kdm1.biz/api/hellow/',
+          '',
+          {
+            headers: authHeader()
+          }
+      ).then((resp)=>{
+        if(resp.data.hello_show === 0){
+          this.hello = true;
+          if(resp.data.rate === 0){
+            this.helloText = true;
+          }
+        }
+        console.log(resp.data);
 
+      }).catch(function(error){
+        console.log(error);
+
+      });
+    },
+    hideShowHello(){
+      axios.post( 'http://panel.kdm1.biz/api/hellow/hide',
+          '',
+          {
+            headers: authHeader()
+          }
+      ).then(()=>{
+
+      }).catch(function(error){
+        console.log(error);
+
+      });
+    },
     initPaymend(){
       axios.post( 'http://panel.kdm1.biz/api/paymend/',
           '',
@@ -526,7 +352,27 @@ export default {
 
       });
     },
+    checkAuth(){
+      const authDate = localStorage.getItem('auth');
+      if(authDate === ''){
+        setTimeout(()=>{
+          this.$store.dispatch('auth/logout');
+          this.$router.push('/login');
+        },3000);
+      }
 
+      let today = new Date();
+      let now = today.setHours(today.getHours() - 4)/1000;
+      if(authDate > now){
+        let date = new Date().getTime()/1000;
+        localStorage.setItem('auth', date);
+      } else {
+        setTimeout(()=>{
+          this.$store.dispatch('auth/logout');
+          this.$router.push('/login');
+        },3000);
+      }
+    },
     logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
@@ -540,6 +386,8 @@ export default {
     },
   },
   mounted() {
+    this.initHellow();
+    this.checkAuth();
 
     if(this.$store.state.auth.step === 'step1') {
       this.$router.push("/step1");
@@ -548,13 +396,8 @@ export default {
     }else if(this.$store.state.auth.step === 'step3'){
       this.$router.push("/step3");
     } else {
-      //chat
-      this.loadRoom();
-      this.getRooms();
-      this.getMsg();
-      this.editMsg();
+
       this.initPaymend();
-      //chat - end
     }
     UserService.getUserBoard().then(
       (response) => {
@@ -584,9 +427,7 @@ export default {
 
   },
   watch:{
-    '$store.state.showChat': function() {
-        this.isOpen=!this.isOpen;
-    }
+
   },
 };
 </script>

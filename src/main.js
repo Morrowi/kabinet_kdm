@@ -77,3 +77,4 @@ createApp(App)
     })
     .component('font-awesome-icon', FontAwesomeIcon)
     .mount("#app");
+

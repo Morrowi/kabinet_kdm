@@ -43,6 +43,9 @@ body {
     margin: 0 auto;
     color: #171717;
 }
+.border-bottom{
+    border-bottom: 1px solid #EFF0F6 !important;
+}
 .cursor-pointer{
     cursor: pointer;
 }
@@ -123,6 +126,9 @@ body {
 .b-radius{
     border-radius: 10px;
 }
+.b-radius-top{
+    border-radius: 10px 10px 0 0;
+}
 .lh-1{
     line-height: 1;
 }
@@ -131,6 +137,11 @@ body {
 }
 .h-100vh{
     height: 100vh;
+}
+
+.px-30{
+    padding-left: 30px !important;
+    padding-right: 30px !important;
 }
 .trash{
     background: none;
@@ -225,7 +236,7 @@ a.router-link-exact-active svg path{
 }
 
 .button {
-    padding: 7px;
+    padding: 8px;
     border-radius: 4px;
     text-align: center;
     font-size: 14px;
@@ -241,7 +252,7 @@ a.router-link-exact-active svg path{
     position: relative;
 }
 .button.blueButton .spinner-border{
-
+    margin-right: 5px;
 }
 .button.buttonBorderBlack {
     background: none;
@@ -528,16 +539,94 @@ table.c3-tooltip {
 .ui-selectmenu-button,
 .formInput_pv input{
     background: #FFFFFF;
-    border: 1px solid #94A2AB !important;
+    border: 1px solid #F0F2FA !important;
     border-radius: 6px;
     padding: 15px 20px;
     min-height: 56px;
     outline-color: #218ffb;
 }
+.p-inputtextarea{
+    width: 100%;
+    height: 54px;
+    background: #FFFFFF;
+    border: 1px solid #F0F2FA;
+    border-radius: 6px;
+    outline:none;
+    padding: 14px;
+}
+.p-inputtextarea:focus,
+.p-inputtextarea:active{
+    border: 1px solid #ced4da !important;
+    outline:1px solid #ced4da;
+}
 .form-group .p-dropdown, .form-group .p-calendar{
-    border: 1px solid #94A2AB !important;
+    border: 1px solid #F0F2FA !important;
 }
 
+.warp_task_header{
+    padding: 9px 20px;
+}
+
+.warp_task_list .p-datatable .p-datatable-thead > tr > th{
+    background-color: #fff;
+    font-weight: 500 !important;
+    font-size: 14px;
+    color: #94A2AB;
+    padding: 9px 20px 8px;
+}
+
+.p-datatable .p-datatable-tbody > tr > td{
+    padding: 9px 20px 8px;
+    font-weight: 400;
+    font-size: 14px;
+    color: #171717;
+}
+
+.warp_task_add .p-calendar{
+    width: 247px;
+}
+.warp_task_add .p-calendar:hover{
+    border: 1px solid #0D85FB !important;
+    cursor: pointer;
+}
+.warp_task_add .p-calendar:hover input{
+    cursor: pointer;
+}
+.warp_task_add .p-calendar:hover input::placeholder{
+    color: #0D85FB !important;
+
+}
+
+.warp_task_add  .form-input-error{
+    outline:1px solid #F23A11;
+}
+.warp_task_add  .form-input-error::placeholder{
+    color: #F23A11;
+}
+
+.warp_task_add  .error-task{
+    margin-left: 10px;
+    background: #FFD2C8;
+    border-radius: 6px;
+    font-weight: 400;
+    font-size: 12px;
+    color: #000000;
+    padding: 10px;
+}
+
+.warp_task_add  .succes-task{
+    margin-left: 10px;
+    background: #EAF7ED;
+    border-radius: 6px;
+    font-weight: 400;
+    font-size: 12px;
+    color: #000000;
+    padding: 10px;
+}
+
+.p-inputtext:enabled:focus{
+    outline: none !important;
+}
 .p-inputtext.p-invalid.p-component,
 .p-inputnumber.p-invalid.p-component > .p-inputtext {
     border-color: #e24c4c !important;
@@ -550,9 +639,127 @@ table.c3-tooltip {
 }
 
 
-.formInput::placeholder{
+.formInput::placeholder,
+.p-inputtextarea::placeholder{
     color: #94A2AB;
 }
+.p-datepicker{
+    padding: 0 !important;
+}
+.p-datepicker table{
+
+}
+.p-datepicker .p-datepicker-header{
+    padding-top: 2px !important;
+    padding-bottom: 3px !important;
+}
+.p-datepicker:not(.p-datepicker-inline){
+    border: 1px solid #EFF0F6 !important;
+    box-shadow: 0px 15px 50px rgba(160, 163, 189, 0.1) !important;
+    border-radius: 10px !important;
+    overflow: hidden;
+}
+.p-datepicker table th{
+    text-align: center;
+}
+.p-datepicker table td{
+    padding: 8px 10px !important;
+}
+.p-datepicker table td > span{
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 4px !important;
+}
+
+.p-datepicker table td.p-datepicker-today > span{
+    background: #F0F2FA !important;
+    color: #0D85FB !important;
+}
+
+.p-datepicker table td > span.p-highlight,
+.p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):hover {
+    color: #ffffff !important;
+    background: #0D85FB !important;
+}
+
+.p-datepicker-header .p-datepicker-title .p-datepicker-month,
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year{
+    font-weight: 600 !important;
+    font-size: 18px !important;
+    color: #000000;
+    margin-right: 0 !important;
+}
+.p-datepicker .p-datepicker-header .p-datepicker-prev,
+.p-datepicker .p-datepicker-header .p-datepicker-next{
+    color: #0D85FB;
+}
+
+
+.warp_tast_upload .img-prev{
+    background: #B2BAC6;
+    border-radius: 6px;
+    display: inline-flex;
+    width: 60px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+}
+
+.warp_tast_upload .p-fileupload-row{
+    position: relative;
+}
+.warp_tast_upload .p-fileupload-row::before{
+    content: '';
+    width: calc(100% + 30px);
+    margin-left: -15px;
+    height: 1px;
+    background-color: #EFF0F6;
+    position: absolute;
+    bottom: 0;
+}
+
+.warp_task_add .button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.warp_tast_upload .p-dialog-content{
+    padding-bottom: 23px !important;
+}
+
+.warp_tast_upload .p-fileupload-row  img{
+    border-radius: 6px;
+    width: 60px;
+    height: 60px;
+}
+.p-fileupload .p-fileupload-row > div{
+    font-weight: 400;
+    font-size: 16px;
+    color: #94A2AB;
+}
+
+.warp_tast_upload .p-button.p-button-icon-only{
+    width: 27px;
+    height: 29px;
+    background: #0D85FB;
+    border: 1px solid #0D85FB;
+    border-radius: 4px;
+}
+.warp_tast_upload .p-button.p-button-icon-only span::before,
+.warp_tast_upload .p-button.p-button-icon-only span::after{
+    content: '';
+    width: 22px;
+    height: 1px;
+    background-color: #ffffff;
+    display: block;
+    transform: rotate(45deg);
+}
+.warp_tast_upload .p-button.p-button-icon-only span::after {
+    transform: rotate(-45deg);
+    margin-top: -1px;
+}
+
+
 .form-label{
     color: #94A2AB;
     font-style: normal;
@@ -604,7 +811,7 @@ textarea.formInput {
     box-sizing: border-box;
     border-radius: 4px;
     padding: 15px 20px;
-    min-height: 56px;
+    min-height: 54px;
     cursor: pointer;
     position: relative;
     display: flex;
@@ -906,11 +1113,11 @@ input[type="checkbox"]:checked + .blockCheck:before{
     stroke: #fff;
 }
 .checkBlockWrap input[type="checkbox"]:checked + .checkBloc{
-    background: #ffffff;
+    background: #0D85FB;
     border-color: #94A2AB;
 }
 .checkBlockWrap input[type="checkbox"]:checked + .checkBloc svg path{
-    stroke: #0D85FB;
+    stroke: #ffffff;
 }
 
 .buttonShowPass input[type="checkbox"] {
@@ -1078,8 +1285,8 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
     display: block;
 }
 .p-avatar-xl{
-    width: 80px !important;
-    height: 80px !important;
+    width: 109px !important;
+    height: 109px !important;
 }
 
 .modal::before{
@@ -1118,6 +1325,22 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
 .p-datepicker{
     z-index: 1125 !important;
 }
+.warp_task_add .p-dialog-title{
+    justify-content: start;
+}
+
+.warp_task_add .checkBlockWrap{
+    font-size: 16px;
+    color: #94A2AB;
+}
+
+.warp_task_add .checkBloc{
+    width: 26px;
+    height: 26px;
+    border: 1px solid #F0F2FA;
+    border-radius: 2px;
+}
+
 .warp_tast_upload .p-fileupload-buttonbar,
 .warp_tast_upload .p-progressbar{
     display: none;
@@ -1125,10 +1348,6 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
 .p-fileupload .p-fileupload-content{
     padding: 0 !important;
     border: none !important;
-}
-.p-fileupload-files{
-    padding: 2rem 1rem;
-    border: 1px solid #dee2e6;
 }
 
 
@@ -1222,22 +1441,72 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
     padding: 0 !important;
     margin: 0 !important;
 }
-
+.p-component-overlay{
+    background: rgba(49, 58, 70, 0.9) !important;
+}
 .p-dialog{
     border-radius: 10px !important;
     overflow: hidden !important;
+
+}
+.p-dialog-top .p-dialog{
+    margin-top: 86px !important;
 }
 
 .p-dialog .p-dialog-header{
-    border-bottom: 1px solid #dee2e6 !important;
-    padding: 11px 20px 10px 20px !important;
+    border-bottom: 1px solid #EFF0F6 !important;
+    padding: 10px 20px!important;
 }
 .p-dialog-title{
+    font-family: 'Inter', sans-serif;
     font-size: 24px !important;
-    line-height: 30px !important;
+    line-height: 34px !important;
+    width: 100%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
 }
 .p-dialog-content{
     padding: 1rem!important;
+}
+
+.p-dialog-header-close-icon{
+    position: relative;
+}
+.p-dialog-header-close-icon::before,
+.p-dialog-header-close-icon::after{
+    content:'' !important;
+    width: 21px;
+    height: 1px;
+    background-color: #000000;
+    display: block;
+    transform: rotate(45deg);
+}
+.p-dialog-header-close-icon::after{
+    transform: rotate(-45deg);
+    margin-top: -1px;
+}
+.p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover{
+    background: none !important;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover .p-dialog-header-close-icon::before,
+.p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover .p-dialog-header-close-icon::after{
+    background-color: #0D85FB;
+}
+.p-dialog .p-dialog-footer button{
+    width: 200px;
+    height: 40px;
+    margin-right: 0;
+}
+.p-dialog .p-dialog-footer{
+    text-align: center;
+    padding-bottom: 33px;
+}
+
+.p-dialog-content{
+    padding-top: 33px !important;
+
 }
 
 .w-200{
@@ -1247,6 +1516,15 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
 .pi{
     font-size: 18px !important;
 }
+
+.warp_chat_marketolog{
+    background: #FFFFFF;
+    border: 1px solid #EFF0F6;
+    box-shadow: 0px 15px 50px rgba(160, 163, 189, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
 .warp_rate .sub_title{
     font-family: 'Muller', sans-serif;
     font-style: normal;
@@ -1275,6 +1553,71 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
     border-radius: 5px;
 }
 
+.vac-room-header{
+    display: none !important;
+}
+.vac-card-window{
+    background-color: #ffffff !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+    max-height: calc(100vh - 478px);
+}
+.vac-col-messages .vac-container-scroll{
+    margin-top: 10px !important;
+    background-color: #ffffff !important;
+}
+.vac-message-wrapper .vac-card-info{
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.vac-box-footer{
+    background-color: #F3F4F7 !important;
+}
+.vac-col-messages .vac-messages-container{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.vac-message-wrapper .vac-avatar{
+    width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    min-width: 40px !important;
+}
+
+.p-fileupload-files.more{
+    height: 276px;
+    overflow: hidden;
+}
+
+.count_files{
+    margin-top: 18px;
+    background: #FFFFFF;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 20px;
+    border: 1px solid #EFF0F6;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.count_files::after{
+    content: '';
+    width: 13px;
+    height: 8px;
+    display: block;
+    background-image: url("../images/st.svg");
+    margin-left: 9px;
+}
+.count_files.more::after{
+    transform: rotate(180deg);
+}
 
 @media only screen and (max-width : 1200px) {
     .tarifTabletInfo{

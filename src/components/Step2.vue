@@ -51,7 +51,6 @@
                         </span>
                       </div>
                     </div>
-
                     <div class="d-flex flex-column">
                       <div class="f-18 fw-600">
                         {{ marketolog.username}}
@@ -72,7 +71,6 @@
 
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>

@@ -13,6 +13,8 @@ class AuthService {
       .then(response => {
         if (response.data.accessToken) {
           localStorage.setItem('user', JSON.stringify(response.data));
+          let date = new Date().getTime()/1000;
+          localStorage.setItem('auth', date);
         }
 
         return response.data;
@@ -21,6 +23,7 @@ class AuthService {
 
   logout() {
     localStorage.removeItem('user');
+    localStorage.removeItem('auth');
   }
 
   register(user) {
@@ -32,6 +35,8 @@ class AuthService {
       if (response.data.accessToken) {
         localStorage.setItem('user', JSON.stringify(response.data));
         localStorage.setItem('step', 'step1');
+        let date = new Date().getTime()/1000;
+        localStorage.setItem('auth', date);
       }
       return response;
     });

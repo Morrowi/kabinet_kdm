@@ -1,8 +1,6 @@
 <template>
-  <div class="col-12 mb-20">
-
-    <div class="b-radius bg-white">
-      <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
+  <div class="b-radius-top bg-white">
+    <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
         <div class="f-18 fw-600">
           Мой маркетолог
         </div>
@@ -16,47 +14,74 @@
           </svg>
         </div>-->
       </div>
-      <div class="border-bottom  p-3">
+    <div class="border-bottom  p-3">
         <transition name="fade" >
         <div class="position-absolute" v-if="loading">Loading...</div>
         <div v-else class="d-flex justify-content-between me-0 ml-0 align-items-start">
           <div class="d-flex align-items-center">
-
             <div class="avaBlock me-3">
               <router-link  to="/dashboard/marketer">
                 <Avatar size="xlarge"  shape="circle" :image="'http://panel.kdm1.biz/uploads/'+marketolog.id+'/'+marketolog.avatar" />
               </router-link>
-            </div>
-            <div class="d-flex flex-column warp_username">
-              <router-link  class="f-16 mb-1" to="/dashboard/marketer">
-                {{ marketolog.username }}
-              </router-link>
-              <div class="f-18 fw-600 d-flex align-items-center lh-1">
-                <div class="me-1 d-flex align-items-center">
-                  <star-rating :rating="marketolog.rating"  :read-only="true" :round-start-rating="false" :star-size="18" :rounded-corners="false" :border-width="0" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]" :padding="7" :show-rating="false" inactive-color="#B2BAC6" active-color="#EE735A" ></star-rating> <div class="ms-1">{{marketolog.rating}}</div>
+              <div class="f-18 fw-600 d-flex align-items-center flex-column">
+                <div class="me-1">
+                  {{marketolog.rating}}
                 </div>
-
+                <span class="pt-1">
+                          <star-rating :rating="marketolog.rating"  :read-only="true" :round-start-rating="false" :star-size="18" :rounded-corners="false" :border-width="0" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]" :padding="5" :show-rating="false" inactive-color="#B2BAC6" active-color="#EE735A" ></star-rating>
+                        </span>
               </div>
+              <div class="btn_add_review"><a href="javascript: void(0);" @click="displayReviews = true;">Оставить отзыв</a></div>
             </div>
           </div>
-          <div class="tabletInfo online" v-if="online"> Онлайн </div>
-          <div class="tabletInfo" v-else> Оффлайн </div>
+          <div class="d-flex flex-column warp_username">
+            <div class="f-16">
+              {{ marketolog.username}}
+            </div>
+            <div class="d-flex warp_prop_marketolog">
+              <div>
+                <span>7</span>
+                <br>
+                лет опыта
+              </div>
+              <div>
+                <span>160</span>
+                <br>
+                успешных проектов
+              </div>
+            </div>
+            <div class="f-14 color-2 lh-22" v-html="marketolog.description">
+
+            </div>
+            <div class="tabletInfo online" v-if="online"> Онлайн </div>
+            <div class="tabletInfo" v-else> Оффлайн </div>
+          </div>
         </div>
         </transition>
       </div>
-      <div class="pe-3 ps-3 pt-2 pb-2">
-        <div class="d-flex justify-content-center justify-content-lg-end">
-          <div class="button buttonBorder"  @click="showChat">
-            Написать в чат
-          </div>
-        </div>
+  </div>
+
+  <Dialog header="Оценка работы" v-model:visible="displayReviews"  position="top" :modal="true" :closeOnEscape="true"  :draggable="false" :breakpoints="{'960px': '75vw', '640px': '100vw'}" style="max-width: 360px; width: 100%;" class="warp_modal">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-center">
+        {{textRaiting}}
+      </div>
+      <div class="col-12 d-flex justify-content-center mb-3">
+        <star-rating @update:rating ="setRating" @hover:rating ="setRatingText" :rating="rating" :star-size="27" :rounded-corners="false" :border-width="0" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]" :padding="7" :show-rating="false" inactive-color="#EFF0F6" active-color="#EE735A" ></star-rating>
+      </div>
+      <div class="col-12">
+        <textarea ref="contentTextArea" id="contentTextArea" class="p-inputtextarea"  placeholder="Ваш комментарий..." v-model="valueEditor"></textarea>
       </div>
     </div>
-  </div>
+    <template #footer>
+      <button @click="submitForm" type="button" class="button blueButton">Готово</button>
+    </template>
+  </Dialog>
 </template>
 
 <script>
 import Avatar from 'primevue/avatar';
+import Dialog from 'primevue/dialog';
 import axios from "axios";
 import authHeader from "@/services/auth-header";
 import StarRating from 'vue-star-rating'
@@ -65,10 +90,14 @@ export default {
   name: "Marketer",
   components: {
     Avatar,
-    StarRating
+    StarRating,
+    Dialog
   },
   data() {
     return{
+      displayReviews:false,
+      textRaiting:'Отлично',
+      rating:5,
       loading:true,
       marketolog:null,
       online:false
@@ -111,14 +140,59 @@ export default {
 
       }).finally(() => (this.loading = false));
     },
-    showChat() {
-      if(this.$store.state.showChat){
-        this.$store.dispatch('showChat', false );
-      } else {
-        this.$store.dispatch('showChat', true );
+    setRating(rating){
+      this.rating= rating;
+    },
+    setRatingText(rating){
+      switch (rating) {
+        case 1:
+          this.textRaiting= 'Не то, что я ожидал';
+          break;
+        case 2:
+          this.textRaiting= 'Можно лучше';
+          break;
+        case 3:
+          this.textRaiting= 'Приемлемо';
+          break;
+        case 4:
+          this.textRaiting= 'Хорошо';
+          break;
+        case 5:
+          this.textRaiting= 'Отлично';
+          break;
       }
 
-    }
+    },
+    submitForm(){
+      console.log(this.valueEditor);
+      console.log(this.rating);
+      let date={
+        marketolog: this.$store.state.auth.user.manager.id,
+        rating:this.rating,
+        text: this.valueEditor
+      }
+
+      axios.post( 'http://panel.kdm1.biz/api/reviews/add/',
+          date,
+          {
+            headers: authHeader()
+          }
+      ).then((resp)=>{
+        if(resp.data === 'saccess'){
+          this.valueEditor='';
+          this.rating='';
+          this.open= false;
+          this.$toast.add({severity:'success', summary: 'Спасибо за оценку.', detail:'', life: 3000});
+        }
+        console.log(resp.data);
+
+        //this.openTask=true;
+      }).catch(function(error){
+        this.$toast.add({severity:'error', summary: 'Ошибка', detail:error, life: 3000});
+        console.log(error);
+      });
+
+    },
   },
   computed:{
     currentUser() {
@@ -140,10 +214,75 @@ export default {
 };
 </script>
 <style>
+.btn_add_review{
+
+}
+.btn_add_review a{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #0D85FB;
+  position: relative;
+}
+.btn_add_review a::before{
+  content: '';
+  width: 100%;
+  height: 2px;
+  background-color: #0D85FB;
+  position: absolute;
+  bottom: -4px;
+}
+.btn_add_review a:hover:before{
+  display: none;
+}
 .warp_username a {
   color: #171717;
 }
 .warp_username a:hover {
   color: #EE735A;
 }
+
+.warp_username{
+  position: relative;
+}
+.warp_username .tabletInfo{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.warp_username .warp_prop_marketolog{
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+  color: #6A7686;
+  margin-bottom: 20px;
+  margin-top: 12px;
+}
+.warp_username .warp_prop_marketolog > div{
+  margin-right: 60px;
+}
+
+.warp_username .warp_prop_marketolog span{
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #171717;
+}
+.warp_modal .p-dialog-footer button{
+  width: 100% !important;
+  height: auto !important;
+  padding: 15px !important;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+}
+.p-dialog.warp_modal .p-dialog-content{
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  padding-bottom: 9px !important;
+}
+
 </style>
