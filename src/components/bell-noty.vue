@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <a href="#">
-      <div class="d-flex align-items-center massageTopWrap" :class="{'active':viewedBell}">
+  <div class="noty" @click="showNoty=!showNoty;" :class="{'open':showNoty}">
+    <a href="javascript:void(0)">
+      <div class="d-flex align-items-center massageTopWrap" :class="{'active':viewedBell}" >
         <div class="bellBlock me-2">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_250_45995)">
@@ -14,17 +14,17 @@
             </defs>
           </svg>
         </div>
-        <div class="f-14 fw-400 color-blue messOn" v-if="viewed!==0">
-          <router-link to="/dashboard/notifications" >Новых уведомлений <span>{{viewed}}</span></router-link>
+        <div class="f-14 fw-400  messOn" v-if="viewed!==0">
+          Новых уведомлений <span>{{viewed}}</span>
         </div>
-        <div class="f-14 fw-400 color-2 " v-if="viewed===0">
-          <router-link to="/dashboard/notifications" >Нет новых уведомлений</router-link>
-
+        <div class="f-14 fw-400 " v-if="viewed===0">
+          Нет новых уведомлений
         </div>
+        <div class="close"></div>
       </div>
     </a>
-
   </div>
+  <div class="noty-body" :class="{'open':showNoty}"><Noty/></div>
   <Toast position="bottom-right" group="chat">
     <template #message="slotProps">
       <div  role="alert" aria-live="assertive" aria-atomic="true">
@@ -42,6 +42,7 @@
 import axios from "axios";
 import authHeader from "@/services/auth-header";
 import Toast from 'primevue/toast';
+import Noty from '@/views/user/component/index/Notifications'
 
 import {Howl} from 'howler';
 import {io} from "socket.io-client";
@@ -57,7 +58,8 @@ export default {
     },
   },
   components: {
-    Toast
+    Toast,
+    Noty
   },
   created: function () {
     window.addEventListener('focus',this.hiddenToas);
@@ -66,6 +68,7 @@ export default {
   data() {
 
     return{
+      showNoty:false,
       viewed:0,
       viewedBell:false
     }
@@ -122,7 +125,7 @@ export default {
         this.viewed = viewedTmp;
         setTimeout(()=>{
           this.initNoty();
-        },30000);
+        },5000);
       }).catch(function(error){
         console.log(error);
 

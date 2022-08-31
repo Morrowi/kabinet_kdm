@@ -71,6 +71,7 @@
               <div class="p-title">Фото профиля</div>
             </div>
             <div class="col-auto d-flex align-items-center p-2">
+              <Cropper/>
               <div v-if="image">
                 <Avatar shape="circle" class="me-2" size="xlarge" @click="showEditAvata" :class="{'active':showEditAvataPanel}" :image="image" />
               </div>
@@ -134,6 +135,9 @@ import authHeader from "@/services/auth-header";
 import Toast from 'primevue/toast';
 import Button from 'primevue/button';
 import CascadeSelect from 'primevue/cascadeselect';
+import Cropper from '@/components/cropper/Cropper';
+
+//https://github.com/rolodromo/playground-token-maker
 
 export default {
   name: "Profile",
@@ -144,8 +148,8 @@ export default {
     Toast,
     Dialog,
     Button,
-    CascadeSelect
-
+    CascadeSelect,
+    Cropper
   },
   data() {
     let user = this.$store.state.auth.user;

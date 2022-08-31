@@ -1,19 +1,14 @@
 <template>
   <div class="contentBlock mb-5 mx-n075">
-    <div class="row me-0 ms-0 justify-content-between mb-3 flex-column">
-      <div class="f-24 fw-600">
-        Счета, оплаты, акты
-      </div>
-    </div>
     <div class="row bg-white pl-3 pr-3 mb-3">
       <div class="col-auto py-3 f-14 tabsButton active" data-target="0">
-        Договор
+        Счета
       </div>
-      <div class="col-auto py-3 tabsButton" data-target="1">
-        История операций
-      </div>
-      <div class="col-auto py-3 f-14 tabsButton" data-target="2">
+      <div class="col-auto py-3 tabsButton" data-target="2">
         Закрывающие документы
+      </div>
+      <div class="col-auto py-3 f-14 tabsButton" data-target="1">
+        Договор
       </div>
     </div>
     <div class="d-flex mb-3">
@@ -239,7 +234,7 @@
 export default {
   name: "In pay",
   components: {
-//    AddRates,
+
 
   },
   data() {

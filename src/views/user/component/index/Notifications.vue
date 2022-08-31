@@ -1,28 +1,22 @@
 <template>
-  <div class="contentBlock mb-20">
+  <div class="contentBlock">
     <transition name="fade" >
     <div class="position-absolute" v-if="loading">Loading...</div>
     <div class="row"  v-else>
       <div class="col-12">
-        <div class="b-radius bg-white">
-          <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
-            <div class="f-18 fw-600">
-              Уведомления
-            </div>
-          </div>
           <div class="messBlockWrap">
-            <div class="bessBlockItem f-14 border-bottom" v-for="noty in arrNoty" :key="noty.id" :class="{'active':noty.viewed}" @click="showNoty(noty.id);">
+            <div class="bessBlockItem f-14 border-bottom d-flex justify-content-between" v-for="noty in arrNoty" :key="noty.id" :class="{'active':noty.viewed}" @click="showNoty(noty.id);">
               <div class="titleBlock cropBlock"><span>{{ noty.text }}</span></div>
+              <div class="infoBlock">{{ noty.data_insert }}</div>
             </div>
           </div>
-          <div class="row me-0 ml-0 justify-content-between align-items-center">
-            <div class="col-auto mx-2 my-3">
+          <div class="d-flex align-items-center">
+            <div class="warp_link_all_noty">
               <div class="colMessBlock f-14 color-blue">
-                У вас <span>{{viewed}}</span> непрочитанных уведомления
+                <router-link to="/dashboard/notifications">Все уведомления</router-link>
               </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
     </transition>
@@ -82,7 +76,9 @@ export default {
           }
         }
         this.arrNoty =resp.data;
-
+        setTimeout(()=>{
+          this.initNoty();
+        },5000);
 
       }).catch(function(error){
         console.log(error);
@@ -111,7 +107,7 @@ export default {
 
         this.showNotyOne=resp.data;
         this.displayNoty = true;
-        console.log(resp.data);
+
         for (let i in  this.arrNoty){
           if( this.arrNoty[i].id === id){
             if( this.arrNoty[i].viewed){
@@ -121,6 +117,8 @@ export default {
 
           }
         }
+
+
 
       }).catch(function(error){
         console.log(error);
@@ -135,3 +133,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.warp_link_all_noty{
+  padding-left: 20px;
+  padding-top: 10px;
+}
+</style>

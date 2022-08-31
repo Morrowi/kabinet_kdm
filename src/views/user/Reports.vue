@@ -1,9 +1,6 @@
 <template>
   <div class="contentBlock mb-5">
     <div class="row mr-0 ml-0 justify-content-between align-items-center mb-3">
-      <div class="f-24 fw-600">
-        Отчеты по рекламе
-      </div>
       <div class="dropWrap f-12">
         <div class="dropArrow">
           <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">

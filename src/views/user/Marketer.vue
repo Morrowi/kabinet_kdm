@@ -1,11 +1,6 @@
 <template>
 
     <div class="contentBlock mb-5">
-      <div class="row mr-0 ml-0 justify-content-between align-items-center mb-3">
-        <div class="f-24 fw-600">
-          Мой маркетолог
-        </div>
-      </div>
       <div class="row justify-content-between h-100">
         <div class="col-lg-6">
           <div class="d-flex flex-column justify-content-between h-100">

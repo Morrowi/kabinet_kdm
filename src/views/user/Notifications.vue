@@ -24,11 +24,6 @@
       </svg>
   </div>
   <div class="contentBlock mb-5" v-else>
-    <div class="row mr-0 ml-0 justify-content-between mb-3 flex-column">
-      <div class="f-24 fw-600">
-        Уведомления
-      </div>
-    </div>
     <div class="row">
       <div class="col-12 mb-3">
         <div class="b-radius bg-white">

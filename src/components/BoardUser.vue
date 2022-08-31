@@ -220,15 +220,57 @@
       <button class="button blueButton" @click="hello=false;" >Окей, начинаем </button>
     </template>
   </Dialog>
+  <div
+      id="warp_openChat"
+      v-if="showLauncher"
+      class="sc-launcher"
+      :class="{opened: isOpen}"
+      :style="{backgroundColor: colors.launcher.bg}"
+      @click="openAndFocus()"
+  >
+
+    <img class="sc-open-icon" :src="icons.open.img" :alt="icons.open.name" />
+    <span>Написать сообщение</span>
+  </div>
+  <div v-if="isOpen" class="sc-chat-window" :class="{opened: isOpen}">
+    <div class="close-chat" @click="close()"></div>
+    <chat-window
+      :height="'100%'"
+      :styles="styles"
+      :current-user-id="currentUserId"
+      :rooms="room"
+      :rooms-list-opened ="roomsListOpened"
+      :rooms-loaded="roomsLoaded"
+      :show-add-room="showAddRoom"
+      :show-search="showSearch"
+      :show-reaction-emojis="showReactionEmojis"
+      :loading-rooms="loadingRooms"
+      :single-room="singleRoom"
+      :show-footer="true"
+      :messages="messages"
+      :messages-loaded="messagesLoaded"
+      :text-messages="textMessages"
+      :message-actions="messageActions"
+      @fetch-messages="onFetchMessages"
+      @send-message="sendMessage"
+      @open-file ="openFile"
+      @delete-message="deleteMessage"
+      @edit-message="editMessage"
+
+  />
+  </div>
 </template>
 
 <script>
 import UserService from "../services/user.service";
 import bellNoty from "./bell-noty"
-import CloseIcon from '../assets/image/close-icon.png'
 import OpenIcon from '../assets/image/logo-no-bg.svg'
 import Avatar from 'primevue/avatar';
 import Dialog from 'primevue/dialog';
+import ChatWindow from 'vue-advanced-chat'
+import 'vue-advanced-chat/dist/vue-advanced-chat.css'
+import {io} from "socket.io-client";
+const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
 
 
 
@@ -241,6 +283,7 @@ import authHeader from "@/services/auth-header";
 export default {
   name: "User",
   components: {
+    ChatWindow,
     bellNoty,
     Avatar,
     Dialog
@@ -271,17 +314,100 @@ export default {
         open: {
           img: OpenIcon
         },
-        close: {
-          img: CloseIcon
-        }
       },
       content: "",
+      isOpen:false,
       showLauncher: true,
       colors: {
         launcher: {
           bg: '#ee7459'
         },
       },
+
+      //chat
+      styles:{
+        message: {
+          background: '#F1F3FA',
+          backgroundMe: '#FEF5E5',
+          color: '#000000',
+          colorStarted: '#9ca6af',
+          backgroundDeleted: '#dadfe2',
+          backgroundSelected: '#c2dcf2',
+          colorDeleted: '#757e85',
+          colorUsername: '#9ca6af',
+          colorTimestamp: '#828c94',
+          backgroundDate: '#ffffff',
+          colorDate: '#505a62',
+          backgroundSystem: '#e5effa',
+          colorSystem: '#505a62',
+          backgroundMedia: 'rgba(0, 0, 0, 0.15)',
+          backgroundReply: 'rgba(0, 0, 0, 0.08)',
+          colorReplyUsername: '#0a0a0a',
+          colorReply: '#6e6e6e',
+          colorTag: '#0d579c',
+          backgroundImage: '#ddd',
+          colorNewMessages: '#1976d2',
+          backgroundScrollCounter: '#0696c7',
+          colorScrollCounter: '#fff',
+          backgroundReaction: '#eee',
+          borderStyleReaction: '1px solid #eee',
+          backgroundReactionHover: '#fff',
+          borderStyleReactionHover: '1px solid #ddd',
+          colorReactionCounter: '#0a0a0a',
+          backgroundReactionMe: '#cfecf5',
+          borderStyleReactionMe: '1px solid #3b98b8',
+          backgroundReactionHoverMe: '#cfecf5',
+          borderStyleReactionHoverMe: '1px solid #3b98b8',
+          colorReactionCounterMe: '#0b59b3',
+          backgroundAudioRecord: '#eb4034',
+          backgroundAudioLine: 'rgba(0, 0, 0, 0.15)',
+          backgroundAudioProgress: '#455247',
+          backgroundAudioProgressSelector: '#455247',
+          colorFileExtension: '#757e85'
+        },
+      },
+      messageActions:
+          [
+            {
+              name: 'replyMessage',
+              title: 'Ответить'
+            },
+            {
+              name: 'editMessage',
+              title: 'Отредактировать',
+              onlyMe: true
+            },
+            {
+              name: 'deleteMessage',
+              title: 'Удалить сообщение',
+              onlyMe: true
+            },
+            {
+              name: 'selectMessages',
+              title: 'Выбрать'
+            }
+          ],
+      textMessages:{
+        ROOMS_EMPTY: 'Чат не выбран',
+        ROOM_EMPTY: 'Комната не выбрана',
+        NEW_MESSAGES: 'Новое сообщение',
+        MESSAGE_DELETED: 'Сообщение удалено',
+        MESSAGES_EMPTY: 'Сообщений нет',
+        CONVERSATION_STARTED: 'Сообщение отправлено:',
+        TYPE_MESSAGE: 'Введите сообщениe',
+        SEARCH: 'Поиск',
+      },
+      room: [],
+      roomsLoaded: true,
+      showSearch:true,
+      roomsListOpened: false,
+      showAddRoom:false,
+      showReactionEmojis:false,
+      singleRoom:true,
+      messagesLoaded: false,
+      loadingRooms: false,
+      messages: [],
+      currentUserId: user.id
 
     };
   },
@@ -300,9 +426,12 @@ export default {
     closeMenu(){
       this.mobMenu = '';
     },
-    /*reUser() {
-      this.$store.dispatch("auth/reuser");
-    },*/
+    close() {
+      this.isOpen = false;
+    },
+    openAndFocus() {
+      this.isOpen = true;
+    },
     initHellow(){
       axios.post( 'http://panel.kdm1.biz/api/hellow/',
           '',
@@ -377,7 +506,144 @@ export default {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
     },
+    //chat
+    getRooms(){
+      socket.on("get room", data => {
+        this.room=[data];
+      });
+    },
+    getMsg(){
+      socket.on("message_m", data => {
+        console.log('[line 63]',data);
+        /*let tmpMessage = [...this.messages, ...data];*/
+        this.messages.push(data.msg);
+        //console.log('[this.messages]',this.messages);
+      });
+    },
+    editMsg(){
+      socket.on("edit_message", data => {
+        console.log('[line 362]',data);
+        for (let k in this.messages){
+          if(this.messages[k]._id === data.msg._id){
+            this.messages[k] = data.msg;
+          }
+        }
+        /*let tmpMessage = [...this.messages, ...data];*/
+        //this.messages.push(data.msg);
+        console.log('[this.messages]',this.messages);
+      });
+    },
+    loadRoom(){
+      let user =  JSON.parse(localStorage.getItem('user'));
+      let join ={
+        is: 'user',
+        rooms:{
+          room: user.room,
+          id: user.id,
+          manager: user.manager.id
+        },
+      }
+      //console.log('399 user',user);
+      //console.log('395 line', join);
+      socket.emit("subscribe", join);
+    },
+    onFetchMessages(data) {
+      //console.log('178 line', data);
 
+
+      socket.emit("get msg", data.room.roomId);
+
+      socket.on("load msg", data => {
+        setTimeout(() => {
+          this.messages= data;
+          this.messagesLoaded = true;
+        })
+      });
+
+    },
+    async sendMessage({ content, roomId, files, replyMessage }) {
+      const message = {
+        sender_id: this.currentUserId,
+        content,
+        timestamp: new Date()
+      }
+      if (files) {
+        message.files = await this.formattedFiles(files)
+      }
+      let dataMsg = {
+        room: roomId,
+        message:message
+      }
+      console.log(replyMessage)
+      socket.emit("message_m", dataMsg);
+
+    },
+    async formattedFiles(files) {
+      const formattedFiles = []
+
+      for (let i in files){
+        let file =files[i];
+        const messageFile = {
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          extension: file.extension || file.type,
+          url: file.url || file.localUrl
+        }
+        if (file.audio) {
+          messageFile.audio = true
+          messageFile.duration = file.duration
+        }
+        const blobFile = await fetch(file.localUrl).then(res => res.blob());
+        console.log(blobFile);
+        messageFile.b64 = await this.blobToBase64(blobFile);
+
+        formattedFiles.push(messageFile)
+      }
+
+      return formattedFiles
+    },
+    async blobToBase64(blob) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+    },
+    openFile({ file }) {
+      window.open(file.file.url, '_blank')
+    },
+    async deleteMessage({ message, roomId }) {
+      message.deleted = 1;
+      console.log(roomId);
+      console.log(message);
+
+      let dataMsg = {
+        room:roomId,
+        message:message
+      };
+      socket.emit("deleted_msg", dataMsg);
+      const { files } = message
+      if (files) {
+        files.forEach(file => {
+          console.log(this.currentUserId, message._id, file);
+        })
+      }
+    },
+    async editMessage({ messageId, newContent, roomId }) {
+      let dataMsg={
+        messageId:messageId,
+        newContent:newContent,
+        room:roomId
+      }
+      socket.emit("edit_msg", dataMsg);
+      for (let k in this.messages){
+        if(this.messages[k]._id === messageId){
+          this.messages[k].content = newContent;
+        }
+      }
+    },
+    //chat - end
   },
   computed:{
     currentUser() {
@@ -424,6 +690,12 @@ export default {
       }
     );
 
+    //chat
+    this.loadRoom();
+    this.getRooms();
+    this.getMsg();
+    this.editMsg();
+    //chat - end
 
   },
   watch:{
@@ -433,46 +705,35 @@ export default {
 </script>
 <style>
 .sc-launcher {
-  width: 60px;
-  height: 60px;
+  width: 470px;
+  height: 54px;
   background-position: center;
   background-repeat: no-repeat;
   position: fixed;
   right: 25px;
-  bottom: 25px;
-  border-radius: 50%;
+  bottom: 0;
+  border-radius: 10px 10px 0 0;
   box-shadow: none;
   transition: box-shadow 0.2s ease-in-out;
+  background-color: #EE735A;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #fff;
 }
-.sc-launcher:before {
-  content: '';
-  position: relative;
-  display: block;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  transition: box-shadow 0.2s ease-in-out;
-}
-.sc-launcher .sc-open-icon,
-.sc-launcher .sc-closed-icon {
-  width: 60px;
-  height: 60px;
-  position: fixed;
-  right: 25px;
-  bottom: 25px;
+
+.sc-launcher .sc-open-icon{
+  padding-left: 18px;
+  padding-right: 18px;
   transition: opacity 100ms ease-in-out, transform 100ms ease-in-out;
 }
-.sc-launcher .sc-closed-icon {
-  transition: opacity 100ms ease-in-out, transform 100ms ease-in-out;
-  width: 60px;
-  height: 60px;
+.sc-launcher.opened{
+  display: none;
 }
-.sc-launcher .sc-open-icon {
-  padding: 20px;
-  box-sizing: border-box;
-  opacity: 1;
-}
+
 .sc-launcher.opened .sc-open-icon {
   transform: rotate(-90deg);
   opacity: 1;
@@ -494,7 +755,7 @@ export default {
   max-height: 590px;
   position: fixed;
   right: 25px;
-  bottom: 100px;
+  bottom: 0;
   box-sizing: border-box;
   box-shadow: 0px 7px 40px 2px rgba(148, 149, 150, 0.1);
   background: white;
@@ -511,12 +772,33 @@ export default {
 .sc-chat-window .vac-player-bar{
   max-width:calc(100% - 50px);
 }
-
-.sc-chat-window.closed {
-  opacity: 0;
-  display: none;
-  bottom: 90px;
+.close-chat{
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 100;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
 }
+
+.close-chat::before,
+.close-chat::after{
+  content: '';
+  width: 18px;
+  height: 1px;
+  background-color: #ffffff;
+  display: block;
+  transform: rotate(45deg);
+  position: relative;
+  top: 6px;
+  right: 1px;
+}
+.close-chat::after {
+  transform: rotate(-45deg);
+  margin-top: -1px;
+}
+
 @keyframes fadeIn {
   0% {
     display: none;
@@ -549,4 +831,33 @@ export default {
     bottom: 0px;
   }
 }
+.vac-room-header {
+  background: #EE735A;
+  border-radius: 10px 10px 0 0;
+  height: 104px;
+}
+.vac-text-ellipsis .vac-room-name{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 130%;
+  display: flex;
+  color: #FFFFFF;
+  flex-direction: column;
+  align-items: start;
+}
+
+.vac-text-ellipsis .vac-room-name:after{
+  content: 'Ваш маркетолог';
+  font-weight: 400;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.vac-room-header .vac-avatar{
+  width: 68px;
+  height: 68px;
+  flex: 0 0 68px;
+}
+
 </style>

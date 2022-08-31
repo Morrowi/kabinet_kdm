@@ -31,7 +31,7 @@
                           <star-rating :rating="marketolog.rating"  :read-only="true" :round-start-rating="false" :star-size="18" :rounded-corners="false" :border-width="0" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]" :padding="5" :show-rating="false" inactive-color="#B2BAC6" active-color="#EE735A" ></star-rating>
                         </span>
               </div>
-              <div class="btn_add_review"><a href="javascript: void(0);" @click="displayReviews = true;">Оставить отзыв</a></div>
+
             </div>
           </div>
           <div class="d-flex flex-column warp_username">
@@ -57,8 +57,12 @@
             <div class="tabletInfo" v-else> Оффлайн </div>
           </div>
         </div>
+
         </transition>
       </div>
+    <div class="btn_add_review">
+      <a class="button buttonBorder" href="javascript: void(0);" @click="displayReviews = true;">Оставить отзыв</a>
+    </div>
   </div>
 
   <Dialog header="Оценка работы" v-model:visible="displayReviews"  position="top" :modal="true" :closeOnEscape="true"  :draggable="false" :breakpoints="{'960px': '75vw', '640px': '100vw'}" style="max-width: 360px; width: 100%;" class="warp_modal">
@@ -215,27 +219,11 @@ export default {
 </script>
 <style>
 .btn_add_review{
+  display: flex;
+  justify-content: flex-end;
+  padding: 9px 1rem;
+}
 
-}
-.btn_add_review a{
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
-  color: #0D85FB;
-  position: relative;
-}
-.btn_add_review a::before{
-  content: '';
-  width: 100%;
-  height: 2px;
-  background-color: #0D85FB;
-  position: absolute;
-  bottom: -4px;
-}
-.btn_add_review a:hover:before{
-  display: none;
-}
 .warp_username a {
   color: #171717;
 }
