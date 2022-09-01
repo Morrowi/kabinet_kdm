@@ -15,16 +15,16 @@
                style="display: none;"
         />
         <div class="croppie">
-<!--          <vue-croppie-->
-<!--            ref="croppieRef"-->
-<!--            :enable-orientation="true"-->
-<!--            :enable-resize="false"-->
-<!--            :viewport="{ width: 300, height: 300, type: 'circle' }"-->
-<!--            :show-zoomer="true"-->
-<!--            @result="result"-->
-<!--            @update="crop"-->
-<!--          >-->
-<!--          </vue-croppie>-->
+          <vue-croppie
+            ref="croppieRef"
+            :enable-orientation="true"
+            :enable-resize="false"
+            :viewport="{ width: 300, height: 300, type: 'circle' }"
+            :show-zoomer="true"
+            @result="result"
+            @update="crop"
+          >
+          </vue-croppie>
         </div>
 
       </div>
@@ -213,8 +213,8 @@ export default {
 
         reader.onload = async e => {
           this.uploadedUrl = e.target.result
-          //this.bind()
-          //this.crop()
+          this.bind()
+          this.crop()
         }
 
         reader.readAsDataURL(files[0])

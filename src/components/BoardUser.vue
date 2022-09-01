@@ -844,7 +844,7 @@ export default {
   display: flex;
   color: #FFFFFF;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .vac-text-ellipsis .vac-room-name:after{

@@ -143,6 +143,11 @@ body {
     padding-left: 30px !important;
     padding-right: 30px !important;
 }
+.px-58{
+    padding-left: 58px !important;
+    padding-right: 58px !important;
+}
+
 .trash{
     background: none;
     border: none;
@@ -388,11 +393,11 @@ a.router-link-exact-active svg path{
     background: rgba(255, 143, 107, 0.1);
 }
 .tabletInfo.noPay{
-    background: #CE2525;
+    background: #EE4E4E;
     color: #ffffff;
 }
 .tabletInfo.okPay{
-    background: #25CE98;
+    background: #4CE291;
     color: #ffffff;
 }
 .bessBlockItem {
@@ -895,17 +900,17 @@ textarea.formInput {
     cursor: pointer;
     position: relative;
     transition: all 0.3s;
+    margin: 23px 20px;
+    padding: 0;
 }
-.tabsButton:not(:last-child){
-    margin-right: 40px;
-}
+
 .tabsButton.active {
     color: #0D85FB;
 }
 .tabsButton:before{
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -11px;
     left: 0;
     height: 2px;
     width: 100%;
@@ -927,6 +932,7 @@ textarea.formInput {
 }
 .maxWidthTablet{
     min-width: 100px;
+    margin-left: 80px;
 }
 .tarifItem {
     position: relative;

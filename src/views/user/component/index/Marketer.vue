@@ -65,7 +65,7 @@
     </div>
   </div>
 
-  <Dialog header="Оценка работы" v-model:visible="displayReviews"  position="top" :modal="true" :closeOnEscape="true"  :draggable="false" :breakpoints="{'960px': '75vw', '640px': '100vw'}" style="max-width: 360px; width: 100%;" class="warp_modal">
+  <Dialog header="Оценка работы" v-model:visible="displayReviews"  position="top" :modal="true" :closeOnEscape="true"  :draggable="false" :breakpoints="{'960px': '75vw', '640px': '100vw'}" style="max-width: 360px; width: 100%;" class="warp_modal" :class="{'success': success}">
     <div class="row">
       <div class="col-12 d-flex justify-content-center">
         {{textRaiting}}
@@ -74,12 +74,14 @@
         <star-rating @update:rating ="setRating" @hover:rating ="setRatingText" :rating="rating" :star-size="27" :rounded-corners="false" :border-width="0" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]" :padding="7" :show-rating="false" inactive-color="#EFF0F6" active-color="#EE735A" ></star-rating>
       </div>
       <div class="col-12">
-        <textarea ref="contentTextArea" id="contentTextArea" class="p-inputtextarea"  placeholder="Ваш комментарий..." v-model="valueEditor"></textarea>
+        <textarea ref="contentTextArea" id="contentTextArea" class="p-inputtextarea"  style="height: 135px;" placeholder="Ваш комментарий..." v-model="valueEditor"></textarea>
       </div>
     </div>
+    <div class="result-add-riv">Спасибо за оценку</div>
     <template #footer>
       <button @click="submitForm" type="button" class="button blueButton">Готово</button>
     </template>
+
   </Dialog>
 </template>
 
@@ -99,6 +101,7 @@ export default {
   },
   data() {
     return{
+      success:false,
       displayReviews:false,
       textRaiting:'Отлично',
       rating:5,
@@ -186,7 +189,8 @@ export default {
           this.valueEditor='';
           this.rating='';
           this.open= false;
-          this.$toast.add({severity:'success', summary: 'Спасибо за оценку.', detail:'', life: 3000});
+          this.success=true;
+
         }
         console.log(resp.data);
 
@@ -218,6 +222,27 @@ export default {
 };
 </script>
 <style>
+.warp_modal.success .p-dialog-content > .row,
+.warp_modal.success .p-dialog-footer{
+  display: none;
+}
+
+.p-dialog.warp_modal.success .p-dialog-content{
+  padding: 0 0 20px !important;
+  overflow:visible;
+
+}
+
+.warp_modal.success .result-add-riv{
+  font-size: 16px;
+  line-height: 160%;
+  text-align: center;
+  color: #171717;
+  background-color: #EAF7ED;
+  display: block;
+  margin: 0 -15px -16px;
+  padding: 15px 0;
+}
 .btn_add_review{
   display: flex;
   justify-content: flex-end;

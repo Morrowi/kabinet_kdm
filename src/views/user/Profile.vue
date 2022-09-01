@@ -49,8 +49,6 @@
               </div>
             </div>
           </div>
-
-
           <div class="row">
             <div class="col-12 col-sm-5 col-lg-4 col-xl-3">
               <div class="p-title">Пароль</div>
@@ -71,7 +69,6 @@
               <div class="p-title">Фото профиля</div>
             </div>
             <div class="col-auto d-flex align-items-center p-2">
-              <Cropper/>
               <div v-if="image">
                 <Avatar shape="circle" class="me-2" size="xlarge" @click="showEditAvata" :class="{'active':showEditAvataPanel}" :image="image" />
               </div>
@@ -80,11 +77,24 @@
               </div>
             </div>
             <div class="col-auto d-flex flex-column justify-content-center warp_edit_avatar" :class="{'active':showEditAvataPanel}">
-              <label for="file_avata" class="edit_avatar">Изменить фото <input  accept="image/*" @change="previewImage" type="file" id="file_avata"></label>
+              <div @click="toggleShow"  class="edit_avatar">Изменить фото</div>
 
               <div class="delited_avatar" @click="deleteAvatar">Удалить фото</div>
             </div>
           </div>
+          <myUpload field="avatar"
+                    url="http://panel.kdm1.biz/api/user/change/avatar"
+                    @crop-success="cropSuccess"
+                    @crop-upload-success="cropUploadSuccess"
+                    lang-type="ru"
+                    v-model="show"
+                    :width="300"
+                    :height="300"
+                    :headers="headers"
+                    :noSquare="true"
+                    :noCircle="false"
+                    >
+          </myUpload>
           <div class="row mt-3 mb-3">
             <div class="col-12 col-sm-5 col-lg-4 col-xl-3 "></div>
             <div class="col-12 col-sm-auto d-flex align-items-center justify-content-center">
@@ -135,7 +145,9 @@ import authHeader from "@/services/auth-header";
 import Toast from 'primevue/toast';
 import Button from 'primevue/button';
 import CascadeSelect from 'primevue/cascadeselect';
-import Cropper from '@/components/cropper/Cropper';
+
+import myUpload from 'vue-image-crop-upload';
+//import Cropper from '@/components/cropper/Cropper';
 
 //https://github.com/rolodromo/playground-token-maker
 
@@ -149,9 +161,11 @@ export default {
     Dialog,
     Button,
     CascadeSelect,
-    Cropper
+    myUpload
+    //Cropper
   },
   data() {
+
     let user = this.$store.state.auth.user;
     let image = null;
     if(user.avatar !== null && user.avatar.length > 3){
@@ -159,6 +173,13 @@ export default {
     }
 
     return{
+
+      show: false,
+      headers: {
+        'Authorization': 'Bearer ' + user.accessToken
+      },
+      imgDataUrl: '',
+
       displayChangePw:false,
       loading:false,
       username_disabled:true,
@@ -182,6 +203,48 @@ export default {
   },
 
   methods: {
+
+    toggleShow() {
+      this.show = !this.show;
+    },
+    /**
+     * crop success
+     *
+     * [param] imgDataUrl
+     * [param] field
+     */
+    cropSuccess(imgDataUrl, field){
+      console.log('-------- crop success --------');
+      console.log('imgDataUrl',imgDataUrl);
+      console.log('field',field);
+      this.image = imgDataUrl;
+    },
+    /**
+     * upload success
+     *
+     * [param] jsonData  server api return data, already json encode
+     * [param] field
+     */
+    cropUploadSuccess(jsonData, field){
+      console.log('-------- upload success --------');
+      console.log(jsonData);
+      console.log('field: ' + field);
+      this.reUser();
+      this.showEditAvataPanel=false;
+    },
+    /**
+     * upload fail
+     *
+     * [param] status    server api return error status, like 500
+     * [param] field
+     */
+   /* cropUploadFail(status, field){
+      console.log('-------- upload fail --------');
+      console.log(status);
+      console.log('field: ' + field);
+    },
+
+    */
     showModalChangePW(){
       this.displayChangePw = !this.displayChangePw;
     },

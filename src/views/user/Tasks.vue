@@ -2,15 +2,6 @@
   <transition name="fade" >
     <div class="position-absolute" v-if="loading">Loading...</div>
     <div v-else>
-      <div class="row mr-0 ml-0 justify-content-between mb-3 flex-column" v-if="isShowHead">
-        <div class="f-24 fw-600 mb-2">
-          Задачи
-        </div>
-        <div class="f-14">
-          Вы можете создать задачу самостоятельно либо через личного менеджера, <a class="color-blue" href="marketolog.html">написав ему в
-          чат</a>
-        </div>
-      </div>
       <div class="row">
         <div class="col-12">
           <div class="b-radius bg-white warp_task_list">
@@ -28,10 +19,16 @@
               <template #empty>
                 Поставьте нам задачу
               </template>
-              <Column field="nameTask" header="Описание задачи"></Column>
-              <Column >
+              <Column header="Название">
+                <template #body="slotProps">
+                  <div class="name-desc">
+                    <div>{{slotProps.data.nameTask}}</div> <div><span>{{slotProps.data.valueEditor}}</span></div>
+                  </div>
+                </template>
+              </Column>
+              <Column style="width: 110px;" >
                 <template #header>
-                  <div style="width: 100%; text-align: center;">Статус</div>
+                  <div style="width: 110px; text-align: left;">Статус</div>
                 </template>
                 <template #body="slotProps">
                   <div class="tabletInfo" :class="slotProps.data.status_class">
@@ -39,8 +36,8 @@
                   </div>
                 </template>
               </Column>
-              <Column field="date_insert" header="Дата создания"></Column>
-              <Column field="date" header="Дата выполнения"></Column>
+              <Column field="date_insert" header="Постановка" style="width: 90px;"></Column>
+              <Column field="date" header="Выполнение" style="width: 90px;"></Column>
             </DataTable>
 
             <div class="pr-3 pl-3 pt-2 pb-2 px-3">
@@ -56,7 +53,7 @@
           </div>
         </div>
       </div>
-      <Dialog :header="titleAddTask" v-model:visible="open" position="center" :modal="true" class="warp_task_add"  @hide="clearProp" :breakpoints="{'960px': '75vw', '640px': '100vw'}" style="max-width: 1163px; width:100%"  >
+      <Dialog :header="titleAddTask" v-model:visible="open" position="center" :modal="true" class="warp_task_add"  @hide="clearProp" :breakpoints="{'960px': '75vw', '640px': '100vw'}" style="max-width: 1163px; width:100%"  :class="{'success': success}" >
 
         <form class="formTask" action="">
           <div class="row">
@@ -124,7 +121,7 @@
           </div>
         </form>
 
-        <div class="d-flex justify-content-start" style="margin-top: 20px;">
+        <div class="d-flex justify-content-start warp_btn_form" style="margin-top: 20px;">
           <button @click="submitForm" type="button" class="button blueButton w-200">
              <span
                  v-show="loadingAdd"
@@ -135,6 +132,7 @@
           <div class="error-task" v-if="requestInputText">Обязательные поля не заполнены</div>
           <div class="succes-task" v-if="addSuccess">{{saccessAlertAddTask}}</div>
         </div>
+        <div class="result-add-task">Задача поставлена</div>
       </Dialog>
 
       <Dialog :header="modalTaks.nameTask" v-model:visible="openTask" position="center" :modal="true" class="warp_task_add"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" style="max-width: 1163px; width:100%"   >
@@ -257,7 +255,8 @@ export default {
   },
   data() {
     return{
-
+      success:false,
+      loadingAdd:false,
       loading:true,
       countTasksFlex: 'justify-content-between',
       countTasks:0,
@@ -435,6 +434,7 @@ export default {
             }
         ).then((resp) => {
           if(resp.data.status === 'saccess'){
+            this.success=true;
             this.id_task = resp.data.id;
             this.listTasks();
             //this.open=false;
@@ -442,7 +442,7 @@ export default {
             setTimeout(()=>{
               this.addSuccess=false;
             },3000);
-            this.titleAddTask = this.nameTask;
+            //this.titleAddTask = this.nameTask;
             this.btnTextAddTask = "Сохранить изменения";
             this.loadingAdd=false;
 
@@ -562,6 +562,7 @@ export default {
       this.valueEditor=null;
       this.date=null;
       this.files=null;
+      this.success=false;
     },
     customPreSelected(event) {
       this.files = event.files;
@@ -656,3 +657,51 @@ export default {
 };
 </script>
 
+<style>
+.name-desc{
+  display: flex;
+}
+.name-desc div span{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-left:18px;
+  max-width: 600px;
+  width: 100%;
+  display: block;
+}
+
+.result-add-task{
+  display: none;
+}
+
+.warp_task_add.success{
+  max-width: 730px !important;
+
+}
+
+.warp_task_add.success .p-dialog-title{
+  justify-content: center;
+  padding-left: 32px;
+}
+.warp_task_add.success .p-dialog-content .formTask,
+.warp_task_add.success .p-dialog-content .warp_btn_form{
+  display: none !important;
+}
+
+.warp_task_add.success .result-add-task{
+  font-size: 16px;
+  line-height: 160%;
+  text-align: center;
+  color: #171717;
+  background-color: #EAF7ED;
+  display: block;
+  margin: 0 -15px -16px;
+  padding: 15px 0;
+}
+
+.warp_task_add.success .p-dialog-content{
+  padding-top: 0 !important;
+}
+
+</style>

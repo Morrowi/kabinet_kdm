@@ -457,7 +457,7 @@ export default {
             setTimeout(()=>{
               this.addSuccess=false;
             },3000);
-            this.titleAddTask = this.nameTask;
+            //this.titleAddTask = this.nameTask;
             this.btnTextAddTask = "Сохранить изменения";
             this.loadingAdd=false;
 
