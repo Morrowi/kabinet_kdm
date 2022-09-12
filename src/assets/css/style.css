@@ -617,6 +617,7 @@ table.c3-tooltip {
     font-size: 12px;
     color: #000000;
     padding: 10px;
+    font-family: 'Inter', sans-serif;
 }
 
 .warp_task_add  .succes-task{

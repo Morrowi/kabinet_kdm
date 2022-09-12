@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" >
-    <div class="position-absolute" v-if="loading">Loading...</div>
+    <div class="position-absolute" v-if="loading"></div>
     <div v-else>
       <div class="row">
         <div class="col-12">
@@ -435,6 +435,7 @@ export default {
         ).then((resp) => {
           if(resp.data.status === 'saccess'){
             this.success=true;
+            this.titleAddTask='';
             this.id_task = resp.data.id;
             this.listTasks();
             //this.open=false;
@@ -703,5 +704,7 @@ export default {
 .warp_task_add.success .p-dialog-content{
   padding-top: 0 !important;
 }
-
+.warp_task_add.success .p-dialog .p-dialog-header{
+  justify-content: flex-end;
+}
 </style>

@@ -182,13 +182,13 @@
             <router-link to="/dashboard/profile" class="d-flex align-items-center userTopWrap me-0 me-lg-5">
               <div class="imgUserTop me-2">
                 <div v-if="image !== null">
-                  <Avatar shape="circle" :image="image" />
+                  <Avatar id="avatar_img" shape="circle" :image="image" />
                 </div>
                 <div v-else>
-                  <Avatar icon="pi pi-user" class="mr-2"  shape="circle" />
+                  <Avatar id="avatar_img" icon="pi pi-user" class="mr-2"  shape="circle" />
                 </div>
               </div>
-              <div class="f-14 fw-400">
+              <div class="f-14 fw-400" id="username_header">
                 {{username }}
               </div>
             </router-link>
@@ -230,11 +230,12 @@
   >
 
     <img class="sc-open-icon" :src="icons.open.img" :alt="icons.open.name" />
-    <span>Написать сообщение</span>
+    <span>Чат с маркетологом</span>
   </div>
   <div v-if="isOpen" class="sc-chat-window" :class="{opened: isOpen}">
     <div class="close-chat" @click="close()"></div>
     <chat-window
+      ref="chat"
       :height="'100%'"
       :styles="styles"
       :current-user-id="currentUserId"
@@ -431,6 +432,11 @@ export default {
     },
     openAndFocus() {
       this.isOpen = true;
+      setTimeout(() => {
+        let elem = document.getElementById('roomTextarea');
+        elem.focus();
+      })
+
     },
     initHellow(){
       axios.post( 'http://panel.kdm1.biz/api/hellow/',

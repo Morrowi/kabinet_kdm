@@ -10,11 +10,21 @@
         <div class="container-fluid warp_profile">
           <div class="row">
             <div class="col-12 col-sm-5 col-lg-4 col-xl-3">
-              <div class="p-title">Имя / Название компании</div>
+              <div class="p-title">Название компании</div>
             </div>
             <div class="col-12 col-sm-7 col-lg-7 col-xl-6 d-flex align-items-center">
               <div class="form-group w-100">
-                <InputText type="text" v-model="username" placeholder="Укажите ваше имя или название компании"/>
+                <InputText type="text" v-model="username" placeholder="Укажите название компании"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-sm-5 col-lg-4 col-xl-3">
+              <div class="p-title">Имя</div>
+            </div>
+            <div class="col-12 col-sm-7 col-lg-7 col-xl-6 d-flex align-items-center">
+              <div class="form-group w-100">
+                <InputText type="text" v-model="name" placeholder="Укажите ваше имя"/>
               </div>
             </div>
           </div>
@@ -36,16 +46,6 @@
             <div class="col-12 col-sm-7 col-lg-7 col-xl-6 d-flex align-items-center">
               <div class="w-100 form-group">
                 <InputMask mask="+9(999) 999-9999" v-model="phone" placeholder="Добавьте телефон" />
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12 col-sm-5 col-lg-4 col-xl-3">
-              <div class="p-title">Регион</div>
-            </div>
-            <div class="col-12 col-sm-7 col-lg-7 col-xl-6 d-flex align-items-center">
-              <div class="w-100 form-group">
-                <CascadeSelect v-model="selectedCity" :options="countries" optionLabel="cname" optionGroupLabel="name" :optionGroupChildren="['states', 'cities']" :placeholder="regionSelected" />
               </div>
             </div>
           </div>
@@ -119,7 +119,7 @@
         <div class="warp_error_text"  v-if="errorPasswordText">{{errorPasswordText}}</div>
       </div>
       <div class="form-group mb-4" :class="{ 'form-input-error': errorClassPassword }">
-        <input v-model="passwordConfirm" type="password" class="w-100 formInput" placeholder="Повторите yовый пароль">
+        <input v-model="passwordConfirm" type="password" class="w-100 formInput" placeholder="Повторите новый пароль">
       </div>
       <button class="button blueButton px-4" @click="changePassword" :disabled="loading">
         <span v-show="loading" class="spinner-border spinner-border-sm"></span>
@@ -144,7 +144,7 @@ import axios from "axios";
 import authHeader from "@/services/auth-header";
 import Toast from 'primevue/toast';
 import Button from 'primevue/button';
-import CascadeSelect from 'primevue/cascadeselect';
+
 
 import myUpload from 'vue-image-crop-upload';
 //import Cropper from '@/components/cropper/Cropper';
@@ -160,7 +160,6 @@ export default {
     Toast,
     Dialog,
     Button,
-    CascadeSelect,
     myUpload
     //Cropper
   },
@@ -187,6 +186,7 @@ export default {
       phone:user.phone,
       username:user.username,
       email: user.email,
+      name: user.name,
       image,
       showEditAvataPanel:false,
       password_old:null,
@@ -218,6 +218,7 @@ export default {
       console.log('imgDataUrl',imgDataUrl);
       console.log('field',field);
       this.image = imgDataUrl;
+      document.getElementById('avatar_img').querySelector('img').setAttribute("src", imgDataUrl);
     },
     /**
      * upload success
@@ -253,11 +254,11 @@ export default {
       let data = {
         phone:this.phone,
         username:this.username,
+        name:this.name,
         email:this.email,
         region:this.selectedCity.cname,
         regionCode:this.selectedCity.code
       }
-      console.log(this.selectedCity);
       axios.post( 'http://panel.kdm1.biz/api/user/change/info',
           data,
           {
@@ -266,11 +267,9 @@ export default {
       ).then((resp) => {
         if(resp.data === 'success'){
           this.reUser();
-          this.$toast.add({severity:'success', summary: 'Данные успешно изменены', detail:'', life: 5000});
-          setTimeout(()=>{
-            this.$router.push('/dashboard');
-          },3000);
-
+          //this.$toast.add({severity:'success', summary: 'Данные успешно изменены', detail:'', life: 5000});
+          let name = document.getElementById('username_header');
+          name.innerHTML = this.username;
         }
 
         this.loading = false;

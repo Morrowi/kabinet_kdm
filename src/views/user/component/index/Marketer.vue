@@ -1,9 +1,11 @@
 <template>
   <div class="b-radius-top bg-white">
     <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
-        <div class="f-18 fw-600">
+      <router-link  to="/dashboard/marketer">
+        <div class="f-18 fw-600 color-black">
           Мой маркетолог
         </div>
+      </router-link>
 <!--        <div class="blockHeaderButton">
           <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g opacity="0.3">
@@ -16,7 +18,7 @@
       </div>
     <div class="border-bottom  p-3">
         <transition name="fade" >
-        <div class="position-absolute" v-if="loading">Loading...</div>
+        <div class="position-absolute" v-if="loading"></div>
         <div v-else class="d-flex justify-content-between me-0 ml-0 align-items-start">
           <div class="d-flex align-items-center">
             <div class="avaBlock me-3">
@@ -31,7 +33,7 @@
                           <star-rating :rating="marketolog.rating"  :read-only="true" :round-start-rating="false" :star-size="18" :rounded-corners="false" :border-width="0" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]" :padding="5" :show-rating="false" inactive-color="#B2BAC6" active-color="#EE735A" ></star-rating>
                         </span>
               </div>
-
+              <a class="f-14 fw-400 mt-1 d-block" href="javascript: void(0);" @click="displayReviews = true;">Оценить работу</a>
             </div>
           </div>
           <div class="d-flex flex-column warp_username">
@@ -60,9 +62,7 @@
 
         </transition>
       </div>
-    <div class="btn_add_review">
-      <a class="button buttonBorder" href="javascript: void(0);" @click="displayReviews = true;">Оставить отзыв</a>
-    </div>
+
   </div>
 
   <Dialog header="Оценка работы" v-model:visible="displayReviews"  position="top" :modal="true" :closeOnEscape="true"  :draggable="false" :breakpoints="{'960px': '75vw', '640px': '100vw'}" style="max-width: 360px; width: 100%;" class="warp_modal" :class="{'success': success}">
@@ -232,7 +232,9 @@ export default {
   overflow:visible;
 
 }
-
+.result-add-riv{
+  display: none;
+}
 .warp_modal.success .result-add-riv{
   font-size: 16px;
   line-height: 160%;
