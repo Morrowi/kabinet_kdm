@@ -245,6 +245,7 @@
       :show-add-room="showAddRoom"
       :show-search="showSearch"
       :show-reaction-emojis="showReactionEmojis"
+      :message-selection-actions="messageSelectionActions"
       :loading-rooms="loadingRooms"
       :single-room="singleRoom"
       :show-footer="true"
@@ -290,7 +291,12 @@ export default {
     Dialog
   },
   created() {
-
+    //chat
+    this.loadRoom();
+    this.getRooms();
+    this.getMsg();
+    this.editMsg();
+    //chat - end
   },
   data() {
 
@@ -400,6 +406,7 @@ export default {
       },
       room: [],
       roomsLoaded: true,
+      messageSelectionActions: [{ name: 'deleteMessages', title: 'Удалить' }],
       showSearch:true,
       roomsListOpened: false,
       showAddRoom:false,
@@ -451,7 +458,7 @@ export default {
             this.helloText = true;
           }
         }
-        console.log(resp.data);
+
 
       }).catch(function(error){
         console.log(error);
@@ -520,7 +527,7 @@ export default {
     },
     getMsg(){
       socket.on("message_m", data => {
-        console.log('[line 63]',data);
+        //console.log('[line 63]',data);
         /*let tmpMessage = [...this.messages, ...data];*/
         this.messages.push(data.msg);
         //console.log('[this.messages]',this.messages);
@@ -549,29 +556,34 @@ export default {
           manager: user.manager.id
         },
       }
-      //console.log('399 user',user);
-      //console.log('395 line', join);
+
       socket.emit("subscribe", join);
     },
     onFetchMessages(data) {
-      //console.log('178 line', data);
-
-
+      this.messagesLoaded = false;
       socket.emit("get msg", data.room.roomId);
 
       socket.on("load msg", data => {
-        setTimeout(() => {
-          this.messages= data;
-          this.messagesLoaded = true;
+
+        setTimeout(() => (this.messagesLoaded = true), 0)
+        data.forEach(message => {
+          this.messages = this.messages.concat([message])
         })
+        console.log(this.messages)
+        /*setTimeout(() => {
+          this.messages= data;
+          this.messagesLoaded = false;
+        })*/
       });
 
     },
     async sendMessage({ content, roomId, files, replyMessage }) {
+      console.log(replyMessage);
       const message = {
         sender_id: this.currentUserId,
         content,
-        timestamp: new Date()
+        timestamp: new Date(),
+        replyMessage:(replyMessage!== null)?replyMessage._id:null
       }
       if (files) {
         message.files = await this.formattedFiles(files)
@@ -580,7 +592,8 @@ export default {
         room: roomId,
         message:message
       }
-      console.log(replyMessage)
+      console.log('dataMsg',dataMsg)
+      console.log('replyMessage',replyMessage)
       socket.emit("message_m", dataMsg);
 
     },
@@ -696,12 +709,7 @@ export default {
       }
     );
 
-    //chat
-    this.loadRoom();
-    this.getRooms();
-    this.getMsg();
-    this.editMsg();
-    //chat - end
+
 
   },
   watch:{

@@ -121,7 +121,7 @@ export default {
             headers: authHeader()
           }
       ).then((resp)=>{
-        console.log(resp.data);
+
         this.marketolog = resp.data;
       }).catch(function(error){
         console.log(error);

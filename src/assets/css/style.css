@@ -1573,10 +1573,7 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
     -moz-box-shadow: none !important;
     box-shadow: none !important;
 }
-.vac-col-messages .vac-container-scroll{
-    margin-top: 10px !important;
-    background-color: #ffffff !important;
-}
+
 .vac-message-wrapper .vac-card-info{
     -webkit-box-shadow: none !important;
     -moz-box-shadow: none !important;
@@ -1598,7 +1595,9 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
 }
 
 */
-
+.vac-col-messages .vac-container-scroll{
+    margin-top: 104px !important;
+}
 .p-fileupload-files.more{
     height: 276px;
     overflow: hidden;
