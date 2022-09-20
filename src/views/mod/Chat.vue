@@ -153,6 +153,7 @@ export default {
       });
     },
     onFetchMessages(data) {
+      console.log(123);
       socket.emit("get msg", data.room.roomId);
       this.activeRoom=data.room.roomId;
       for (let i in this.rooms){

@@ -238,6 +238,7 @@
       ref="chat"
       :height="'100%'"
       :styles="styles"
+      :show-new-messages-divider="false"
       :current-user-id="currentUserId"
       :rooms="room"
       :rooms-list-opened ="roomsListOpened"
@@ -291,12 +292,7 @@ export default {
     Dialog
   },
   created() {
-    //chat
-    this.loadRoom();
-    this.getRooms();
-    this.getMsg();
-    this.editMsg();
-    //chat - end
+
   },
   data() {
 
@@ -560,20 +556,17 @@ export default {
       socket.emit("subscribe", join);
     },
     onFetchMessages(data) {
-      this.messagesLoaded = false;
+
       socket.emit("get msg", data.room.roomId);
 
       socket.on("load msg", data => {
 
-        setTimeout(() => (this.messagesLoaded = true), 0)
-        data.forEach(message => {
-          this.messages = this.messages.concat([message])
-        })
-        console.log(this.messages)
-        /*setTimeout(() => {
+        console.log('wwwww');
+        setTimeout(() => {
+
           this.messages= data;
-          this.messagesLoaded = false;
-        })*/
+          this.messagesLoaded = true;
+        })
       });
 
     },
@@ -709,7 +702,12 @@ export default {
       }
     );
 
-
+    //chat
+    this.loadRoom();
+    this.getRooms();
+    this.getMsg();
+    this.editMsg();
+    //chat - end
 
   },
   watch:{
