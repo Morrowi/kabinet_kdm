@@ -231,7 +231,15 @@ export default {
   },
   created() {
     if (this.loggedIn) {
-      this.$router.push("/step1");
+      if(this.$store.state.auth.step === null){
+        this.$router.push("/dashboard");
+      } else {
+        this.$router.push("/"+this.$store.state.auth.step);
+      }
+      //console.log(this.$store.state.auth.step);
+      //step
+      //if(this.$store.state.auth.step !== 'step1'){
+      //this.$router.push("/step1");
     }
   },
 };

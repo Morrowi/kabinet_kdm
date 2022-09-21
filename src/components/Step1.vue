@@ -98,9 +98,11 @@ export default {
   },
   mounted() {
     this.username = this.$store.state.auth.user.username;
-/*    if(this.$store.state.auth.step === 'step2'){
-      this.$router.push("/step2");
-    }*/
+    if(this.$store.state.auth.step === null){
+      this.$router.push("/dashboard");
+    } else {
+      this.$router.push("/"+this.$store.state.auth.step);
+    }
 
     if (this.loggedIn) {
       console.log()

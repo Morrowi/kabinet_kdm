@@ -30,7 +30,7 @@
     "socket.io-client": "^4.5.0",
     "vee-validate": "4.5.10",
     "vue": "3.2.31",
-    "vue-advanced-chat": "https://github.com/antoine92190/vue-advanced-chat/tarball/next",
+    "vue-advanced-chat": "https://github.com/antoine92190/vue-advanced-chat/tarball/2.0.3",
     "vue-image-crop-upload": "^3.0.3",
     "vue-router": "4.0.14",
     "vue-star-rating": "^2.1.0",
@@ -44,7 +44,8 @@
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0"
+    "eslint-plugin-vue": "^7.0.0",
+    "webpack-chain": "^6.5.1"
   },
   "eslintConfig": {
     "root": true,

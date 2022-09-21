@@ -261,6 +261,7 @@
       @edit-message="editMessage"
 
   />
+
   </div>
 </template>
 
@@ -275,8 +276,9 @@ import 'vue-advanced-chat/dist/vue-advanced-chat.css'
 import {io} from "socket.io-client";
 const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
 
-
-
+import { register } from 'vue-advanced-chat'
+register();
+console.log(register)
 import axios from "axios";
 import authHeader from "@/services/auth-header";
 
@@ -289,8 +291,10 @@ export default {
     ChatWindow,
     bellNoty,
     Avatar,
-    Dialog
+    Dialog,
+
   },
+
   created() {
 
   },

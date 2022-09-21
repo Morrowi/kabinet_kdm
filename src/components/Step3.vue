@@ -192,7 +192,11 @@ export default {
     this.initRates();
   },
   created() {
-
+    if(this.$store.state.auth.step === null){
+      this.$router.push("/dashboard");
+    } else {
+      this.$router.push("/"+this.$store.state.auth.step);
+    }
   },
 };
 </script>
