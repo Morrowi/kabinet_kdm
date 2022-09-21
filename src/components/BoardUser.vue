@@ -234,35 +234,15 @@
   </div>
   <div v-if="isOpen" class="sc-chat-window" :class="{opened: isOpen}">
     <div class="close-chat" @click="close()"></div>
-    <chat-window
-      ref="chat"
-      :height="'100%'"
-      :styles="styles"
-      :show-new-messages-divider="false"
-      :current-user-id="currentUserId"
-      :rooms="room"
-      :rooms-list-opened ="roomsListOpened"
-      :rooms-loaded="roomsLoaded"
-      :show-add-room="showAddRoom"
-      :show-search="showSearch"
-      :show-reaction-emojis="showReactionEmojis"
-      :message-selection-actions="messageSelectionActions"
-      :loading-rooms="loadingRooms"
-      :single-room="singleRoom"
-      :show-footer="true"
-      :messages="messages"
-      :messages-loaded="messagesLoaded"
-      :text-messages="textMessages"
-      :message-actions="messageActions"
-      @fetch-messages="onFetchMessages"
-      @send-message="sendMessage"
-      @open-file ="openFile"
-      @delete-message="deleteMessage"
-      @edit-message="editMessage"
 
-  />
 
   </div>
+  <vue-advanced-chat
+      :current-user-id="currentUserId"
+      :rooms="JSON.stringify(rooms)"
+      :messages="JSON.stringify(messages)"
+      :room-actions="JSON.stringify(roomActions)"
+  />
 </template>
 
 <script>
@@ -271,7 +251,7 @@ import bellNoty from "./bell-noty"
 import OpenIcon from '../assets/image/logo-no-bg.svg'
 import Avatar from 'primevue/avatar';
 import Dialog from 'primevue/dialog';
-import ChatWindow from 'vue-advanced-chat'
+//import ChatWindow from 'vue-advanced-chat'
 import 'vue-advanced-chat/dist/vue-advanced-chat.css'
 import {io} from "socket.io-client";
 const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
@@ -288,7 +268,6 @@ import authHeader from "@/services/auth-header";
 export default {
   name: "User",
   components: {
-    ChatWindow,
     bellNoty,
     Avatar,
     Dialog,
@@ -311,6 +290,14 @@ export default {
     }
 
     return {
+
+      rooms: [],
+
+      roomActions: [
+        { name: 'inviteUser', title: 'Invite User' },
+        { name: 'removeUser', title: 'Remove User' },
+        { name: 'deleteRoom', title: 'Delete Room' }
+      ],
       hello:false,
       helloText:false,
       pay:false,
