@@ -30,7 +30,7 @@
     "socket.io-client": "^4.5.0",
     "vee-validate": "4.5.10",
     "vue": "3.2.31",
-    "vue-advanced-chat": "https://github.com/antoine92190/vue-advanced-chat/tarball/2.0.3",
+    "vue-advanced-chat": "^2.0.3",
     "vue-image-crop-upload": "^3.0.3",
     "vue-router": "4.0.14",
     "vue-star-rating": "^2.1.0",

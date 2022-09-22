@@ -1,20 +1,20 @@
 <template>
   <div class="mx-n075">
-    <chat-window
+    <vue-advanced-chat
         :height="'calc(100vh - 10vh)'"
         :current-user-id="currentUserId"
-        :rooms="rooms"
+        :rooms="JSON.stringify(rooms)"
         :rooms-loaded="roomsLoaded"
         :loading-rooms="loadingRooms"
-        :messages="messages"
+        :messages="JSON.stringify(messages)"
         :messages-loaded="messagesLoaded"
         :text-messages="textMessages"
         :message-actions="messageActions"
-        @fetch-messages="onFetchMessages"
-        @send-message="sendMessage"
-        @open-file ="openFile"
-        @delete-message="deleteMessage"
-        @edit-message="editMessage"
+        @fetch-messages="onFetchMessages($event.detail[0])"
+        @send-message="sendMessage($event.detail[0])"
+        @open-file ="openFile($event.detail[0])"
+        @delete-message="deleteMessage($event.detail[0])"
+        @edit-message="editMessage($event.detail[0])"
     />
 
   </div>
@@ -25,8 +25,8 @@
 import authHeader from "@/services/auth-header";
 import axios from "axios";
 
-import ChatWindow from 'vue-advanced-chat'
-import 'vue-advanced-chat/dist/vue-advanced-chat.css'
+import { register } from 'vue-advanced-chat'
+register();
 
 //import {Howl} from 'howler';
 
@@ -36,7 +36,6 @@ const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
 export default {
   name: "Chat marketolog",
   components: {
-    ChatWindow
 
   },
   setup() {

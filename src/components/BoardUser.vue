@@ -234,15 +234,34 @@
   </div>
   <div v-if="isOpen" class="sc-chat-window" :class="{opened: isOpen}">
     <div class="close-chat" @click="close()"></div>
-
-
-  </div>
-  <vue-advanced-chat
+    <vue-advanced-chat
+        ref="chatWindow"
+      :height="'100%'"
+      :styles="JSON.stringify(styles)"
+      :show-new-messages-divider="false"
       :current-user-id="currentUserId"
-      :rooms="JSON.stringify(rooms)"
+      :rooms="JSON.stringify(room)"
+      :rooms-list-opened ="roomsListOpened"
+      :rooms-loaded="roomsLoaded"
+      :show-add-room="showAddRoom"
+      :show-search="showSearch"
+      :show-reaction-emojis="showReactionEmojis"
+      :message-selection-actions="messageSelectionActions"
+      :loading-rooms="loadingRooms"
+      :single-room="singleRoom"
+      :show-footer="true"
       :messages="JSON.stringify(messages)"
-      :room-actions="JSON.stringify(roomActions)"
+      :messages-loaded="messagesLoaded"
+      :text-messages="textMessages"
+      :message-actions="messageActions"
+      @fetch-messages="onFetchMessages($event.detail[0])"
+      @send-message="sendMessage($event.detail[0])"
+      @open-file ="openFile($event.detail[0])"
+      @delete-message="deleteMessage($event.detail[0])"
+      @edit-message="editMessage($event.detail[0])"
+
   />
+  </div>
 </template>
 
 <script>
@@ -251,14 +270,13 @@ import bellNoty from "./bell-noty"
 import OpenIcon from '../assets/image/logo-no-bg.svg'
 import Avatar from 'primevue/avatar';
 import Dialog from 'primevue/dialog';
-//import ChatWindow from 'vue-advanced-chat'
-import 'vue-advanced-chat/dist/vue-advanced-chat.css'
+
 import {io} from "socket.io-client";
 const socket = io('http://panel.kdm1.biz/', {  path: "/api/chat" });
 
 import { register } from 'vue-advanced-chat'
 register();
-console.log(register)
+
 import axios from "axios";
 import authHeader from "@/services/auth-header";
 
@@ -268,6 +286,7 @@ import authHeader from "@/services/auth-header";
 export default {
   name: "User",
   components: {
+   // ChatWindow,
     bellNoty,
     Avatar,
     Dialog,
@@ -290,14 +309,6 @@ export default {
     }
 
     return {
-
-      rooms: [],
-
-      roomActions: [
-        { name: 'inviteUser', title: 'Invite User' },
-        { name: 'removeUser', title: 'Remove User' },
-        { name: 'deleteRoom', title: 'Delete Room' }
-      ],
       hello:false,
       helloText:false,
       pay:false,
