@@ -236,7 +236,7 @@
     <div class="close-chat" @click="close()"></div>
     <vue-advanced-chat
         ref="chatWindow"
-      :height="'100%'"
+      :height="'calc(100vh - 120px)'"
       :styles="JSON.stringify(styles)"
       :show-new-messages-divider="false"
       :current-user-id="currentUserId"
@@ -428,6 +428,7 @@ export default {
       } else {
         this.mobMenu = 'active';
       }
+
     },
     closeMenu(){
       this.mobMenu = '';
@@ -438,8 +439,12 @@ export default {
     openAndFocus() {
       this.isOpen = true;
       setTimeout(() => {
-        let elem = document.getElementById('roomTextarea');
-        elem.focus();
+        //let elem = document.getElementById('roomTextarea');
+        //elem.focus();
+       // const style2 = '<style>.vac-room-header123 {background: #EE735A !important; border-radius: 10px 10px 0 0 !important;height: 104px !important;}</style>';
+        const style = document.createElement('style')
+        style.innerHTML ='.vac-room-header{background: #EE735A !important; border-radius: 10px 10px 0 0 !important;height: 104px !important;}.vac-text-ellipsis .vac-room-name{font-style:normal;font-weight:600;font-size:18px;line-height:130%;display:flex;color:#FFFFFF;flex-direction:column;align-items:flex-start}.vac-text-ellipsis .vac-room-name:after{content:\'Ваш маркетолог\';font-weight:400;font-size:16px;color:rgba(255,255,255,0.5)}.vac-room-header .vac-avatar{width:68px;height:68px;flex:0 0 68px}';
+        this.$refs.chatWindow.shadowRoot.appendChild(style)
       })
 
     },
@@ -520,6 +525,7 @@ export default {
     //chat
     getRooms(){
       socket.on("get room", data => {
+        console.log(data);
         this.room=[data];
       });
     },
@@ -559,15 +565,16 @@ export default {
     },
     onFetchMessages(data) {
 
+      console.log('qwe');
       socket.emit("get msg", data.room.roomId);
 
       socket.on("load msg", data => {
+        this.messagesLoaded = false;
 
-        console.log('wwwww');
         setTimeout(() => {
-
+          console.log(data);
           this.messages= data;
-          this.messagesLoaded = true;
+
         })
       });
 
@@ -845,10 +852,10 @@ export default {
     bottom: 0px;
   }
 }
-.vac-room-header {
-  background: #EE735A;
-  border-radius: 10px 10px 0 0;
-  height: 104px;
+.sc-chat-window .vac-room-header {
+  background: #EE735A !important;
+  border-radius: 10px 10px 0 0 !important;
+  height: 104px !important;
 }
 .vac-text-ellipsis .vac-room-name{
   font-style: normal;
