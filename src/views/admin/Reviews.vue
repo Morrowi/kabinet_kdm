@@ -22,7 +22,7 @@
         Loading customers data. Please wait.
       </template>
       <Column field="id" header="#"></Column>
-      <Column header="Имя" :sortable="true" sortField="representative.name" filterField="representative.name" filterMatchMode="in" style="width:25%">
+      <Column header="Имя" :sortable="true" sortField="representative.name" filterField="representative.name" filterMatchMode="in" style="width:20%">
         <template #body="slotProps">
           <div class="d-flex align-items-center">
           <Avatar shape="circle" :image="slotProps.data.representative.img" />
@@ -32,12 +32,23 @@
       </Column>
       <Column field="rating" header="Оценка" sortable>
         <template #body="slotProps">
-          <Rating :modelValue="slotProps.data.rating" :readonly="true" :cancel="false" />
+
+          {{slotProps.data.rating}}
         </template>
       </Column>
       <Column field="text" header="Текст отзыва">
         <template #body="{data}">
           <div v-html="data.text"></div>
+        </template>
+      </Column>
+      <Column field="text" header="Дата добавления">
+        <template #body="{data}">
+          <div v-html="data.date_insert"></div>
+        </template>
+      </Column>
+      <Column header="Кто оставил">
+        <template #body="slotProps">
+          <span class="ms-3 image-text">{{slotProps.data.uid.username}}</span>
         </template>
       </Column>
       <Column field="moderation" header="Статус" dataType="boolean"  bodyClass="text-center" style="width: 8rem;">
@@ -64,7 +75,7 @@
 
 import axios from "axios";
 import authHeader from "@/services/auth-header";
-import Rating from 'primevue/rating';
+//import Rating from 'primevue/rating';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import InputText from 'primevue/inputtext';
@@ -85,7 +96,7 @@ export default {
   components: {
     DataTable,
     Column,
-    Rating,
+    //Rating,
     InputText,
     Button,
     Avatar,

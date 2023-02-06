@@ -87,7 +87,9 @@ export default {
       messagesLoaded: false,
       loadingRooms: false,
       messages: [],
-      currentUserId: user.id
+      currentUserId: user.id,
+      loadingLastMessageByRoom:0,
+      loadNextMsg:true
     }
   },
   watch:{
@@ -152,21 +154,33 @@ export default {
       });
     },
     onFetchMessages(data) {
-      console.log(123);
-      socket.emit("get msg", data.room.roomId);
-      this.activeRoom=data.room.roomId;
-      for (let i in this.rooms){
-        if(data.room.roomId === this.rooms[i].roomId){
-          this.rooms[i].unreadCount=0;
-        }
+
+      let dataSend={
+        roomid:data.room.roomId,
+        limit:this.loadingLastMessageByRoom
+      };
+      socket.emit("get msg", dataSend);
+      if(this.loadNextMsg){
+        socket.on("load msg", data => {
+          this.messagesLoaded = false;
+
+          setTimeout(() => {
+            this.loadingLastMessageByRoom = this.loadingLastMessageByRoom+10;
+            console.log(data.length);
+            if(data.length !== 0 && this.loadNextMsg){
+              //this.messages= data;
+              data.forEach(message => {
+                console.log(message.content);
+                console.log('this.messages',this.messages.length);
+                this.messages.unshift(message)
+              })
+              if(data.length !==10){this.messagesLoaded = true; this.loadNextMsg=false; console.log('not load');}
+            } else {
+              this.messagesLoaded = true;
+            }
+          })
+        });
       }
-      socket.on("load msg", data => {
-        //console.log(data);
-        setTimeout(() => {
-          this.messages= data;
-          this.messagesLoaded = true;
-        })
-      });
 
     },
     async sendMessage({ content, roomId, files, replyMessage }) {

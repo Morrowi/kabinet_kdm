@@ -82,6 +82,20 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
+                  <router-link to="/mod/inpayac" >
+                    <div class="menuLinkBlock">
+                      <div class="me-3">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M5.81 0H14.191C17.28 0 19 1.78 19 4.83V15.16C19 18.26 17.28 20 14.191 20H5.81C2.77 20 1 18.26 1 15.16V4.83C1 1.78 2.77 0 5.81 0ZM6.08 4.66V4.65H9.069C9.5 4.65 9.85 5 9.85 5.429C9.85 5.87 9.5 6.22 9.069 6.22H6.08C5.649 6.22 5.3 5.87 5.3 5.44C5.3 5.01 5.649 4.66 6.08 4.66ZM6.08 10.74H13.92C14.35 10.74 14.7 10.39 14.7 9.96C14.7 9.53 14.35 9.179 13.92 9.179H6.08C5.649 9.179 5.3 9.53 5.3 9.96C5.3 10.39 5.649 10.74 6.08 10.74ZM6.08 15.31H13.92C14.319 15.27 14.62 14.929 14.62 14.53C14.62 14.12 14.319 13.78 13.92 13.74H6.08C5.78 13.71 5.49 13.85 5.33 14.11C5.17 14.36 5.17 14.69 5.33 14.95C5.49 15.2 5.78 15.35 6.08 15.31Z" fill="#6A7686"/>
+                        </svg>
+                      </div>
+                      <div class="menuLinkName fw-500 f-14">
+                        Счета, оплаты, акты
+                      </div>
+                    </div>
+                  </router-link>
+                </li>
+                <li class="d-flex mb-4">
                   <router-link to="/mod/profile" >
                     <div class="menuLinkBlock">
                       <div class="me-3">

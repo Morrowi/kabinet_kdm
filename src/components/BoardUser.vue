@@ -413,7 +413,9 @@ export default {
       messagesLoaded: false,
       loadingRooms: false,
       messages: [],
-      currentUserId: user.id
+      currentUserId: user.id,
+      loadingLastMessageByRoom:0,
+      loadNextMsg:true
 
     };
   },
@@ -439,13 +441,11 @@ export default {
     openAndFocus() {
       this.isOpen = true;
       setTimeout(() => {
-        //let elem = document.getElementById('roomTextarea');
-        //elem.focus();
-       // const style2 = '<style>.vac-room-header123 {background: #EE735A !important; border-radius: 10px 10px 0 0 !important;height: 104px !important;}</style>';
         const style = document.createElement('style')
-        style.innerHTML ='.vac-room-header{background: #EE735A !important; border-radius: 10px 10px 0 0 !important;height: 104px !important;}.vac-text-ellipsis .vac-room-name{font-style:normal;font-weight:600;font-size:18px;line-height:130%;display:flex;color:#FFFFFF;flex-direction:column;align-items:flex-start}.vac-text-ellipsis .vac-room-name:after{content:\'Ваш маркетолог\';font-weight:400;font-size:16px;color:rgba(255,255,255,0.5)}.vac-room-header .vac-avatar{width:68px;height:68px;flex:0 0 68px}';
+        style.innerHTML ='.vac-card-window{max-height:590px;}.vac-col-messages .vac-container-scroll{margin-top:110px;}.vac-room-header{background: #EE735A !important; border-radius: 10px 10px 0 0 !important;height: 104px !important;}.vac-text-ellipsis .vac-room-name{font-style:normal;font-weight:600;font-size:18px;line-height:130%;display:flex;color:#FFFFFF;flex-direction:column;align-items:flex-start}.vac-text-ellipsis .vac-room-name:after{content:\'Ваш маркетолог\';font-weight:400;font-size:16px;color:rgba(255,255,255,0.5)}.vac-room-header .vac-avatar{width:68px;height:68px;flex:0 0 68px}';
         this.$refs.chatWindow.shadowRoot.appendChild(style)
       })
+
 
     },
     initHellow(){
@@ -525,7 +525,7 @@ export default {
     //chat
     getRooms(){
       socket.on("get room", data => {
-        console.log(data);
+       // console.log(data);
         this.room=[data];
       });
     },
@@ -539,7 +539,7 @@ export default {
     },
     editMsg(){
       socket.on("edit_message", data => {
-        console.log('[line 362]',data);
+        //console.log('[line 362]',data);
         for (let k in this.messages){
           if(this.messages[k]._id === data.msg._id){
             this.messages[k] = data.msg;
@@ -547,7 +547,7 @@ export default {
         }
         /*let tmpMessage = [...this.messages, ...data];*/
         //this.messages.push(data.msg);
-        console.log('[this.messages]',this.messages);
+      //  console.log('[this.messages]',this.messages);
       });
     },
     loadRoom(){
@@ -565,22 +565,36 @@ export default {
     },
     onFetchMessages(data) {
 
-      console.log('qwe');
-      socket.emit("get msg", data.room.roomId);
+      let dataSend={
+        roomid:data.room.roomId,
+        limit:this.loadingLastMessageByRoom
+      };
+      socket.emit("get msg", dataSend);
+      if(this.loadNextMsg){
+        socket.on("load msg", data => {
+          this.messagesLoaded = false;
 
-      socket.on("load msg", data => {
-        this.messagesLoaded = false;
-
-        setTimeout(() => {
-          console.log(data);
-          this.messages= data;
-
-        })
-      });
+          setTimeout(() => {
+            this.loadingLastMessageByRoom = this.loadingLastMessageByRoom+10;
+            //console.log(data.length);
+            if(data.length !== 0 && this.loadNextMsg){
+            //this.messages= data;
+              data.forEach(message => {
+               // console.log(message.content);
+              //  console.log('this.messages',this.messages.length);
+                this.messages.unshift(message)
+              })
+              if(data.length !==10){this.messagesLoaded = true; this.loadNextMsg=false; console.log('not load');}
+            } else {
+              this.messagesLoaded = true;
+            }
+          })
+        });
+      }
 
     },
     async sendMessage({ content, roomId, files, replyMessage }) {
-      console.log(replyMessage);
+     // console.log(replyMessage);
       const message = {
         sender_id: this.currentUserId,
         content,
@@ -594,8 +608,8 @@ export default {
         room: roomId,
         message:message
       }
-      console.log('dataMsg',dataMsg)
-      console.log('replyMessage',replyMessage)
+      //console.log('dataMsg',dataMsg)
+     // console.log('replyMessage',replyMessage)
       socket.emit("message_m", dataMsg);
 
     },
@@ -636,8 +650,8 @@ export default {
     },
     async deleteMessage({ message, roomId }) {
       message.deleted = 1;
-      console.log(roomId);
-      console.log(message);
+      //console.log(roomId);
+     // console.log(message);
 
       let dataMsg = {
         room:roomId,

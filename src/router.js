@@ -246,6 +246,20 @@ const routes = [
         component: () => import('./views/mod/Reports.vue')
       },
       {
+        path: 'inpayac',
+        component: () => import('./views/mod/inpayac/Index.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('./views/mod/inpayac/list.vue'),
+          },
+          {
+            path: ':id',
+            component: () => import('./views/mod/inpayac/Inpayac.vue'),
+          }
+        ]
+      },
+      {
         path: 'profile',
         component: () => import('./views/mod/Profile.vue')
       },

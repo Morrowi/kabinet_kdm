@@ -61,7 +61,7 @@
                 На вашем тарифе вы можете заменить маркетолога
               </div>
               <div class="d-flex">
-                <div class="button buttonBorder" @click="showChangeMarketolog = !showChangeMarketolog">
+                <div class="button buttonBorder" @click="initMarketologs">
                   Заменить
                 </div>
               </div>
@@ -210,6 +210,26 @@ export default {
 
   },
   methods: {
+    selectedManager(id){
+      console.log(id);
+    let data = {id: id};
+      axios.post( 'http://panel.kdm1.biz/api/user/change/marketolog',
+          data,
+          {
+            headers: authHeader()
+          }
+      ).then((resp)=>{
+        if(resp.data === 'success'){
+          this.initMarketolog();
+          this.showChangeMarketolog=false;
+        }
+        console.log(resp.data);
+
+      }).catch(function(error){
+
+        console.log(error);
+      });
+    },
     initOnline(){
       axios.post( 'http://panel.kdm1.biz/api/user/online',
           '',
@@ -290,9 +310,33 @@ export default {
       });
 
     },
+    initMarketolog(){
+      axios.post( 'http://panel.kdm1.biz/api/marketolog/',
+          '',
+          {
+            headers: authHeader()
+          }
+      ).then((resp)=>{
+        //console.log(resp.data);
+        this.marketolog = resp.data;
+      }).catch(function(error){
+        console.log(error);
+      }).finally(() => (this.loading = false));
+    },
     initMarketologs(){
+
       axios.get( 'http://panel.kdm1.biz/api/marketolog/').then((resp)=>{
-        this.Marketologs = resp.data;
+
+        let newArrTmp =[];
+        let i2=0;
+        for(let i in resp.data){
+          if(resp.data[i].id !== this.marketolog.id){
+            newArrTmp[i2]=resp.data[i];
+            i2++;
+          }
+        }
+        this.showChangeMarketolog=true;
+        this.Marketologs = newArrTmp;
       }).catch(function(error){
         console.log(error);
       });
@@ -332,20 +376,10 @@ export default {
     },
   },
   mounted() {
-    this.initMarketologs();
+    //this.initMarketologs();
 
     this.$toast.removeAllGroups();
-      axios.post( 'http://panel.kdm1.biz/api/marketolog/',
-          '',
-          {
-            headers: authHeader()
-          }
-      ).then((resp)=>{
-        //console.log(resp.data);
-        this.marketolog = resp.data;
-      }).catch(function(error){
-        console.log(error);
-      }).finally(() => (this.loading = false));
+     this.initMarketolog();
 
     //this.loadRoom();
     //this.getRooms();

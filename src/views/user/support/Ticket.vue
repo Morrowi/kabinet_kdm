@@ -49,7 +49,7 @@
           <Textarea v-model="comment" :autoResize="true" rows="5" placeholder="Сообщение"></Textarea>
         </div>
       </div>
-      <div class="row" v-if="ticket.status !== 3">
+      <div class="row" v-if="ticket.status !== 3">customPreSelected
         <div class="offset-sm-3 col-sm-7 upload_component d-flex flex-column align-items-end">
           <FileUpload  :customUpload="true" @select="customPreSelected"  mode="advanced" :showCancelButton="false"  :showUploadButton="false"  :multiple="true" :maxFileSize="3145728">
           </FileUpload>

@@ -195,7 +195,7 @@ export default {
   },
   mounted() {
     this.listInit();
-    this.directReport();
+    //this.directReport();
   }
 };
 </script>
