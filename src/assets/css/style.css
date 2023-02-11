@@ -43,6 +43,9 @@ body {
     margin: 0 auto;
     color: #171717;
 }
+.p-component{
+    font-family: 'Inter', sans-serif !important;
+}
 .border-bottom{
     border-bottom: 1px solid #EFF0F6 !important;
 }
@@ -1724,6 +1727,9 @@ label.searchTarifCheck input[type="checkbox"]:checked + div{
     z-index: 10;
 }
 
+.p-datatable .p-datatable-tbody > tr:focus{
+    outline: none;
+}
 
 @media only screen and (max-width : 1200px) {
     .tarifTabletInfo{

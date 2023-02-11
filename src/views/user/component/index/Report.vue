@@ -1,94 +1,33 @@
 <template>
-  <div class="b-radius bg-white">
-    <div class="d-flex align-items-center flex-wrap justify-content-between border-bottom p-3">
+  <div class="b-radius bg-white warp_report_index">
+    <div class="d-flex align-items-start flex-column justify-content-between border-bottom p-3">
       <router-link to="/dashboard/reports" ><div class="f-18 fw-600 color-black">Данные по рекламе</div> </router-link>
-    </div>
-    <div class="row p-3">
-      <div class="col-lg-6 pr-2 pl-2 mb-3">
-        <div class="border p-2 b-radius d-flex flex-column align-items-center justify-content-center">
-          <div class="f-14 color-1 mb-2">
-            Клики
-          </div>
-          <div class="f-18 fw-600 mb-2">
-            17 050 шт
-          </div>
-          <div class="d-flex align-items-center color-green f-14">
-            <div class="me-1">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.3332 4L8.99984 10.3333L5.6665 7L0.666504 12" stroke="#29B147" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M11.3335 4H15.3335V8" stroke="#29B147" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <span>
-                                            32,1%
-                                        </span>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 pr-2 pl-2 mb-3">
-        <div class="border p-2 b-radius d-flex flex-column align-items-center justify-content-center">
-          <div class="f-14 color-1 mb-2">
-            Расходы
-          </div>
-          <div class="f-18 fw-600 mb-2">
-            2 144 965 ₽
-          </div>
-          <div class="d-flex align-items-center color-red f-14">
-            <div class="me-1">
-              <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.3332 12.5L8.99984 6.16667L5.6665 9.5L0.666504 4.5" stroke="#F26464" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M11.3335 12.5H15.3335V8.5" stroke="#F26464" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <span>
-                                            8%
-                                        </span>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 pr-2 pl-2 mb-3">
-        <div class="border p-2 b-radius d-flex flex-column align-items-center justify-content-center">
-          <div class="f-14 color-1 mb-2">
-            Средняя цена клика
-          </div>
-          <div class="f-18 fw-600 mb-2">
-            31 ₽
-          </div>
-          <div class="d-flex align-items-center color-green f-14">
-            <div class="me-1">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.3332 4L8.99984 10.3333L5.6665 7L0.666504 12" stroke="#29B147" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M11.3335 4H15.3335V8" stroke="#29B147" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <span>
-                                            3%
-                                        </span>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 pr-2 pl-2 mb-3">
-        <div class="border p-2 b-radius d-flex flex-column align-items-center justify-content-center">
-          <div class="f-14 color-1 mb-2">
-            Конверсии
-          </div>
-          <div class="f-18 fw-600 mb-2">
-            13,3 %
-          </div>
-          <div class="d-flex align-items-center color-red f-14">
-            <div class="me-1">
-              <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.3332 12.5L8.99984 6.16667L5.6665 9.5L0.666504 4.5" stroke="#F26464" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M11.3335 12.5H15.3335V8.5" stroke="#F26464" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <span>
-                                            18,79 %
-                                        </span>
-          </div>
-        </div>
+      <div class="warp_panle_date">
+        <button class="active">Сегодня</button>
+        <button>Вчера</button>
+        <button>Неделя</button>
+        <button>Месяц</button>
+        <button>Квартал</button>
+        <button>Год</button>
       </div>
     </div>
+
+    <div class="row">
+      <DataTable :value="arrReport" :lazy="true"  @row-click="showTasks" selectionMode="single" dataKey="id" responsiveLayout="scroll" >
+        <template #empty>
+          Поставьте нам задачу
+        </template>
+        <Column  header="Площадка">
+          <template #body="slotProps">
+            <div class="name-area">{{slotProps.data.area}}</div>
+          </template>
+        </Column>
+        <Column field="consumption" header="Расход"></Column>
+        <Column field="applications" header="Заявки" ></Column>
+        <Column field="application_price" header="Цена заявки"></Column>
+      </DataTable>
+    </div>
+    <div class="pr-3 pl-3 pt-2 pb-2 px-3"><div class="row align-items-center justify-content-between"><!--v-if--></div></div>
   </div>
 
 </template>
@@ -96,16 +35,34 @@
 <script>
 import axios from "axios";
 import authHeader from "@/services/auth-header";
-
+import DataTable from 'primevue/datatable';
+import  'primevue/resources/themes/saga-blue/theme.css';
+import  'primevue/resources/primevue.min.css';
+import 'primeicons/primeicons.css';
+import Column from "primevue/column";
 
 export default {
   name: "Report",
   components: {
-
+    DataTable,
+    Column
   },
   data() {
     return{
-     arrReport:null
+     arrReport:[
+       {
+         area:'Директ',
+         consumption:'6597.24 ₽',
+         applications:'1',
+         application_price:'1'
+       },
+       {
+         area:'Директ',
+         consumption:'6597.24 ₽',
+         applications:'1',
+         application_price:'1'
+       }
+     ]
     }
   },
   watch:{
@@ -119,7 +76,8 @@ export default {
             headers: authHeader()
           }
       ).then((resp)=>{
-        this.arrReport = resp.data;
+        //this.arrReport = resp.data;
+        console.log(resp.data);
 
       }).catch(function(error){
         console.log(error);
@@ -142,82 +100,49 @@ export default {
 };
 </script>
 <style>
-.warp_modal.success .p-dialog-content > .row,
-.warp_modal.success .p-dialog-footer{
-  display: none;
+.warp_report_index{
+  overflow: hidden;
 }
-
-.p-dialog.warp_modal.success .p-dialog-content{
-  padding: 0 0 20px !important;
-  overflow:visible;
-
-}
-.result-add-riv{
-  display: none;
-}
-.warp_modal.success .result-add-riv{
-  font-size: 16px;
-  line-height: 160%;
-  text-align: center;
-  color: #171717;
-  background-color: #EAF7ED;
-  display: block;
-  margin: 0 -15px -16px;
-  padding: 15px 0;
-}
-.btn_add_review{
+.warp_panle_date {
+  margin-top: 16px;
   display: flex;
-  justify-content: flex-end;
-  padding: 9px 1rem;
+  justify-content: space-between;
+  width: 100%;
+
 }
 
-.warp_username a {
-  color: #171717;
-}
-.warp_username a:hover {
-  color: #EE735A;
-}
-
-.warp_username{
-  position: relative;
-}
-.warp_username .tabletInfo{
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.warp_username .warp_prop_marketolog{
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 160%;
-  color: #6A7686;
-  margin-bottom: 20px;
-  margin-top: 12px;
-}
-.warp_username .warp_prop_marketolog > div{
-  margin-right: 60px;
-}
-
-.warp_username .warp_prop_marketolog span{
+.name-area{
   font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
+  font-size: 14px;
+  line-height: 17px;
   color: #171717;
 }
-.warp_modal .p-dialog-footer button{
-  width: 100% !important;
-  height: auto !important;
-  padding: 15px !important;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
+.warp_panle_date button{
+  border:none;
+  background: none;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding: 2px 16px;
+  color: #0D85FB;
+  border-radius: 100px;
 }
-.p-dialog.warp_modal .p-dialog-content{
-  padding-left: 20px !important;
-  padding-right: 20px !important;
-  padding-bottom: 9px !important;
+
+.warp_panle_date button.active,
+.warp_panle_date button:hover{
+  background: #0D85FB;
+  color: #FFFFFF;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background-color: #fff;
+  font-weight: 500 !important;
+  font-size: 14px;
+  color: #94A2AB;
+  padding: 9px 20px 8px;
 }
 
 </style>

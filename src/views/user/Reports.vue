@@ -1,240 +1,42 @@
 <template>
-  <div class="contentBlock mb-5">
-    <div class="row mr-0 ml-0 justify-content-between align-items-center mb-3">
-      <div class="dropWrap f-12">
-        <div class="dropArrow">
-          <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 1.25L6.5 6.75L12 1.25" stroke="black"/>
-          </svg>
-        </div>
-        <div class="dropBlock">20 дек. 2021 - 19 янв. 2022</div>
-        <div class="dopDownBlock" style="display: none;">
-          <div class="dopDownItem">19 дек. 2021 - 19 янв. 2022</div>
-          <div class="dopDownItem">18 дек. 2021 - 19 янв. 2022</div>
-          <div class="dopDownItem">17 дек. 2021 - 19 янв. 2022</div>
+  <div class="b-radius bg-white warp_report_page">
+    <div class="d-flex align-items-start flex-column justify-content-between border-bottom p-3">
+      <div class="d-flex justify-content-between w-100 ">
+        <router-link to="/dashboard/reports" ><div class="f-18 fw-600 color-black">Данные по рекламе</div> </router-link>
+        <div class="warp_date">
+          <div class="name">Период:</div>
+          <Calendar v-model="period.in"  dateFormat="dd.mm.yy" :showTime="false" :manualInput="true" :disabledDays="[5,6]"  class="date_first" placeholder="c"/>
+
+          <Calendar v-model="period.to"  dateFormat="dd.mm.yy" :showTime="false" :manualInput="true" :disabledDays="[5,6]"  placeholder="по"/>
         </div>
       </div>
-    </div>
-    <div class="row justify-content-between h-100">
-      <div class="col-12 mb-3">
-        <div class="b-radius bg-white">
-          <div class="d-flex align-items-center flex-wrap justify-content-between p-3">
-            <div class="f-18 fw-600">
-              Основные показатели
-            </div>
-            <div class="blockHeaderButton">
-              <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g opacity="0.3">
-                  <path d="M13.4874 0.512567C12.804 -0.170848 11.696 -0.170848 11.0126 0.512567C10.3291 1.19598 10.3291 2.30402 11.0126 2.98744C11.696 3.67085 12.804 3.67085 13.4874 2.98744C14.1709 2.30405 14.1709 1.19601 13.4874 0.512567Z" fill="#030229"/>
-                  <path d="M8.23744 0.512567C7.55402 -0.170848 6.44598 -0.170848 5.76257 0.512567C5.07915 1.19598 5.07915 2.30402 5.76257 2.98744C6.44598 3.67085 7.55402 3.67085 8.23744 2.98744C8.92085 2.30405 8.92085 1.19601 8.23744 0.512567Z" fill="#030229"/>
-                  <path d="M2.98744 0.512567C2.30402 -0.170848 1.19598 -0.170848 0.512564 0.512567C-0.170852 1.19598 -0.170852 2.30402 0.512564 2.98744C1.19598 3.67085 2.30402 3.67085 2.98744 2.98744C3.67085 2.30405 3.67085 1.19601 2.98744 0.512567Z" fill="#030229"/>
-                </g>
-              </svg>
-            </div>
-          </div>
-          <div class="row mr-0 ml-0 p-2">
-            <div class="otchetBlock pr-2 pl-2 mb-3">
-              <div class="border p-2 b-radius d-flex flex-column align-items-center justify-content-center">
-                <div class="f-14 color-1 mb-2">
-                  Клики
-                </div>
-                <div class="f-18 fw-600 mb-2">
-                  17 050 шт
-                </div>
-                <div class="d-flex align-items-center color-green f-14">
-                  <div class="mr-1">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M15.3332 4L8.99984 10.3333L5.6665 7L0.666504 12" stroke="#29B147" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M11.3335 4H15.3335V8" stroke="#29B147" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </div>
-                  <span>32,1%</span>
-                </div>
-              </div>
-            </div>
-            <div class="otchetBlock pr-2 pl-2 mb-3">
-              <div class="border p-2 b-radius d-flex flex-column align-items-center justify-content-center">
-                <div class="f-14 color-1 mb-2">
-                  Расходы
-                </div>
-                <div class="f-18 fw-600 mb-2">
-                  2 144 965 ₽
-                </div>
-                <div class="d-flex align-items-center color-red f-14">
-                  <div class="mr-1">
-                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M15.3332 12.5L8.99984 6.16667L5.6665 9.5L0.666504 4.5" stroke="#F26464" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M11.3335 12.5H15.3335V8.5" stroke="#F26464" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </div>
-                  <span>
-                                            8%
-                                        </span>
-                </div>
-              </div>
-            </div>
-            <div class="otchetBlock pr-2 pl-2 mb-3">
-              <div class="border p-2 b-radius d-flex flex-column align-items-center justify-content-center">
-                <div class="f-14 color-1 mb-2">
-                  Средняя цена клика
-                </div>
-                <div class="f-18 fw-600 mb-2">
-                  31 ₽
-                </div>
-                <div class="d-flex align-items-center color-green f-14">
-                  <div class="mr-1">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M15.3332 4L8.99984 10.3333L5.6665 7L0.666504 12" stroke="#29B147" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M11.3335 4H15.3335V8" stroke="#29B147" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </div>
-                  <span>
-                                            3%
-                                        </span>
-                </div>
-              </div>
-            </div>
-            <div class="otchetBlock pr-2 pl-2 mb-3">
-              <div class="border p-2 b-radius d-flex flex-column align-items-center justify-content-center">
-                <div class="f-14 color-1 mb-2">
-                  Конверсии
-                </div>
-                <div class="f-18 fw-600 mb-2">
-                  13,3 %
-                </div>
-                <div class="d-flex align-items-center color-red f-14">
-                  <div class="mr-1">
-                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M15.3332 12.5L8.99984 6.16667L5.6665 9.5L0.666504 4.5" stroke="#F26464" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M11.3335 12.5H15.3335V8.5" stroke="#F26464" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </div>
-                  <span>
-                                            18,79 %
-                                        </span>
-                </div>
-              </div>
-            </div>
-            <div class="otchetBlock pr-2 pl-2 mb-3">
-              <div class="border p-2 b-radius d-flex flex-column align-items-center justify-content-center">
-                <div class="f-14 color-1 mb-2">
-                  Остаток на счете
-                </div>
-                <div class="f-18 fw-600 mb-2">
-                  130 000 ₽
-                </div>
-                <div class="d-flex align-items-center color-red f-14">
-                  <div class="f-14 color-blue">YandexDirect</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+      <div class="warp_panle_date">
+        <button class="active">Сегодня</button>
+        <button>Вчера</button>
+        <button>Неделя</button>
+        <button>Месяц</button>
+        <button>Квартал</button>
+        <button>Год</button>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-lg-6 mb-3">
-        <div class="b-radius bg-white">
-          <div class="d-flex align-items-center flex-wrap justify-content-between p-3">
-            <div class="f-18 fw-600">
-              Расходы и типы устройств
-            </div>
-            <div class="blockHeaderButton">
-              <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g opacity="0.3">
-                  <path d="M13.4874 0.512567C12.804 -0.170848 11.696 -0.170848 11.0126 0.512567C10.3291 1.19598 10.3291 2.30402 11.0126 2.98744C11.696 3.67085 12.804 3.67085 13.4874 2.98744C14.1709 2.30405 14.1709 1.19601 13.4874 0.512567Z" fill="#030229"/>
-                  <path d="M8.23744 0.512567C7.55402 -0.170848 6.44598 -0.170848 5.76257 0.512567C5.07915 1.19598 5.07915 2.30402 5.76257 2.98744C6.44598 3.67085 7.55402 3.67085 8.23744 2.98744C8.92085 2.30405 8.92085 1.19601 8.23744 0.512567Z" fill="#030229"/>
-                  <path d="M2.98744 0.512567C2.30402 -0.170848 1.19598 -0.170848 0.512564 0.512567C-0.170852 1.19598 -0.170852 2.30402 0.512564 2.98744C1.19598 3.67085 2.30402 3.67085 2.98744 2.98744C3.67085 2.30405 3.67085 1.19601 2.98744 0.512567Z" fill="#030229"/>
-                </g>
-              </svg>
-            </div>
-          </div>
-          <div id="chart1"></div>
-        </div>
-      </div>
-      <div class="col-lg-6 mb-3">
-        <div class="b-radius bg-white">
-          <div class="d-flex align-items-center flex-wrap justify-content-between p-3">
-            <div class="f-18 fw-600">
-              Клики и расходы
-            </div>
-            <div class="blockHeaderButton">
-              <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g opacity="0.3">
-                  <path d="M13.4874 0.512567C12.804 -0.170848 11.696 -0.170848 11.0126 0.512567C10.3291 1.19598 10.3291 2.30402 11.0126 2.98744C11.696 3.67085 12.804 3.67085 13.4874 2.98744C14.1709 2.30405 14.1709 1.19601 13.4874 0.512567Z" fill="#030229"/>
-                  <path d="M8.23744 0.512567C7.55402 -0.170848 6.44598 -0.170848 5.76257 0.512567C5.07915 1.19598 5.07915 2.30402 5.76257 2.98744C6.44598 3.67085 7.55402 3.67085 8.23744 2.98744C8.92085 2.30405 8.92085 1.19601 8.23744 0.512567Z" fill="#030229"/>
-                  <path d="M2.98744 0.512567C2.30402 -0.170848 1.19598 -0.170848 0.512564 0.512567C-0.170852 1.19598 -0.170852 2.30402 0.512564 2.98744C1.19598 3.67085 2.30402 3.67085 2.98744 2.98744C3.67085 2.30405 3.67085 1.19601 2.98744 0.512567Z" fill="#030229"/>
-                </g>
-              </svg>
-            </div>
-          </div>
-          <div id="chart2"></div>
-        </div>
-      </div>
+      <DataTable :value="arrReport" :lazy="true"  @row-click="showTasks" selectionMode="single" dataKey="id" responsiveLayout="scroll" >
+        <template #empty>
+          Поставьте нам задачу
+        </template>
+        <Column  header="Площадка">
+          <template #body="slotProps">
+            <div class="name-area">{{slotProps.data.area}}</div>
+          </template>
+        </Column>
+        <Column field="consumption" header="Расход"></Column>
+        <Column field="applications" header="Заявки" ></Column>
+        <Column field="application_price" header="Цена заявки"></Column>
+      </DataTable>
     </div>
-    <div class="row">
-      <div class="col-lg-6 mb-3 mb-lg-0">
-        <div class="row">
-          <div class="col-lg-6 mb-3 mb-lg-0">
-            <div class="b-radius bg-white">
-              <div class="d-flex align-items-center flex-wrap justify-content-between p-3 flex-nowrap">
-                <div class="f-18 fw-600">
-                  Расходы и типы полощадок
-                </div>
-                <div class="blockHeaderButton">
-                  <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g opacity="0.3">
-                      <path d="M13.4874 0.512567C12.804 -0.170848 11.696 -0.170848 11.0126 0.512567C10.3291 1.19598 10.3291 2.30402 11.0126 2.98744C11.696 3.67085 12.804 3.67085 13.4874 2.98744C14.1709 2.30405 14.1709 1.19601 13.4874 0.512567Z" fill="#030229"/>
-                      <path d="M8.23744 0.512567C7.55402 -0.170848 6.44598 -0.170848 5.76257 0.512567C5.07915 1.19598 5.07915 2.30402 5.76257 2.98744C6.44598 3.67085 7.55402 3.67085 8.23744 2.98744C8.92085 2.30405 8.92085 1.19601 8.23744 0.512567Z" fill="#030229"/>
-                      <path d="M2.98744 0.512567C2.30402 -0.170848 1.19598 -0.170848 0.512564 0.512567C-0.170852 1.19598 -0.170852 2.30402 0.512564 2.98744C1.19598 3.67085 2.30402 3.67085 2.98744 2.98744C3.67085 2.30405 3.67085 1.19601 2.98744 0.512567Z" fill="#030229"/>
-                    </g>
-                  </svg>
-                </div>
-              </div>
-              <div id="chart3"></div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="b-radius bg-white">
-              <div class="d-flex align-items-center flex-wrap justify-content-between p-3 flex-nowrap">
-                <div class="f-18 fw-600">
-                  Конверсии и типы площадок
-                </div>
-                <div class="blockHeaderButton">
-                  <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g opacity="0.3">
-                      <path d="M13.4874 0.512567C12.804 -0.170848 11.696 -0.170848 11.0126 0.512567C10.3291 1.19598 10.3291 2.30402 11.0126 2.98744C11.696 3.67085 12.804 3.67085 13.4874 2.98744C14.1709 2.30405 14.1709 1.19601 13.4874 0.512567Z" fill="#030229"/>
-                      <path d="M8.23744 0.512567C7.55402 -0.170848 6.44598 -0.170848 5.76257 0.512567C5.07915 1.19598 5.07915 2.30402 5.76257 2.98744C6.44598 3.67085 7.55402 3.67085 8.23744 2.98744C8.92085 2.30405 8.92085 1.19601 8.23744 0.512567Z" fill="#030229"/>
-                      <path d="M2.98744 0.512567C2.30402 -0.170848 1.19598 -0.170848 0.512564 0.512567C-0.170852 1.19598 -0.170852 2.30402 0.512564 2.98744C1.19598 3.67085 2.30402 3.67085 2.98744 2.98744C3.67085 2.30405 3.67085 1.19601 2.98744 0.512567Z" fill="#030229"/>
-                    </g>
-                  </svg>
-                </div>
-              </div>
-              <div id="chart4"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="b-radius bg-white h-100">
-          <div class="d-flex align-items-center flex-wrap justify-content-between p-3 flex-nowrap">
-            <div class="f-18 fw-600">
-              Расходы и аккаунты
-            </div>
-            <div class="blockHeaderButton">
-              <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g opacity="0.3">
-                  <path d="M13.4874 0.512567C12.804 -0.170848 11.696 -0.170848 11.0126 0.512567C10.3291 1.19598 10.3291 2.30402 11.0126 2.98744C11.696 3.67085 12.804 3.67085 13.4874 2.98744C14.1709 2.30405 14.1709 1.19601 13.4874 0.512567Z" fill="#030229"/>
-                  <path d="M8.23744 0.512567C7.55402 -0.170848 6.44598 -0.170848 5.76257 0.512567C5.07915 1.19598 5.07915 2.30402 5.76257 2.98744C6.44598 3.67085 7.55402 3.67085 8.23744 2.98744C8.92085 2.30405 8.92085 1.19601 8.23744 0.512567Z" fill="#030229"/>
-                  <path d="M2.98744 0.512567C2.30402 -0.170848 1.19598 -0.170848 0.512564 0.512567C-0.170852 1.19598 -0.170852 2.30402 0.512564 2.98744C1.19598 3.67085 2.30402 3.67085 2.98744 2.98744C3.67085 2.30405 3.67085 1.19601 2.98744 0.512567Z" fill="#030229"/>
-                </g>
-              </svg>
-            </div>
-          </div>
-          <div id="chart5"></div>
-        </div>
-      </div>
-    </div>
+    <div class="pr-3 pl-3 pt-2 pb-2 px-3"><div class="row align-items-center justify-content-between"><!--v-if--></div></div>
   </div>
 
 </template>
@@ -242,20 +44,50 @@
 <script>
 import axios from "axios";
 //import authHeader from "@/services/auth-header";
+import DataTable from 'primevue/datatable';
+import  'primevue/resources/themes/saga-blue/theme.css';
+import  'primevue/resources/primevue.min.css';
+import 'primeicons/primeicons.css';
+import Column from "primevue/column";
+import Calendar from 'primevue/calendar';
 
 export default {
   name: "Reports",
   components: {
-
+    DataTable,
+    Column,
+    Calendar
 
   },
   data() {
-
+    return{
+      period:{
+        in:null,
+        to:null,
+      },
+      arrReport:[
+        {
+          area:'Директ',
+          consumption:'6597.24 ₽',
+          applications:'1',
+          application_price:'1'
+        },
+        {
+          area:'Директ',
+          consumption:'6597.24 ₽',
+          applications:'1',
+          application_price:'1'
+        }
+      ]
+    }
   },
   watch:{
 
   },
   methods: {
+    showTasks(){
+
+    },
     metrikaReport(){
      // r = requests.get('https://api-metrika.yandex.ru/stat/v1/data?&id=21075004&accuracy=full&date1=yesterday&date2=yesterday&metrics=ym:s:visits&oauth_token=' + atoken)
 
@@ -292,7 +124,80 @@ export default {
     }
   },
   mounted() {
-    this.metrikaReport();
+
   }
 };
 </script>
+<style>
+.warp_report_index{
+  overflow: hidden;
+}
+.warp_panle_date {
+  margin-top: 16px;
+  display: flex;
+  width: 100%;
+
+}
+
+.warp_panle_date button{
+  border:none;
+  background: none;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding: 2px 16px;
+  color: #0D85FB;
+  border-radius: 100px;
+  margin-right: 20px;
+}
+
+.name-area{
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: #171717;
+}
+
+.warp_panle_date button.active,
+.warp_panle_date button:hover{
+  background: #0D85FB;
+  color: #FFFFFF;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background-color: #fff;
+  font-weight: 500 !important;
+  font-size: 14px;
+  color: #94A2AB;
+  padding: 9px 20px 8px;
+}
+
+.warp_date {
+  display: flex;
+  align-items: center;
+}
+
+.warp_date .name{
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: #171717;
+  margin-right: 10px;
+}
+
+.warp_date .p-calendar {
+  padding: 0 12px !important;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 160%;
+  color: #94A2AB;
+}
+
+.warp_date .date_first{
+  margin-right: 10px;
+}
+
+</style>
