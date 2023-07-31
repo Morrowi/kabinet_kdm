@@ -115,7 +115,7 @@ export default {
   },
   methods: {
     async initMarketolog(){
-      axios.post( 'http://panel.kdm1.biz/api/marketolog/',
+      axios.post( this.hostapi+'marketolog/',
           '',
           {
             headers: authHeader()
@@ -128,7 +128,7 @@ export default {
       }).finally(() => (this.loading = false));
     },
     async initOnline(){
-      axios.post( 'http://panel.kdm1.biz/api/user/online',
+      axios.post( this.hostapi+'user/online',
           '',
           {
             headers: authHeader()
@@ -179,7 +179,7 @@ export default {
         text: this.valueEditor
       }
 
-      axios.post( 'http://panel.kdm1.biz/api/reviews/add/',
+      axios.post( this.hostapi+'reviews/add/',
           date,
           {
             headers: authHeader()

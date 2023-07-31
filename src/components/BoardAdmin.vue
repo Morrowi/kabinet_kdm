@@ -38,7 +38,7 @@
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">
-                  <router-link to="/admin/rates/add" >
+                  <router-link to="/admin/rates/" >
                     <div class="menuLinkBlock">
                       <div class="me-3">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,9 +53,12 @@
                         </svg>
                       </div>
                       <div class="menuLinkName fw-500 f-14">
-                        Добавить тариф
+                        Тарифы
                       </div>
                     </div>
+                    <ul>
+                      <li><router-link to="/admin/rates/add" >Добавить тариф</router-link></li>
+                    </ul>
                   </router-link>
                 </li>
                 <li class="d-flex mb-4">

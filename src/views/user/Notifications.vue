@@ -1,9 +1,7 @@
 <template>
   <transition name="fade" >
-  <div class="loading" v-if="loading">
 
-  </div>
-  <div class="contentBlock mb-5" v-else>
+  <div class="contentBlock mb-5">
     <div class="row">
       <div class="col-12 mb-3">
         <div class="b-radius bg-white">
@@ -63,7 +61,7 @@ export default {
   },
   methods: {
     initNoty(){
-      axios.post( 'http://panel.kdm1.biz/api/notifications/',
+      axios.post( this.hostapi+'notifications/',
           '',
           {
             headers: authHeader()
@@ -99,7 +97,7 @@ export default {
     showNoty(id, e){
       e.currentTarget.classList.toggle('show');
       e.currentTarget.classList.remove('active');
-      axios.post( 'http://panel.kdm1.biz/api/notifications/show/'+id,
+      axios.post( this.hostapi+'notifications/show/'+id,
       '',
           {
             headers: authHeader()

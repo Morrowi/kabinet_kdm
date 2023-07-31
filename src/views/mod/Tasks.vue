@@ -267,7 +267,7 @@ export default {
   methods: {
 
     listTasks(){
-      axios.post( 'http://panel.kdm1.biz/api/tasks/',
+      axios.post( this.hostapi+'tasks/',
           this.$store.state.auth.user.client,
           {
             headers: authHeader()
@@ -310,7 +310,7 @@ export default {
       });
     },
     showTasks(id){
-      axios.post( 'http://panel.kdm1.biz/api/tasks/id',
+      axios.post( this.hostapi+'tasks/id',
           {id:id},
           {
             headers: authHeader()
@@ -386,7 +386,7 @@ export default {
       //let val={name:'name'};
 
 
-      axios.post( 'http://panel.kdm1.biz/api/tasks/add',
+      axios.post( this.hostapi+'tasks/add',
           formData,
           {
             headers: authHeader(), 'Content-Type': 'multipart/form-data'
@@ -442,7 +442,7 @@ export default {
     changeStatus(task_id, status_id){
       console.log(task_id);
       console.log(status_id);
-      axios.put('http://panel.kdm1.biz/api/tasks/'+task_id,
+      axios.put(this.hostapi+'tasks/'+task_id,
           { status: status_id },
           {headers: authHeader()}
       ).then((resp)=>{

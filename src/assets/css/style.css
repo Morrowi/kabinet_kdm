@@ -198,7 +198,8 @@ body {
 .menuLinkBlock:hover .menuLinkName{
     color: #ffffff;
 }
-a.router-link-exact-active svg path{
+a.router-link-exact-active svg path,
+a.router-link-active svg path{
     fill: #EE735A;
 }
 .router-link-exact-active .menuLinkBlock .menuLinkName{
@@ -553,6 +554,12 @@ table.c3-tooltip {
     min-height: 56px;
     outline-color: #218ffb;
 }
+
+.formInput_pv.w-100 input{
+    width: 100%;
+}
+
+
 .p-inputtextarea{
     width: 100%;
     height: 54px;
@@ -947,18 +954,18 @@ textarea.formInput {
     font-size: 14px;
     line-height: 24px;
     color: #262626;
+    padding-left: 45px !important;
 }
 .tarifItem:before{
     content: '';
     position: absolute;
-    width: 4px;
-    height: 4px;
-    background-color: #E66950;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-    left: -15px;
-    top: 10px;
+    background: url(../image/arrowOr.svg)no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 13px;
+    height: 10px;
+    left: 20px;
+    top: 20px;
 }
 .warp_rate .warp_sub_title{
     font-family: 'Inter', sans-serif;

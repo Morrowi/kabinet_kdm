@@ -146,7 +146,7 @@ export default {
         }
       }
 
-      axios.post( 'http://panel.kdm1.biz/api/support/add',
+      axios.post( this.hostapi+'support/add',
           formData,
           {
             headers: authHeader(), 'Content-Type': 'multipart/form-data'

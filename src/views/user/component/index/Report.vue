@@ -13,7 +13,7 @@
     </div>
 
     <div class="row">
-      <DataTable :value="arrReport" :lazy="true"  @row-click="showTasks" selectionMode="single" dataKey="id" responsiveLayout="scroll" >
+      <DataTable :value="arrReport" :lazy="true"  responsiveLayout="scroll" >
         <template #empty>
           Поставьте нам задачу
         </template>
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     async initReport(){
-      axios.post( 'http://panel.kdm1.biz/api/marketolog/',
+      axios.post( this.hostapi+'marketolog/',
           '',
           {
             headers: authHeader()
@@ -85,6 +85,7 @@ export default {
     },
   },
   computed:{
+
     currentUser() {
       return this.$store.state.auth.user;
     },
@@ -106,7 +107,6 @@ export default {
 .warp_panle_date {
   margin-top: 16px;
   display: flex;
-  justify-content: space-between;
   width: 100%;
 
 }

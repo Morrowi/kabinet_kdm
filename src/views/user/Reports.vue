@@ -1,39 +1,44 @@
 <template>
-  <div class="b-radius bg-white warp_report_page">
+  <div class="b-radius bg-white warp_report_page" v-if="loading">
     <div class="d-flex align-items-start flex-column justify-content-between border-bottom p-3">
       <div class="d-flex justify-content-between w-100 ">
         <router-link to="/dashboard/reports" ><div class="f-18 fw-600 color-black">Данные по рекламе</div> </router-link>
         <div class="warp_date">
           <div class="name">Период:</div>
-          <Calendar v-model="period.in"  dateFormat="dd.mm.yy" :showTime="false" :manualInput="true" :disabledDays="[5,6]"  class="date_first" placeholder="c"/>
+          <Calendar v-model="period.in"  dateFormat="dd.mm.yy" :showTime="false" :manualInput="true"  class="date_first" placeholder="c"/>
 
-          <Calendar v-model="period.to"  dateFormat="dd.mm.yy" :showTime="false" :manualInput="true" :disabledDays="[5,6]"  placeholder="по"/>
+          <Calendar v-model="period.to"  dateFormat="dd.mm.yy" :showTime="false" :manualInput="true"   placeholder="по"/>
         </div>
       </div>
 
       <div class="warp_panle_date">
-        <button class="active">Сегодня</button>
-        <button>Вчера</button>
-        <button>Неделя</button>
-        <button>Месяц</button>
-        <button>Квартал</button>
-        <button>Год</button>
+        <button :class="{'active': periodDate === 'today'}" @click="changePeriod('today')">Сегодня</button>
+        <button :class="{'active': periodDate === 'yesterday'}" @click="changePeriod('yesterday')">Вчера</button>
+        <button :class="{'active': periodDate === 'week'}" @click="changePeriod('week')">Неделя</button>
+        <button :class="{'active': periodDate === 'month'}" @click="changePeriod('month')">Месяц</button>
+        <button :class="{'active': periodDate === 'quarter'}" @click="changePeriod('quarter')">Квартал</button>
+        <button :class="{'active': periodDate === 'year'}" @click="changePeriod('year')">Год</button>
       </div>
     </div>
 
     <div class="row">
-      <DataTable :value="arrReport" :lazy="true"  @row-click="showTasks" selectionMode="single" dataKey="id" responsiveLayout="scroll" >
+      <DataTable :value="arrReport" :lazy="true"  dataKey="id" responsiveLayout="scroll" >
         <template #empty>
-          Поставьте нам задачу
+          Данные еще не загружены.
         </template>
         <Column  header="Площадка">
           <template #body="slotProps">
-            <div class="name-area">{{slotProps.data.area}}</div>
+            <div class="name-area">{{areas(slotProps.data.area)}}</div>
           </template>
         </Column>
         <Column field="consumption" header="Расход"></Column>
         <Column field="applications" header="Заявки" ></Column>
         <Column field="application_price" header="Цена заявки"></Column>
+        <Column  header="Дата">
+          <template #body="slotProps">
+            {{ dateFormat(slotProps.data.date) }}
+          </template>
+        </Column>
       </DataTable>
     </div>
     <div class="pr-3 pl-3 pt-2 pb-2 px-3"><div class="row align-items-center justify-content-between"><!--v-if--></div></div>
@@ -50,6 +55,7 @@ import  'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import Column from "primevue/column";
 import Calendar from 'primevue/calendar';
+import authHeader from "@/services/auth-header";
 
 export default {
   name: "Reports",
@@ -61,70 +67,130 @@ export default {
   },
   data() {
     return{
+      periodDate:'today',
+      loading:false,
       period:{
         in:null,
         to:null,
       },
-      arrReport:[
-        {
-          area:'Директ',
-          consumption:'6597.24 ₽',
-          applications:'1',
-          application_price:'1'
-        },
-        {
-          area:'Директ',
-          consumption:'6597.24 ₽',
-          applications:'1',
-          application_price:'1'
-        }
-      ]
+      arArea:[
+        { name: 'Яндекс.Директ', code: 'yad' },
+        { name: 'MyTarget', code: 'MyTarget' },
+        { name: 'Авито', code: 'avito' },
+        { name: 'ВКонтакте', code: 'vk' }
+      ],
+      arrReportTmp:[],
+
     }
   },
   watch:{
 
   },
-  methods: {
-    showTasks(){
+  computed:{
+    arrReport(){
 
-    },
-    metrikaReport(){
-     // r = requests.get('https://api-metrika.yandex.ru/stat/v1/data?&id=21075004&accuracy=full&date1=yesterday&date2=yesterday&metrics=ym:s:visits&oauth_token=' + atoken)
 
-      /*fetch(
-          'https://api-sandbox.direct.yandex.com/json/v5/campaigns', {
-            method:'post',
+      return this.arrReportTmp.filter(data=>{
 
-            headers: {
-              "Authorization": "Bearer ******1"
-            }
-          })
-          .then(r => r.json())
-          .then(metrikaApiJSON => {
-          console.log(metrikaApiJSON);
-          })*/
-      axios.post( 'https://api-sandbox.direct.yandex.com/json/v5/campaigns',
-          {
-            FieldNames:["Id","Name"]
-          },
-          {
-            headers: {
-              "Authorization": "Bearer AQAAAAA55yrgAAgEYgycA9s0uU2KthWf2XgHc-A"
-            }
+        if(this.period.in !== null && this.period.to!== null){
+          const startDate = new Date(this.period.in).toISOString().slice(0, 10);
+          const endDate = new Date(this.period.to).toISOString().slice(0, 10);
+          const dateObj = new Date(data.date).toISOString().slice(0, 10);
+          console.log('startDate',startDate);
+          console.log('endDate',endDate);
+          if(dateObj >= startDate && dateObj <= endDate){
+            return data;
           }
-      ).then((resp)=>{
+        }
+        if(this.periodDate === 'today'){
+          const today = new Date().toISOString().slice(0, 10);
+          if(today === data.date.slice(0, 10)){
+            return data;
+          }
+        }
+        if(this.periodDate === 'yesterday'){
+          const yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().slice(0, 10);
+          if(yesterday === data.date.slice(0, 10)){
+            return data;
+          }
+        }
+        if(this.periodDate === 'week'){
+          const today = new Date().toISOString().slice(0, 10);
+          const diffTime = Math.abs(new Date(data.date) - new Date(today));
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          console.log('diffTime', diffTime);
+          console.log('diffDays', diffDays);
+          if(diffDays <= 7){
 
-        console.log(resp.data);
+            return data;
+            //prod.push(data);
+          }
+        }
 
-        //this.openTask=true;
-      }).catch(function(error){
-        this.$toast.add({severity:'error', summary: 'Ошибка', detail:error, life: 3000});
-        console.log(error);
+        if(this.periodDate === 'month'){
+          const today = new Date();
+          console.log('today',today.getMonth());
+          const dateObj = new Date(data.date);
+          if(dateObj.getMonth() === today.getMonth()){
+            return data;
+          }
+        }
+
+        if(this.periodDate === 'quarter'){
+          const today = new Date();
+          const currentQuarter = Math.floor((today.getMonth() / 3));
+
+          const dateObj = new Date(data.date);
+          const dateQuarter = Math.floor((dateObj.getMonth() / 3));
+          if(dateQuarter === currentQuarter){
+            return data;
+          }
+
+        }
+
+        if(this.periodDate === 'year'){
+          const today = new Date();
+          const currentYear = today.getFullYear();
+          const dateObj = new Date(data.date);
+
+          const dateYear = dateObj.getFullYear();
+          if(currentYear === dateYear){
+            return data;
+          }
+        }
+
+
       });
     }
   },
-  mounted() {
+  methods: {
+    changePeriod(type){
+      this.periodDate = type;
+    },
+    areas(code){
+      return this.arArea.find(item => item.code === code).name;
+    },
+    dateFormat(date){
+      return date.slice(0, 10)  ;
+    },
+    initReports() {
+      axios.post(this.hostapi + 'report/user/list',
+          {},
+          {
+            headers: authHeader()
+          }
+      ).then((resp) => {
+        this.arrReportTmp = resp.data;
 
+      }).catch(function (error) {
+        console.log(error);
+
+      }).finally(() => {this.loading = true;});
+    }
+
+  },
+  mounted() {
+    this.initReports();
   }
 };
 </script>

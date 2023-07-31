@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     initNoty(){
-      axios.post( 'http://panel.kdm1.biz/api/notifications/',
+      axios.post( this.hostapi+'notifications/',
           '',
           {
             headers: authHeader()
@@ -93,7 +93,7 @@ export default {
       e.currentTarget.classList.toggle('show');
       e.currentTarget.classList.remove('active');
 
-      axios.post( 'http://panel.kdm1.biz/api/notifications/show/'+id,
+      axios.post( this.hostapi+'notifications/show/'+id,
       '',
           {
             headers: authHeader()

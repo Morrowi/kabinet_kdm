@@ -213,7 +213,7 @@ export default {
     selectedManager(id){
       console.log(id);
     let data = {id: id};
-      axios.post( 'http://panel.kdm1.biz/api/user/change/marketolog',
+      axios.post( this.hostapi+'user/change/marketolog',
           data,
           {
             headers: authHeader()
@@ -231,7 +231,7 @@ export default {
       });
     },
     initOnline(){
-      axios.post( 'http://panel.kdm1.biz/api/user/online',
+      axios.post( this.hostapi+'user/online',
           '',
           {
             headers: authHeader()
@@ -289,7 +289,7 @@ export default {
         text: this.valueEditor
       }
 
-      axios.post( 'http://panel.kdm1.biz/api/reviews/add/',
+      axios.post( this.hostapi+'reviews/add/',
           date,
           {
             headers: authHeader()
@@ -311,7 +311,7 @@ export default {
 
     },
     initMarketolog(){
-      axios.post( 'http://panel.kdm1.biz/api/marketolog/',
+      axios.post( this.hostapi+'marketolog/',
           '',
           {
             headers: authHeader()
@@ -325,7 +325,7 @@ export default {
     },
     initMarketologs(){
 
-      axios.get( 'http://panel.kdm1.biz/api/marketolog/').then((resp)=>{
+      axios.get( this.hostapi+'marketolog/').then((resp)=>{
 
         let newArrTmp =[];
         let i2=0;
@@ -342,7 +342,7 @@ export default {
       });
     },
     showReviews(id){
-      axios.post( 'http://panel.kdm1.biz/api/reviews/show/'+id).then((resp)=>{
+      axios.post( this.hostapi+'reviews/show/'+id).then((resp)=>{
         for ( const key in resp.data){
           resp.data[key].date_insert= this.dateToYMD(new Date(resp.data[key].date_insert));
         }

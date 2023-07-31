@@ -126,7 +126,7 @@ export default {
     },
     initDocs(type = 1){
 
-      axios.post( 'http://panel.kdm1.biz/api/inpay/',
+      axios.post( this.hostapi+'inpay/',
           {
             user_id: this.$route.params.id,
             type:type

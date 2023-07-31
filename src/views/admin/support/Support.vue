@@ -67,7 +67,7 @@ export default {
     },
     listTicket(){
       // console.log(this.currentUser);
-      axios.post( 'http://panel.kdm1.biz/api/support/',
+      axios.post( this.hostapi+'support/',
           "",
           {
             headers: authHeader()

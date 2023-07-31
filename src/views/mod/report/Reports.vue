@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid vh-100">
-    <DataTable :value="usersList" responsiveLayout="scroll" :paginator="true" :rows="10" @rowSelect="onRowSelect" selectionMode="single"  dataKey="id" >
+    <DataTable :value="usersList"   selectionMode="single"  dataKey="id" @rowSelect="onRowSelect" responsiveLayout="scroll">
       <template #empty>
         No customers found.
       </template>
@@ -8,23 +8,28 @@
         Loading customers data. Please wait.
       </template>
       <Column field="id" header="ID"></Column>
-      <Column header="Имя" >
+      <Column header="Имя">
         <template #body="slotProps">
           <div class="d-flex align-items-center">
-            <Avatar shape="circle" :image="slotProps.data.avatar" />
+            <template v-if="slotProps.data.avatar">
+              <Avatar shape="circle" :image="host+'/uploads/'+slotProps.data.id+'/'+slotProps.data.avatar" />
+            </template>
+            <template v-else>
+              <Avatar icon="pi pi-user"  shape="circle"  />
+            </template>
             <span class="ms-3 image-text">{{slotProps.data.username}}</span>
           </div>
         </template>
       </Column>
-
     </DataTable>
   </div>
-
 </template>
 
 <script>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+
+//import "primeflex/primeflex.css";
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
@@ -45,39 +50,36 @@ export default {
   data() {
 
     return {
+      host:this.host,
       usersList:null,
-      clientDialog: false,
-      client: {},
-
-      editingRows: [],
-      campaigns: [],
     }
   },
   watch:{
 
   },
   methods: {
+    onRowSelect(event){
+      this.$router.push('/mod/reports/'+event.data.id);
+    },
     listInit(){
-      // console.log(this.currentUser);
-      axios.post( this.hostapi+'inpay/user',
-          {},
+      axios.post( this.hostapi+'report/mod/list',
+          this.$store.state.auth.user.client,
           {
             headers: authHeader()
           }
       ).then((resp)=>{
-        console.log('report list', resp.data);
-
         this.usersList = resp.data;
       }).catch(function(error){
         console.log(error);
       });
-    },
-    onRowSelect(e){
-      this.$router.push('/mod/inpayac/'+e.data.id);
     }
+
 
   },
   computed:{
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
   },
   mounted() {
     this.listInit();
@@ -85,11 +87,5 @@ export default {
 };
 </script>
 <style>
-.castom_drop{
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-}
-.castom_drop .p-inputtext{
-  font-size: 12px !important;
-}
+
 </style>

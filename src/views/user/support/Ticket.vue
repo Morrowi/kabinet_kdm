@@ -113,7 +113,7 @@ export default {
         }
       }
 
-      axios.post( 'http://panel.kdm1.biz/api/support/comment',
+      axios.post( this.hostapi+'support/comment',
           formData,
           {
             headers: authHeader(), 'Content-Type': 'multipart/form-data'
@@ -141,7 +141,7 @@ export default {
     closeTicket(){
       console.log(this.$route.params.id);
       let id =this.$route.params.id;
-      axios.post( 'http://panel.kdm1.biz/api/support/close/',
+      axios.post( this.hostapi+'support/close/',
           {id:id},
           {
             headers: authHeader()
@@ -189,7 +189,7 @@ export default {
     },
     async initTicket(){
       let id =this.$route.params.id;
-      axios.post( 'http://panel.kdm1.biz/api/support/'+id,
+      axios.post( this.hostapi+'support/'+id,
           '',
           {
             headers: authHeader()

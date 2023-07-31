@@ -160,11 +160,25 @@ const routes = [
       {path: '',
         component: () => import('./views/admin/Index.vue'),
       },
-
       {
-        path: 'rates/add',
-        component: () => import('./views/admin/AddRates.vue'),
+        path: 'rates/',
+        component: () => import('./views/admin/rates/tmp.vue'),
+        children:[
+          {
+            path: '',
+            component: () => import('./views/admin/rates/Rate.vue'),
+          },
+          {
+            path: 'add',
+            component: () => import('./views/admin/rates/AddRates.vue'),
+          },
+          {
+            path: 'edit/:id',
+            component: () => import('./views/admin/rates/Edit.vue'),
+          },
+        ]
       },
+
       {
         path: 'users',
         component: () => import('./views/admin/Users.vue'),
@@ -234,7 +248,8 @@ const routes = [
     // lazy-loaded
     component: BoardModerator,
     children: [
-      {path: '',
+      {
+        path: '',
         component: () => import('./views/mod/Index.vue'),
       },
       {
@@ -243,7 +258,17 @@ const routes = [
       },
       {
         path: 'reports',
-        component: () => import('./views/mod/Reports.vue')
+        component: () => import('./views/mod/report/tmp.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('./views/mod/report/Reports.vue'),
+          },
+          {
+            path: ':id',
+            component: () => import('./views/mod/report/Change.vue'),
+          }
+        ]
       },
       {
         path: 'inpayac',

@@ -23,7 +23,12 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 library.add(faUserSecret)
 
 
-createApp(App)
+let app =createApp(App);
+
+app.config.globalProperties.hostapi = 'http://panel.kdm1.biz/api/';
+app.config.globalProperties.host = 'http://panel.kdm1.biz';
+
+app
     .use(router)
     .use(store)
     .use(DropZone)

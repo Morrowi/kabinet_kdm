@@ -104,7 +104,7 @@ export default {
 
     initNoty(){
 
-      axios.post( 'http://panel.kdm1.biz/api/notifications/',
+      axios.post( this.hostapi+'notifications/',
           '',
           {
             headers: authHeader()

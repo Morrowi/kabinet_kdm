@@ -148,7 +148,7 @@ export default {
   methods: {
 
     initMarketologs(){
-      axios.get( 'http://panel.kdm1.biz/api/marketolog/').then((resp)=>{
+      axios.get( this.hostapi+'marketolog/').then((resp)=>{
         this.Marketologs = resp.data;
       }).catch(function(error){
         console.log(error);

@@ -139,7 +139,7 @@ export default {
         formData.append('files', file);
       }
 
-      axios.post( 'http://panel.kdm1.biz/api/inpay/add',
+      axios.post( this.hostapi+'inpay/add',
           formData,
           {
             headers: authHeader(), 'Content-Type': 'multipart/form-data'
@@ -166,7 +166,7 @@ export default {
     },
     initDocs(type = 1){
 
-      axios.post( 'http://panel.kdm1.biz/api/inpay/',
+      axios.post( this.hostapi+'inpay/',
           {
             user_id: this.$route.params.id,
             type:type

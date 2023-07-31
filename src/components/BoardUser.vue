@@ -449,7 +449,7 @@ export default {
 
     },
     initHellow(){
-      axios.post( 'http://panel.kdm1.biz/api/hellow/',
+      axios.post( this.hostapi+'hellow/',
           '',
           {
             headers: authHeader()
@@ -469,7 +469,7 @@ export default {
       });
     },
     hideShowHello(){
-      axios.post( 'http://panel.kdm1.biz/api/hellow/hide',
+      axios.post( this.hostapi+'hellow/hide',
           '',
           {
             headers: authHeader()
@@ -482,7 +482,7 @@ export default {
       });
     },
     initPaymend(){
-      axios.post( 'http://panel.kdm1.biz/api/paymend/',
+      axios.post( this.hostapi+'paymend/',
           '',
           {
             headers: authHeader()

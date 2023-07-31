@@ -21,7 +21,7 @@ const store = createStore({
     },
     getRatesAction({commit}){
 
-      axios('http://panel.kdm1.biz/api/rates/list').then(res => {
+      axios(this.hostapi+'rates/list').then(res => {
         commit('getRates', res.data)
       }).catch(error => {
         console.log(error);

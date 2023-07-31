@@ -297,7 +297,7 @@ export default {
       })
     },
     listTasks(){
-      axios.post( 'http://panel.kdm1.biz/api/tasks/',
+      axios.post( this.hostapi+'tasks/',
           '',
           {
             headers: authHeader()
@@ -353,7 +353,7 @@ export default {
     showTasks(event){
 
       console.log(event.data.id);
-      axios.post( 'http://panel.kdm1.biz/api/tasks/id',
+      axios.post( this.hostapi+'tasks/id',
           {id:event.data.id},
           {
             headers: authHeader()
@@ -427,7 +427,7 @@ export default {
       }
 
       if(error === 0){
-        axios.post( 'http://panel.kdm1.biz/api/tasks/add',
+        axios.post( this.hostapi+'tasks/add',
             formData,
             {
               headers: authHeader(), 'Content-Type': 'multipart/form-data'
@@ -524,7 +524,7 @@ export default {
       }
 
       if(error === 0){
-        axios.post( 'http://panel.kdm1.biz/api/tasks/add',
+        axios.post( this.hostapi+'tasks/add',
             formData,
             {
               headers: authHeader(), 'Content-Type': 'multipart/form-data'
@@ -577,7 +577,7 @@ export default {
     changeStatus(task_id, status_id){
       console.log(task_id);
       console.log(status_id);
-      axios.put('http://panel.kdm1.biz/api/tasks/'+task_id,
+      axios.put(this.hostapi+'tasks/'+task_id,
           { status: status_id },
           {headers: authHeader()}
       ).then((resp)=>{

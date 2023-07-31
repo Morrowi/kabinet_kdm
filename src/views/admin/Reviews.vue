@@ -125,7 +125,7 @@ export default {
         moderation = 0;
       }
 
-      axios.post( 'http://panel.kdm1.biz/api/reviews/update/'+id,
+      axios.post( this.hostapi+'reviews/update/'+id,
           {moderation:moderation},
           {
             headers: authHeader()
@@ -151,7 +151,7 @@ export default {
 
     listInit(){
       // console.log(this.currentUser);
-      axios.post( 'http://panel.kdm1.biz/api/reviews/',
+      axios.post( this.hostapi+'reviews/',
           this.$store.state.auth.user.client,
           {
             headers: authHeader()

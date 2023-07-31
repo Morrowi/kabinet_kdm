@@ -87,7 +87,6 @@ import axios from "axios";
 export default {
   name: "Recovery",
   components: {
-
     Toast
   },
   data() {
@@ -155,7 +154,7 @@ export default {
       }
       if(this.error === 0){
 
-          axios.post( 'http://panel.kdm1.biz/api/auth/recovery',{email:this.email}).then((resp)=>{
+          axios.post( this.hostapi+'auth/recovery',{email:this.email}).then((resp)=>{
             console.log(resp.data);
             if(resp.data.error === 'not email'){
               this.errorClassEmail=true;
@@ -203,7 +202,7 @@ export default {
       }
 
       if(this.error === 0){
-        axios.post( 'http://panel.kdm1.biz/api/auth/change',
+        axios.post( this.hostapi+'auth/change',
             {hash:this.$route.params.id, password:this.password}
         ).then((resp)=>{
           console.log(resp.data);

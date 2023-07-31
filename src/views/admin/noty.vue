@@ -57,7 +57,7 @@ export default {
       console.log(this.selected_user);
     },
     initUserList(){
-      axios.post( 'http://panel.kdm1.biz/api/users/list',
+      axios.post( this.hostapi+'users/list',
           '',
           {
             headers: authHeader()

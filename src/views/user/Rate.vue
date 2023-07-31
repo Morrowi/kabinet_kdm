@@ -1,29 +1,7 @@
 <template>
   <transition name="fade" >
-    <div class="loading" v-if="loading">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100"  xml:space="preserve">
-        <circle fill="none" stroke="#fff" stroke-width="4" stroke-miterlimit="10" cx="50" cy="50" r="48"/>
-        <line fill="none" stroke-linecap="round" stroke="#fff" stroke-width="4" stroke-miterlimit="10" x1="50" y1="50" x2="85" y2="50.5">
-          <animateTransform
-              attributeName="transform"
-              dur="2s"
-              type="rotate"
-              from="0 50 50"
-              to="360 50 50"
-              repeatCount="indefinite" />
-        </line>
-        <line fill="none" stroke-linecap="round" stroke="#fff" stroke-width="4" stroke-miterlimit="10" x1="50" y1="50" x2="49.5" y2="74">
-          <animateTransform
-              attributeName="transform"
-              dur="15s"
-              type="rotate"
-              from="0 50 50"
-              to="360 50 50"
-              repeatCount="indefinite" />
-        </line>
-      </svg>
-    </div>
-    <div v-else class="d-flex justify-content-between me-0 ms-0 align-items-start">
+
+    <div class="d-flex justify-content-between me-0 ms-0 align-items-start">
       <div class="contentBlock mb-5">
         <div class="d-flex justify-content-between mb-3 flex-column">
           <div class="f-24 fw-600">
@@ -917,7 +895,7 @@ export default {
               bank_phone:this.bank_phone
           }
 
-          axios.post( 'http://panel.kdm1.biz/api/ratesrequisites/add',
+          axios.post( this.hostapi+'ratesrequisites/add',
               data,
               {
                 headers: authHeader()
@@ -980,7 +958,7 @@ export default {
     },
     changeTarif(){
       this.loading = true;
-      axios.post( 'http://panel.kdm1.biz/api/rates/change',
+      axios.post( this.hostapi+'rates/change',
           {rate:this.changeTarifId},
           {
             headers: authHeader()
@@ -997,7 +975,7 @@ export default {
       });
     },
     async initRates(){
-      axios.post( 'http://panel.kdm1.biz/api/rates/list',
+      axios.post( this.hostapi+'rates/list',
           '',
           {
             headers: authHeader()
@@ -1029,17 +1007,17 @@ export default {
 
         }
 
-
+        this.loading = false
         setTimeout(()=>{
           this.loading = false
-        },1000);
+        },200);
 
       }).catch(function(error){
         console.log(error);
       });
     },
     async initRatesrequisites(){
-      axios.post( 'http://panel.kdm1.biz/api/ratesrequisites/',
+      axios.post( this.hostapi+'ratesrequisites/',
           '',
           {
             headers: authHeader()

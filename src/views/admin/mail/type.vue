@@ -111,7 +111,7 @@ export default {
   watch: {},
   methods: {
     typeInit(){
-      axios.post( 'http://panel.kdm1.biz/api/mail/type/',
+      axios.post( this.hostapi+'mail/type/',
           '',
           {
             headers: authHeader()
@@ -142,7 +142,7 @@ export default {
         data.description = this.description
       }
 
-      axios.post( 'http://panel.kdm1.biz/api/mail/type/add',
+      axios.post( this.hostapi+'mail/type/add',
           data,
           {
             headers: authHeader()

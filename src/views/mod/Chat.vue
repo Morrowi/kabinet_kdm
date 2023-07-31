@@ -139,7 +139,7 @@ export default {
       });
     },
     loadRoom(){
-      axios.post('http://panel.kdm1.biz/api/chat',
+      axios.post(this.hostapi+'chat',
           '',
           {headers: authHeader()}
       ).then((resp)=>{

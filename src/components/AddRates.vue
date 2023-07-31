@@ -83,7 +83,7 @@ export default {
 
       values['user_id']=userStorage.id;
       console.log(values);
-      axios.post( 'http://panel.kdm1.biz/api/rates/add',
+      axios.post( this.hostapi+'rates/add',
           values,
           {
             headers: authHeader()

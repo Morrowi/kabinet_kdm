@@ -259,7 +259,7 @@ export default {
         region:this.selectedCity.cname,
         regionCode:this.selectedCity.code
       }
-      axios.post( 'http://panel.kdm1.biz/api/user/change/info',
+      axios.post( this.hostapi+'user/change/info',
           data,
           {
             headers: authHeader()
@@ -297,7 +297,7 @@ export default {
 
       let formData = new FormData();
       formData.append('avatar', avatar);
-      axios.post( 'http://panel.kdm1.biz/api/user/change/avatar',
+      axios.post( this.hostapi+'user/change/avatar',
           formData,
           {
             headers: authHeader(), 'Content-Type': 'multipart/form-data'
@@ -316,7 +316,7 @@ export default {
 
     },
     deleteAvatar(){
-      axios.post( 'http://panel.kdm1.biz/api/user/deleted/avatar',
+      axios.post( this.hostapi+'user/deleted/avatar',
           {},
           {
             headers: authHeader()
@@ -374,7 +374,7 @@ export default {
       }
 
       if(this.error === 0){
-        axios.post( 'http://panel.kdm1.biz/api/auth/change/password',
+        axios.post( this.hostapi+'auth/change/password',
             {
               password_old:this.password_old, password:this.password
             },

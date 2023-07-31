@@ -101,7 +101,7 @@ export default {
             };
 
 
-           axios.post( 'http://panel.kdm1.biz/api/mail/add',
+           axios.post( this.hostapi+'mail/add',
                 dataSend,
                 {
                   headers: authHeader()
@@ -128,7 +128,7 @@ export default {
       )
     },
     initEventType(){
-      axios.post( 'http://panel.kdm1.biz/api/mail/type/',
+      axios.post( this.hostapi+'mail/type/',
           '',
           {
             headers: authHeader()

@@ -133,7 +133,7 @@ export default {
   methods: {
     initRates(){
 
-      axios.get( 'http://panel.kdm1.biz/api/rates/list/').then((resp)=>{
+      axios.get( this.hostapi+'rates/list/').then((resp)=>{
 
         let tmpRates=[] ;
         for (let key of Object.keys(resp.data)) {
